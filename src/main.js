@@ -56,9 +56,6 @@ class Entity {
   }
 }
 
-const zombie = new Entity(11, 15, [10, 5], "green", true);
-const zofembie = new Entity(13, 3, [10, 5], "red", true);
-
 function renderWorld() {
   for (let i = 0; i < entities.length; i++) {
     let entity = entities[i];
@@ -66,3 +63,32 @@ function renderWorld() {
     ctx.drawImage(entityTile, entity.x * tileSize, entity.y * tileSize);
   }
 }
+
+function clearWorld() {
+  ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+const zombie = new Entity(11, 15, [10, 5], "green", true);
+const hero = new Entity(13, 10, [0, 4], "white", true);
+
+document.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "a":
+      hero.x--;
+      break;
+    case "d":
+      hero.x++;
+      break;
+    case "w":
+      hero.y--;
+      break;
+    case "s":
+      hero.y++;
+      break;
+
+    default:
+      break;
+  }
+  clearWorld();
+  renderWorld();
+});
