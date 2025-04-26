@@ -15,10 +15,9 @@ const ctx = canvas.getContext("2d");
 
 const spritesheet = document.createElement("img");
 spritesheet.src = "assets/spritesheet.png";
-
 spritesheet.onload = renderWorld;
 
-function drawTile([char_x, char_y], color) {
+function drawTile(x, y, [char_x, char_y], color) {
   const offscreenCanvas = new OffscreenCanvas(tileSize, tileSize);
   const offscreenCtx = offscreenCanvas.getContext("2d");
 
@@ -38,7 +37,8 @@ function drawTile([char_x, char_y], color) {
     tileSize,
     tileSize
   );
-  return offscreenCanvas;
+
+  ctx.drawImage(offscreenCanvas, x * tileSize, y * tileSize);
 }
 
 const entities = [];
@@ -59,8 +59,7 @@ class Entity {
 function renderWorld() {
   for (let i = 0; i < entities.length; i++) {
     let entity = entities[i];
-    const entityTile = drawTile(entity.char, entity.color);
-    ctx.drawImage(entityTile, entity.x * tileSize, entity.y * tileSize);
+    drawTile(entity.x, entity.y, entity.char, entity.color);
   }
 }
 
@@ -70,6 +69,20 @@ function clearWorld() {
 
 const zombie = new Entity(11, 15, [10, 5], "green", true);
 const hero = new Entity(13, 10, [0, 4], "white", true);
+
+const test = new Entity(13, 15, [0, 0], "purple", true);
+setInterval(() => {
+  if (test.char[0] < 15) test.char[0]++;
+  else if (test.char[1] < 15) {
+    test.char[1]++;
+    test.char[0] = 0;
+  } else {
+    test.char[0] = 0;
+    test.char[1] = 0;
+  }
+  clearWorld();
+  renderWorld();
+}, 300);
 
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
