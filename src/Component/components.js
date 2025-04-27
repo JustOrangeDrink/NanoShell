@@ -35,4 +35,11 @@ class Render {
   }
 }
 
-export { Position, Vector, Render };
+class Collision {
+  constructor() {
+    this.type = "Collision";
+    this.collision = true;
+  }
+}
+
+export { Position, Vector, Render, Collision };

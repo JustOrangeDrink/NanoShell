@@ -1,7 +1,8 @@
 let entityId = 0;
 class Entity {
-  constructor() {
+  constructor(name) {
     this.id = entityId++;
+    this.name = name;
     this.components = {};
     entities.push(this);
     // this.x = x;
