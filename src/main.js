@@ -1,107 +1,30 @@
-const html = document.querySelector("html");
-const body = document.querySelector("body");
+import { drawTile, handleMovement, renderWorld } from "./System/engine.js";
+import { addEventHandler } from "./System/eventHandler.js";
+import {
+  TILE_SIZE,
+  canvas,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  spritesheet,
+} from "./globals.js";
+import { Entity, entities } from "./Entity/entities.js";
+import { Position, Vector, Render } from "./Component/components.js";
 
-const SCREEN_WIDTH = html.clientWidth;
-const SCREEN_HEIGHT = html.clientHeight;
-
-const tileSize = 24;
-
-const canvas = document.querySelector("canvas");
 //Recalculating size so it in tiles boundaries
-canvas.width = Math.floor(SCREEN_WIDTH / tileSize) * tileSize;
-canvas.height = Math.floor(SCREEN_HEIGHT / tileSize) * tileSize;
+canvas.width = Math.floor(SCREEN_WIDTH / TILE_SIZE) * TILE_SIZE;
+canvas.height = Math.floor(SCREEN_HEIGHT / TILE_SIZE) * TILE_SIZE;
 
-const ctx = canvas.getContext("2d");
+spritesheet.src = "../assets/spritesheet.png";
+spritesheet.onload = () => renderWorld(entities);
 
-const spritesheet = document.createElement("img");
-spritesheet.src = "assets/spritesheet.png";
-spritesheet.onload = renderWorld;
+const zombie = new Entity();
+zombie.addComponent(new Position(3, 3));
+zombie.addComponent(new Vector(0, 0));
+zombie.addComponent(new Render(3, 5, "green"));
+console.log(zombie);
 
-function drawTile(x, y, [char_x, char_y], color) {
-  const offscreenCanvas = new OffscreenCanvas(tileSize, tileSize);
-  const offscreenCtx = offscreenCanvas.getContext("2d");
-
-  offscreenCtx.fillStyle = color;
-  offscreenCtx.fillRect(0, 0, tileSize, tileSize);
-
-  offscreenCtx.globalCompositeOperation = "destination-in";
-
-  offscreenCtx.drawImage(
-    spritesheet,
-    char_x * tileSize,
-    char_y * tileSize,
-    tileSize,
-    tileSize,
-    0,
-    0,
-    tileSize,
-    tileSize
-  );
-
-  ctx.drawImage(offscreenCanvas, x * tileSize, y * tileSize);
-}
-
-const entities = [];
-class Entity {
-  constructor(x, y, char, color, collision) {
-    this.x = x;
-    this.y = y;
-    this.dx = 0;
-    this.dy = 0;
-    this.char = char;
-    this.color = color;
-    this.collision = collision;
-
-    entities.push(this);
-  }
-}
-
-function renderWorld() {
-  for (let i = 0; i < entities.length; i++) {
-    let entity = entities[i];
-    drawTile(entity.x, entity.y, entity.char, entity.color);
-  }
-}
-
-function clearWorld() {
-  ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-}
-
-const zombie = new Entity(11, 15, [10, 5], "green", true);
-const hero = new Entity(13, 10, [0, 4], "white", true);
-
-const test = new Entity(13, 15, [0, 0], "purple", true);
-setInterval(() => {
-  if (test.char[0] < 15) test.char[0]++;
-  else if (test.char[1] < 15) {
-    test.char[1]++;
-    test.char[0] = 0;
-  } else {
-    test.char[0] = 0;
-    test.char[1] = 0;
-  }
-  clearWorld();
-  renderWorld();
-}, 300);
-
-document.addEventListener("keydown", (event) => {
-  switch (event.key) {
-    case "a":
-      hero.x--;
-      break;
-    case "d":
-      hero.x++;
-      break;
-    case "w":
-      hero.y--;
-      break;
-    case "s":
-      hero.y++;
-      break;
-
-    default:
-      break;
-  }
-  clearWorld();
-  renderWorld();
+addEventHandler(document, zombie);
+document.addEventListener("moved", () => {
+  handleMovement(entities);
+  renderWorld(entities);
 });
