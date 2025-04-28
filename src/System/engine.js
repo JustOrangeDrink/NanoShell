@@ -4,6 +4,9 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   spritesheet,
+  viewPort,
+  CANVAS_TILED_WIDTH,
+  CANVAS_TILED_HEIGHT,
 } from "../globals.js";
 import { entities } from "../Entity/entities.js";
 
@@ -43,18 +46,24 @@ function drawTile(x, y, charX, charY, color) {
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  const cameraX = viewPort.x;
+  const cameraY = viewPort.y;
+  const maxCameraX = viewPort.x + viewPort.w;
+  const maxCameraY = viewPort.y + viewPort.h;
   for (let i = 0; i < entities.length; i++) {
     const entity = entities[i];
     const position = entity.getComponent("Position");
     const render = entity.getComponent("Render");
-    if (position && render) {
-      drawTile(
-        position.x,
-        position.y,
-        render.charX,
-        render.charY,
-        render.color
-      );
+    if (!position || !render) continue;
+    if (position.x > cameraX && position.x < maxCameraX) {
+      if (position.y > cameraY && position.y < maxCameraY)
+        drawTile(
+          position.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2,
+          position.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2,
+          render.charX,
+          render.charY,
+          render.color
+        );
     }
   }
 }
@@ -79,7 +88,6 @@ function handleMovement() {
         continue;
       }
     }
-    entitiesOnTile.forEach((el) => console.log("Below:", el.name));
     position.x += vector.dx;
     position.y += vector.dy;
     vector.dx = 0;
