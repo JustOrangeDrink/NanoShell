@@ -1,4 +1,9 @@
-import { handleMovement, renderWorld, handleInput } from "./System/engine.js";
+import {
+  handleMovement,
+  renderWorld,
+  handleInput,
+  getEntitiesUnder,
+} from "./System/engine.js";
 import {
   TILE_SIZE,
   canvas,
@@ -42,24 +47,34 @@ letter.addComponent(new Position(23, 12));
 letter.addComponent(new Render(5, 15, "orange"));
 letter.addComponent(new Vector(0, 0));
 
-const hero = new Entity("Hero");
-hero.addComponent(new Position(26, 10));
-hero.addComponent(new Vector(0, 0));
-hero.addComponent(new Render(0, 4, "white"));
-hero.addComponent(new Collision(true));
+const player = new Entity("Player");
+player.addComponent(new Position(26, 10));
+player.addComponent(new Vector(0, 0));
+player.addComponent(new Render(0, 4, "white"));
+player.addComponent(new Collision(true));
 
 viewPort.scrollTo(
-  hero.getComponent("Position").x,
-  hero.getComponent("Position").y
+  player.getComponent("Position").x,
+  player.getComponent("Position").y
 );
 
-document.addEventListener("keydown", (event) => handleInput(event, hero));
+document.addEventListener("keydown", (event) => handleInput(event, player));
 
 document.addEventListener("moved", () => {
   handleMovement();
   viewPort.scrollTo(
-    hero.getComponent("Position").x,
-    (viewPort.y = hero.getComponent("Position").y)
+    player.getComponent("Position").x,
+    (viewPort.y = player.getComponent("Position").y)
   );
+  const entitiesUnder = getEntitiesUnder(player, ["Floor"]);
+  let entitiesUnderNames = " ";
+  if (entitiesUnder)
+    entitiesUnder.forEach((el) => (entitiesUnderNames += "\n" + el.name));
+  console.log("Under:", entitiesUnderNames);
+  entitiesUnderNames = "";
+
   renderWorld();
 });
+
+setInterval(() => zombie.getComponent("Vector").dx++, 1000);
+setInterval(() => letter.getComponent("Vector").dx++, 1000);

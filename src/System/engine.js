@@ -73,25 +73,38 @@ function handleMovement() {
     const entity = entities[i];
     const position = entity.getComponent("Position");
     const vector = entity.getComponent("Vector");
-    const collisionComponent = entity.getComponent("Collision");
     if (!position || !vector) continue;
     if (vector.dx == 0 && vector.dy == 0) continue;
 
-    const targetX = position.x + vector.dx;
-    const targetY = position.y + vector.dy;
+    handleCollision();
 
-    const entitiesOnTile = getEntitiesOnTile(targetX, targetY);
-    if (entitiesOnTile.length > 0) {
-      if (isBlockedTile(entitiesOnTile, collisionComponent)) {
-        vector.dx = 0;
-        vector.dy = 0;
-        continue;
-      }
-    }
     position.x += vector.dx;
     position.y += vector.dy;
     vector.dx = 0;
     vector.dy = 0;
+  }
+}
+
+function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
+  const position = targetEntity.getComponent("Position");
+  if (!position) return;
+  const entities = getEntitiesOnTile(position.x, position.y);
+
+  if (!ignoredEntitiesNames) {
+    return entities.filter((el) => el.name !== targetEntity.name);
+  }
+  return entities.filter(
+    (el) =>
+      el.name !== targetEntity.name && !ignoredEntitiesNames.includes(el.name)
+  );
+}
+
+function getEntity(name, id) {
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i];
+    if (entity.name == name || entity.id == id) {
+      return entity;
+    }
   }
 }
 
@@ -107,16 +120,37 @@ function getEntitiesOnTile(targetX, targetY) {
   return entitiesOnTile;
 }
 
-function isBlockedTile(tiles, callerCollision) {
-  for (let i = 0; i < tiles.length; i++) {
-    const tile = tiles[i];
-    const collisionComponent = tile.getComponent("Collision");
-    if (collisionComponent && callerCollision) {
-      console.log("Collision with ", tile);
-      return true;
+function getBlockingEntity(entitiesOnTile) {
+  for (let i = 0; i < entitiesOnTile.length; i++) {
+    const entityOnTile = entitiesOnTile[i];
+    const collisionComponent = entityOnTile.getComponent("Collision");
+    if (collisionComponent) {
+      return entitiesOnTile[i];
     }
   }
   return false;
+}
+
+function handleCollision() {
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i];
+    const position = entity.getComponent("Position");
+    const vector = entity.getComponent("Vector");
+    const collision = entity.getComponent("Collision");
+    if (!position || !vector || !collision) continue;
+    if (vector.dx == 0 && vector.dy == 0) continue;
+    const targetEntities = getEntitiesOnTile(
+      position.x + vector.dx,
+      position.y + vector.dy
+    );
+    const blockingEntity = getBlockingEntity(targetEntities);
+    if (blockingEntity) {
+      vector.dx = 0;
+      vector.dy = 0;
+      console.log(`Collision with ${blockingEntity.name}!`);
+      // other stuff like fighting system etc...
+    }
+  }
 }
 
 function handleInput(event, player) {
@@ -140,4 +174,4 @@ function handleInput(event, player) {
   }
 }
 
-export { drawTile, renderWorld, handleMovement, handleInput };
+export { drawTile, renderWorld, handleMovement, handleInput, getEntitiesUnder };
