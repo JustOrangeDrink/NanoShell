@@ -9,7 +9,7 @@ function fillMap() {
       const wall = new Entity("Wall", 3);
       wall.addComponent(new Position(x, y));
       wall.addComponent(new Render(11, 13, "gray"));
-      wall.addComponent(new Collision());
+      wall.addComponent(new Collision(true));
     }
   }
 }

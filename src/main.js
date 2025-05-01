@@ -30,19 +30,18 @@ zombie.addComponent(new Collision(true));
 const gold = new Entity("Gold", 1);
 gold.addComponent(new Position(25, 12));
 gold.addComponent(new Render(7, 4, "gold"));
+gold.addComponent(new Size("tiny"));
 
 const letter = new Entity("Letter", 1);
 letter.addComponent(new Position(23, 12));
 letter.addComponent(new Render(5, 15, "orange"));
-letter.addComponent(new Vector(0, 0));
-letter.addComponent(new Collision());
-letter.addComponent(new Size("small"));
+letter.addComponent(new Size("tiny"));
 
 const player = new Entity("Player", 3);
 player.addComponent(new Position(26, 10));
 player.addComponent(new Vector(0, 0));
 player.addComponent(new Render(0, 4, "white"));
-player.addComponent(new Collision(true));
+player.addComponent(new Collision());
 
 viewPort.scrollTo(
   player.getComponent("Position").x,
@@ -60,7 +59,7 @@ document.addEventListener("moved", () => {
     (viewPort.y = player.getComponent("Position").y)
   );
 
-  const entitiesUnder = getEntitiesUnder(player, [""]);
+  const entitiesUnder = getEntitiesUnder(player, ["Floor"]);
 
   let entitiesUnderNames = " ";
   if (entitiesUnder)
@@ -72,4 +71,7 @@ document.addEventListener("moved", () => {
 });
 
 // setInterval(() => zombie.getComponent("Vector").dx++, 1000);
-setInterval(() => letter.getComponent("Vector").dx++, 1000);
+// setInterval(() => letter.getComponent("Vector").dx++, 1000);
+// setInterval(() => gold.getComponent("Vector").dx++, 1000);
+// letter.addComponent(new Vector(0, 0));
+// gold.addComponent(new Vector(0, 0));

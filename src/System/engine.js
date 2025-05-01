@@ -138,8 +138,7 @@ function handleCollision() {
     const position = entity.getComponent("Position");
     const vector = entity.getComponent("Vector");
     const collision = entity.getComponent("Collision");
-    const size = entity.getComponent("Size");
-    if (!position || !vector || !collision) continue;
+    if (!position || !vector) continue;
     if (vector.dx == 0 && vector.dy == 0) continue;
 
     const targetEntities = getEntitiesOnTile(
@@ -148,7 +147,18 @@ function handleCollision() {
     );
 
     const blockingEntity = getBlockingEntity(targetEntities);
-    if (!blockingEntity) return;
+    if (!blockingEntity) continue;
+
+    const size = entity.getComponent("Size");
+    const smallCollision =
+      blockingEntity.getComponent("Collision").smallCollision;
+    // check for collision with small entities like items etc...
+    if (size && size.size == "tiny" && smallCollision) {
+      vector.dx = 0;
+      vector.dy = 0;
+      console.log(`Collision with ${blockingEntity.name}!`);
+    }
+    if (!collision) continue;
 
     vector.dx = 0;
     vector.dy = 0;

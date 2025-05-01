@@ -36,9 +36,10 @@ class Render {
 }
 
 class Collision {
-  constructor() {
+  constructor(smallCollision = false) {
     this.type = "Collision";
     this.collision = true;
+    this.smallCollision = smallCollision;
   }
 }
 
