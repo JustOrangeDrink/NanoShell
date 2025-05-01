@@ -76,7 +76,7 @@ function handleMovement() {
     if (!position || !vector) continue;
     if (vector.dx == 0 && vector.dy == 0) continue;
 
-    handleCollision();
+    handleCollision(entity);
 
     position.x += vector.dx;
     position.y += vector.dy;
@@ -132,39 +132,36 @@ function getBlockingEntity(entitiesOnTile) {
   return false;
 }
 
-function handleCollision() {
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
-    const position = entity.getComponent("Position");
-    const vector = entity.getComponent("Vector");
-    const collision = entity.getComponent("Collision");
-    if (!position || !vector) continue;
-    if (vector.dx == 0 && vector.dy == 0) continue;
+function handleCollision(entity) {
+  const position = entity.getComponent("Position");
+  const vector = entity.getComponent("Vector");
+  const collision = entity.getComponent("Collision");
+  if (vector.dx == 0 && vector.dy == 0) return;
 
-    const targetEntities = getEntitiesOnTile(
-      position.x + vector.dx,
-      position.y + vector.dy
-    );
+  const targetEntities = getEntitiesOnTile(
+    position.x + vector.dx,
+    position.y + vector.dy
+  );
 
-    const blockingEntity = getBlockingEntity(targetEntities);
-    if (!blockingEntity) continue;
+  const blockingEntity = getBlockingEntity(targetEntities);
+  if (!blockingEntity) return;
 
-    const size = entity.getComponent("Size");
-    const smallCollision =
-      blockingEntity.getComponent("Collision").smallCollision;
-    // check for collision with small entities like items etc...
-    if (size && size.size == "tiny" && smallCollision) {
-      vector.dx = 0;
-      vector.dy = 0;
-      console.log(`Collision with ${blockingEntity.name}!`);
-    }
-    if (!collision) continue;
-
+  // check for collision with small entities like items etc...
+  const size = entity.getComponent("Size");
+  const smallCollision =
+    blockingEntity.getComponent("Collision").smallCollision;
+  if (size && size.size == "tiny" && smallCollision) {
     vector.dx = 0;
     vector.dy = 0;
     console.log(`Collision with ${blockingEntity.name}!`);
-    // other stuff like fighting system etc...
   }
+
+  if (!collision) return;
+
+  vector.dx = 0;
+  vector.dy = 0;
+  console.log(`Collision with ${blockingEntity.name}!`);
+  // other stuff like fighting system etc...
 }
 
 function handleInput(event, player) {

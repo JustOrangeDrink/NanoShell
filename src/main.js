@@ -16,10 +16,9 @@ import {
 } from "./Component/components.js";
 import { carveRoom, carveTile, fillMap } from "./System/mapgen.js";
 
-fillMap();
-
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => renderWorld();
+fillMap();
 
 const zombie = new Entity("Zombie", 2);
 zombie.addComponent(new Position(23, 8));
