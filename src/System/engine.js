@@ -99,11 +99,14 @@ function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
   );
 }
 
-function getEntity(name, id) {
+function getEntity(name, x, y) {
   for (let i = 0; i < entities.length; i++) {
     const entity = entities[i];
-    if (entity.name == name || entity.id == id) {
-      return entity;
+    if (x && y && name) {
+      const position = entity.getComponent("Position");
+      if (position.x == x && position.y == y && entity.name == name) {
+        return i;
+      }
     }
   }
 }
@@ -124,9 +127,7 @@ function getBlockingEntity(entitiesOnTile) {
   for (let i = 0; i < entitiesOnTile.length; i++) {
     const entityOnTile = entitiesOnTile[i];
     const collisionComponent = entityOnTile.getComponent("Collision");
-    if (collisionComponent) {
-      return entitiesOnTile[i];
-    }
+    if (collisionComponent) return entitiesOnTile[i];
   }
   return false;
 }
@@ -137,19 +138,22 @@ function handleCollision() {
     const position = entity.getComponent("Position");
     const vector = entity.getComponent("Vector");
     const collision = entity.getComponent("Collision");
+    const size = entity.getComponent("Size");
     if (!position || !vector || !collision) continue;
     if (vector.dx == 0 && vector.dy == 0) continue;
+
     const targetEntities = getEntitiesOnTile(
       position.x + vector.dx,
       position.y + vector.dy
     );
+
     const blockingEntity = getBlockingEntity(targetEntities);
-    if (blockingEntity) {
-      vector.dx = 0;
-      vector.dy = 0;
-      console.log(`Collision with ${blockingEntity.name}!`);
-      // other stuff like fighting system etc...
-    }
+    if (!blockingEntity) return;
+
+    vector.dx = 0;
+    vector.dy = 0;
+    console.log(`Collision with ${blockingEntity.name}!`);
+    // other stuff like fighting system etc...
   }
 }
 
@@ -174,4 +178,11 @@ function handleInput(event, player) {
   }
 }
 
-export { drawTile, renderWorld, handleMovement, handleInput, getEntitiesUnder };
+export {
+  drawTile,
+  renderWorld,
+  handleMovement,
+  handleInput,
+  getEntitiesUnder,
+  getEntity,
+};

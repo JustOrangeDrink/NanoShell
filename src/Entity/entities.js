@@ -1,16 +1,10 @@
 let entityId = 0;
-class Entity {
-  constructor(name) {
+class EntitySrc {
+  constructor(name, z) {
     this.id = entityId++;
     this.name = name;
+    this.z = z;
     this.components = {};
-    entities.push(this);
-    // this.x = x;
-    // this.y = y;
-    // this.dx = 0;
-    // this.dy = 0;
-    // this.char = char;
-    // this.color = color;
   }
   addComponent(component) {
     this.components[component.type] = component;
@@ -19,10 +13,16 @@ class Entity {
     return this.components[type];
   }
 }
-const entities = [];
 
-// const zombie = new Entity(11, 15, [10, 5], "green", true);
-// const hero = new Entity(13, 10, [0, 4], "white", true);
-// const test = new Entity(13, 15, [0, 0], "purple", true);
+const Entity = new Proxy(EntitySrc, {
+  construct: (target, args) => {
+    const entity = new target(...args);
+    entities.push(entity);
+    entities.sort((a, b) => a.z - b.z);
+    return entity;
+  },
+});
+
+const entities = [];
 
 export { Entity, entities };
