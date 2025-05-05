@@ -7,8 +7,9 @@ import {
   viewPort,
   CANVAS_TILED_WIDTH,
   CANVAS_TILED_HEIGHT,
+  tilemap,
 } from "../globals.js";
-import { entities } from "../Entity/entities.js";
+import { vectorEntities } from "../Entity/entities.js";
 
 function drawTile(x, y, charX, charY, color) {
   const bgCanvas = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
@@ -46,49 +47,52 @@ function drawTile(x, y, charX, charY, color) {
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-  const cameraX = viewPort.x;
-  const cameraY = viewPort.y;
-  const maxCameraX = viewPort.x + viewPort.w;
-  const maxCameraY = viewPort.y + viewPort.h;
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
-    const position = entity.getComponent("Position");
-    const render = entity.getComponent("Render");
-    if (!position || !render) continue;
-    if (position.x > cameraX && position.x < maxCameraX) {
-      if (position.y > cameraY && position.y < maxCameraY)
-        drawTile(
-          position.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2,
-          position.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2,
-          render.charX,
-          render.charY,
-          render.color
-        );
+  let cameraX = viewPort.x;
+  let cameraY = viewPort.y;
+  if (cameraX < 0) cameraX = 0;
+  if (cameraY < 0) cameraY = 0;
+  let maxCameraX = viewPort.x + viewPort.w;
+  let maxCameraY = viewPort.y + viewPort.h;
+  if (maxCameraX > tilemap[0].length - 1) maxCameraX = tilemap[0].length;
+  if (maxCameraY > tilemap.length - 1) maxCameraY = tilemap.length;
+  for (let y = cameraY; y < maxCameraY; y++) {
+    for (let x = cameraX; x < maxCameraX; x++) {
+      const currentTile = tilemap[y][x];
+      const entity = currentTile[currentTile.length - 1];
+      const render = entity.getComponent("Render");
+      if (!render) continue;
+      drawTile(
+        entity.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2,
+        entity.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2,
+        render.charX,
+        render.charY,
+        render.color
+      );
     }
   }
 }
 
 function handleMovement() {
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
-    const position = entity.getComponent("Position");
+  for (let i = 0; i < vectorEntities.length; i++) {
+    const entity = vectorEntities[i];
     const vector = entity.getComponent("Vector");
-    if (!position || !vector) continue;
     if (vector.dx == 0 && vector.dy == 0) continue;
 
     handleCollision(entity);
+    tilemap[entity.y][entity.x].splice(-1, 1);
+    tilemap[entity.y + vector.dy][entity.x + vector.dx].push(entity);
 
-    position.x += vector.dx;
-    position.y += vector.dy;
+    entity.x += vector.dx;
+    entity.y += vector.dy;
     vector.dx = 0;
     vector.dy = 0;
   }
 }
 
 function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
-  const position = targetEntity.getComponent("Position");
-  if (!position) return;
-  const entities = getEntitiesOnTile(position.x, position.y);
+  if (targetEntity.y > tilemap.length - 1 || targetEntity.y < 0) return;
+  if (targetEntity.x > tilemap[0].length - 1 || targetEntity.x < 0) return;
+  const entities = tilemap[targetEntity.y][targetEntity.x];
 
   if (!ignoredEntitiesNames) {
     return entities.filter((el) => el.name !== targetEntity.name);
@@ -97,30 +101,6 @@ function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
     (el) =>
       el.name !== targetEntity.name && !ignoredEntitiesNames.includes(el.name)
   );
-}
-
-function getEntity(name, x, y) {
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
-    if (x && y && name) {
-      const position = entity.getComponent("Position");
-      if (position.x == x && position.y == y && entity.name == name) {
-        return i;
-      }
-    }
-  }
-}
-
-function getEntitiesOnTile(targetX, targetY) {
-  const entitiesOnTile = [];
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
-    const entityPosition = entity.getComponent("Position");
-    if (targetX == entityPosition.x && targetY == entityPosition.y) {
-      entitiesOnTile.push(entity);
-    }
-  }
-  return entitiesOnTile;
 }
 
 function getBlockingEntity(entitiesOnTile) {
@@ -133,15 +113,11 @@ function getBlockingEntity(entitiesOnTile) {
 }
 
 function handleCollision(entity) {
-  const position = entity.getComponent("Position");
   const vector = entity.getComponent("Vector");
   const collision = entity.getComponent("Collision");
   if (vector.dx == 0 && vector.dy == 0) return;
 
-  const targetEntities = getEntitiesOnTile(
-    position.x + vector.dx,
-    position.y + vector.dy
-  );
+  const targetEntities = tilemap[entity.y + vector.dy][entity.x + vector.dx];
 
   const blockingEntity = getBlockingEntity(targetEntities);
   if (!blockingEntity) return;
@@ -185,11 +161,4 @@ function handleInput(event, player) {
   }
 }
 
-export {
-  drawTile,
-  renderWorld,
-  handleMovement,
-  handleInput,
-  getEntitiesUnder,
-  getEntity,
-};
+export { drawTile, renderWorld, handleMovement, handleInput, getEntitiesUnder };

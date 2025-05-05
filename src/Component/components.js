@@ -1,11 +1,3 @@
-class Position {
-  constructor(x = 0, y = 0) {
-    this.type = "Position";
-    this.x = x;
-    this.y = y;
-  }
-}
-
 class Vector {
   constructor(dx = 0, dy = 0) {
     return new Proxy(
@@ -50,4 +42,4 @@ class Size {
   }
 }
 
-export { Position, Vector, Render, Collision, Size };
+export { Vector, Render, Collision, Size };

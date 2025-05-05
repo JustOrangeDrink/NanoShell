@@ -16,6 +16,31 @@ canvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
 const spritesheet = document.createElement("img");
 
+class Tile {
+  constructor() {
+    return new Proxy([], {
+      set: (targ, prop, val) => {
+        if (!val) return;
+        targ.sort((a, b) => a.z - b.z);
+        return (targ[prop] = val);
+      },
+      get: (targ, prop) => {
+        if (prop == "splice") {
+          return (...args) => targ[prop].apply(targ, args);
+        }
+        return targ[prop];
+      },
+    });
+  }
+}
+const tilemap = [];
+for (let y = 0; y < CANVAS_TILED_HEIGHT; y++) {
+  tilemap.push([]);
+  for (let x = 0; x < CANVAS_TILED_WIDTH; x++) {
+    tilemap[y].push(new Tile());
+  }
+}
+
 const viewPort = {
   x: 0,
   y: 0,
@@ -37,4 +62,5 @@ export {
   CANVAS_TILED_HEIGHT,
   spritesheet,
   viewPort,
+  tilemap,
 };

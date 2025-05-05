@@ -1,13 +1,11 @@
-import { CANVAS_TILED_HEIGHT, CANVAS_TILED_WIDTH } from "../globals.js";
-import { getEntity } from "./engine.js";
-import { entities, Entity } from "../Entity/entities.js";
-import { Collision, Position, Render } from "../Component/components.js";
+import { tilemap } from "../globals.js";
+import { Entity } from "../Entity/entities.js";
+import { Collision, Render } from "../Component/components.js";
 
 function fillMap() {
-  for (let x = 0; x < CANVAS_TILED_WIDTH; x++) {
-    for (let y = 0; y < CANVAS_TILED_HEIGHT; y++) {
-      const wall = new Entity("Wall", 3);
-      wall.addComponent(new Position(x, y));
+  for (let y = 0; y < tilemap.length; y++) {
+    for (let x = 0; x < tilemap[y].length; x++) {
+      const wall = new Entity("Wall", x, y, 3);
       wall.addComponent(new Render(11, 13, "gray"));
       wall.addComponent(new Collision(true));
     }
@@ -15,12 +13,12 @@ function fillMap() {
 }
 
 function carveTile(x, y) {
-  const wallIndex = getEntity("Wall", x, y);
-  entities.splice(wallIndex, 1);
+  tilemap[y][x].forEach((el, i) => {
+    if (el.name == "Wall") tilemap[y][x].splice(i, 1);
+  });
 
-  const floor = new Entity("Floor", 0);
-  floor.addComponent(new Position(x, y));
-  floor.addComponent(new Render(0, 11, "Gray"));
+  const floor = new Entity("Floor", x, y, 0);
+  floor.addComponent(new Render(10, 15, "white"));
 }
 
 function carveRoom(x, y, w, h) {
