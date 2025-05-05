@@ -78,6 +78,20 @@ function handleMovement() {
     const vector = entity.getComponent("Vector");
     if (vector.dx == 0 && vector.dy == 0) continue;
 
+    const targetCoordX = entity.x + vector.dx;
+    const targetCoordY = entity.y + vector.dy;
+
+    if (
+      targetCoordX > tilemap[0].length - 1 ||
+      targetCoordY > tilemap.length - 1 ||
+      targetCoordX < 0 ||
+      targetCoordY < 0
+    ) {
+      vector.dx = 0;
+      vector.dy = 0;
+      return;
+    }
+
     handleCollision(entity);
     tilemap[entity.y][entity.x].splice(-1, 1);
     tilemap[entity.y + vector.dy][entity.x + vector.dx].push(entity);
