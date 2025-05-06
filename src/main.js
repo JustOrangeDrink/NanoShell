@@ -7,11 +7,21 @@ import {
 import { spritesheet, viewPort } from "./globals.js";
 import { Entity } from "./Entity/entities.js";
 import { Vector, Render, Collision, Size } from "./Component/components.js";
-import { carveRoom, fillMap } from "./System/mapgen.js";
+import {
+  carveRooms,
+  fillMap,
+  generateMap,
+  hasRoomInRect,
+  rooms,
+} from "./System/mapgen.js";
+import { randomInt } from "../utils.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => renderWorld();
+
 fillMap();
+generateMap();
+carveRooms();
 
 const zombie = new Entity("Zombie", 23, 8, 2);
 zombie.addComponent(new Vector(0, 0));
@@ -26,12 +36,16 @@ const letter = new Entity("Letter", 23, 12, 1);
 letter.addComponent(new Render(5, 15, "orange"));
 letter.addComponent(new Size("tiny"));
 
-const player = new Entity("Player", 26, 10, 3);
+const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
+const player = new Entity(
+  "Player",
+  spawnRoom.getCenter().x,
+  spawnRoom.getCenter().y,
+  3
+);
 player.addComponent(new Vector(0, 0));
 // player.addComponent(new Collision());
 player.addComponent(new Render(0, 4, "white"));
-
-carveRoom(15, 1, 15, 12);
 
 viewPort.scrollTo(player.x, player.y);
 
