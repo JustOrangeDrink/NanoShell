@@ -4,7 +4,7 @@ import {
   handleInput,
   getEntitiesUnder,
 } from "./System/engine.js";
-import { spritesheet, tilemap, viewPort } from "./globals.js";
+import { spritesheet, viewPort } from "./globals.js";
 import { Entity } from "./Entity/entities.js";
 import { Vector, Render, Collision, Size } from "./Component/components.js";
 import { carveRoom, fillMap } from "./System/mapgen.js";
@@ -28,7 +28,7 @@ letter.addComponent(new Size("tiny"));
 
 const player = new Entity("Player", 26, 10, 3);
 player.addComponent(new Vector(0, 0));
-player.addComponent(new Collision());
+// player.addComponent(new Collision());
 player.addComponent(new Render(0, 4, "white"));
 
 carveRoom(15, 1, 15, 12);
@@ -42,7 +42,7 @@ document.addEventListener("moved", () => {
   viewPort.scrollTo(player.x, (viewPort.y = player.y));
   renderWorld();
 
-  const entitiesUnder = getEntitiesUnder(player, ["Floor"]);
+  const entitiesUnder = getEntitiesUnder(player, []);
 
   let entitiesUnderNames = " ";
   if (entitiesUnder)
@@ -50,6 +50,7 @@ document.addEventListener("moved", () => {
   console.log("Under:", entitiesUnderNames);
   entitiesUnderNames = "";
 });
+
 // setInterval(() => zombie.getComponent("Vector").dx++, 1000);
 // setInterval(() => letter.getComponent("Vector").dx++, 1000);
 // setInterval(() => gold.getComponent("Vector").dx++, 1000);

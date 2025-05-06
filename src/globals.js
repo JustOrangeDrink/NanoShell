@@ -33,10 +33,11 @@ class Tile {
     });
   }
 }
+
 const tilemap = [];
-for (let y = 0; y < CANVAS_TILED_HEIGHT; y++) {
+for (let y = 0; y < CANVAS_TILED_HEIGHT * 2; y++) {
   tilemap.push([]);
-  for (let x = 0; x < CANVAS_TILED_WIDTH; x++) {
+  for (let x = 0; x < CANVAS_TILED_WIDTH * 3; x++) {
     tilemap[y].push(new Tile());
   }
 }

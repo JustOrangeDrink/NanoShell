@@ -58,6 +58,9 @@ function renderWorld() {
   for (let y = cameraY; y < maxCameraY; y++) {
     for (let x = cameraX; x < maxCameraX; x++) {
       const currentTile = tilemap[y][x];
+      if (currentTile.length == 0) {
+        continue;
+      }
       const entity = currentTile[currentTile.length - 1];
       const render = entity.getComponent("Render");
       if (!render) continue;

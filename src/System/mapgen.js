@@ -1,6 +1,7 @@
 import { tilemap } from "../globals.js";
 import { Entity } from "../Entity/entities.js";
 import { Collision, Render } from "../Component/components.js";
+import { randomInt } from "../../utils.js";
 
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
@@ -16,9 +17,6 @@ function carveTile(x, y) {
   tilemap[y][x].forEach((el, i) => {
     if (el.name == "Wall") tilemap[y][x].splice(i, 1);
   });
-
-  const floor = new Entity("Floor", x, y, 0);
-  floor.addComponent(new Render(10, 15, "white"));
 }
 
 function carveRoom(x, y, w, h) {
