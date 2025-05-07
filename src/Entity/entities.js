@@ -1,15 +1,30 @@
+import { colorize } from "../../utils.js";
 import { tilemap } from "../globals.js";
 
 let entityId = 0;
-class EntitySrc {
-  constructor(name, x, y, z) {
+class Entity {
+  constructor(name, x, y, z, charX, charY, color) {
     this.id = entityId++;
     this.name = name;
+
     this.x = x;
     this.y = y;
     this.z = z;
+
+    this.charX = charX;
+    this.charY = charY;
+    this.color = color;
     this.components = {};
+
+    if (!(this.name in uniqueAssets))
+      uniqueAssets[this.name] = colorize(charX, charY, color);
+
+    tilemap[y][x].push(this);
+    if (this.name !== "Wall" && this.name !== "Floor") {
+      tilemap[y][x].sort((a, b) => a.z - b.z);
+    }
   }
+
   addComponent(component) {
     if (component.type == "Vector") vectorEntities.push(this);
     this.components[component.type] = component;
@@ -18,15 +33,9 @@ class EntitySrc {
     return this.components[type];
   }
 }
+
+const uniqueAssets = {};
+
 const vectorEntities = [];
 
-const Entity = new Proxy(EntitySrc, {
-  construct: (target, args) => {
-    const entity = new target(...args);
-    tilemap[args[2]][args[1]].push(entity);
-    tilemap[args[2]][args[1]].sort((a, b) => a.z - b.z);
-    return entity;
-  },
-});
-
-export { Entity, vectorEntities };
+export { Entity, vectorEntities, uniqueAssets };

@@ -45,8 +45,8 @@ for (let y = 0; y < CANVAS_TILED_HEIGHT * 2; y++) {
 const viewPort = {
   x: 0,
   y: 0,
-  w: 15,
-  h: 15,
+  w: 60,
+  h: 60,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);

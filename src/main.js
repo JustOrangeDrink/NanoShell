@@ -16,38 +16,41 @@ import {
 } from "./System/mapgen.js";
 import { randomInt } from "../utils.js";
 
+function initEntities() {
+  const zombie = new Entity("Zombie", 23, 8, 2, 10, 5, [0, 1, 0]);
+  zombie.addComponent(new Vector(0, 0));
+  zombie.addComponent(new Collision());
+
+  const gold = new Entity("Gold", 25, 12, 1, 7, 4, [0.6, 0.5, 0.5]);
+  gold.addComponent(new Size("tiny"));
+
+  const letter = new Entity("Letter", 23, 12, 1, 5, 15, [1, 0.6, 0.6]);
+  letter.addComponent(new Size("tiny"));
+
+  const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
+  player = new Entity(
+    "Player",
+    spawnRoom.getCenter().x,
+    spawnRoom.getCenter().y,
+    3,
+    4,
+    0,
+    [1, 1, 1]
+  );
+  player.addComponent(new Vector(0, 0));
+  player.addComponent(new Collision());
+  viewPort.scrollTo(player.x, player.y);
+}
+let player;
+
 spritesheet.src = "../assets/spritesheet.png";
-spritesheet.onload = () => renderWorld();
-
-fillMap();
-generateMap();
-carveRooms();
-
-const zombie = new Entity("Zombie", 23, 8, 2);
-zombie.addComponent(new Vector(0, 0));
-zombie.addComponent(new Render(10, 5, "green"));
-zombie.addComponent(new Collision());
-
-const gold = new Entity("Gold", 25, 12, 1);
-gold.addComponent(new Render(7, 4, "gold"));
-gold.addComponent(new Size("tiny"));
-
-const letter = new Entity("Letter", 23, 12, 1);
-letter.addComponent(new Render(5, 15, "orange"));
-letter.addComponent(new Size("tiny"));
-
-const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
-const player = new Entity(
-  "Player",
-  spawnRoom.getCenter().x,
-  spawnRoom.getCenter().y,
-  3
-);
-player.addComponent(new Vector(0, 0));
-// player.addComponent(new Collision());
-player.addComponent(new Render(0, 4, "white"));
-
-viewPort.scrollTo(player.x, player.y);
+spritesheet.onload = () => {
+  fillMap();
+  generateMap();
+  carveRooms();
+  initEntities();
+  renderWorld();
+};
 
 document.addEventListener("keydown", (event) => handleInput(event, player));
 

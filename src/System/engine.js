@@ -3,47 +3,12 @@ import {
   ctx,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  spritesheet,
   viewPort,
   CANVAS_TILED_WIDTH,
   CANVAS_TILED_HEIGHT,
   tilemap,
 } from "../globals.js";
-import { vectorEntities } from "../Entity/entities.js";
-
-function drawTile(x, y, charX, charY, color) {
-  const bgCanvas = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
-  const bgCtx = bgCanvas.getContext("2d");
-
-  bgCtx.fillStyle = "black";
-  bgCtx.fillRect(0, 0, TILE_SIZE, TILE_SIZE);
-
-  const offscreenCanvas = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
-  const offscreenCtx = offscreenCanvas.getContext("2d");
-
-  offscreenCtx.drawImage(
-    spritesheet,
-    charX * TILE_SIZE,
-    charY * TILE_SIZE,
-    TILE_SIZE,
-    TILE_SIZE,
-    0,
-    0,
-    TILE_SIZE,
-    TILE_SIZE
-  );
-  offscreenCtx.globalCompositeOperation = "source-in";
-
-  offscreenCtx.fillStyle = color;
-  offscreenCtx.fillRect(0, 0, TILE_SIZE, TILE_SIZE);
-
-  // Hides elements that are under this tile
-  offscreenCtx.globalCompositeOperation = "destination-over";
-  offscreenCtx.fillStyle = "black";
-  offscreenCtx.fillRect(0, 0, TILE_SIZE, TILE_SIZE);
-
-  ctx.drawImage(offscreenCanvas, x * TILE_SIZE, y * TILE_SIZE);
-}
+import { uniqueAssets, vectorEntities } from "../Entity/entities.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -61,15 +26,21 @@ function renderWorld() {
       if (currentTile.length == 0) {
         continue;
       }
+
       const entity = currentTile[currentTile.length - 1];
-      const render = entity.getComponent("Render");
-      if (!render) continue;
-      drawTile(
-        entity.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2,
-        entity.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2,
-        render.charX,
-        render.charY,
-        render.color
+
+      ctx.drawImage(
+        uniqueAssets[entity.name],
+        0,
+        0,
+        TILE_SIZE,
+        TILE_SIZE,
+        (entity.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2) *
+          TILE_SIZE,
+        (entity.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2) *
+          TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE
       );
     }
   }
@@ -178,4 +149,4 @@ function handleInput(event, player) {
   }
 }
 
-export { drawTile, renderWorld, handleMovement, handleInput, getEntitiesUnder };
+export { renderWorld, handleMovement, handleInput, getEntitiesUnder };

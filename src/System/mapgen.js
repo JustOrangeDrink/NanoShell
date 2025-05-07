@@ -6,17 +6,21 @@ import { randomInt } from "../../utils.js";
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[y].length; x++) {
-      const wall = new Entity("Wall", x, y, 3);
-      wall.addComponent(new Render(11, 13, "gray"));
+      const wall = new Entity("Wall", x, y, 3, 11, 13, [0.5, 0.5, 0.5]);
       wall.addComponent(new Collision(true));
     }
   }
 }
 
 function carveTile(x, y) {
-  tilemap[y][x].forEach((el, i) => {
-    if (el.name == "Wall") tilemap[y][x].splice(i, 1);
-  });
+  const tile = tilemap[y][x];
+  for (let i = 0; i < tile.length; i++) {
+    const element = tile[i];
+    if (element.name == "Wall") {
+      tilemap[y][x].splice(i, 1);
+      new Entity("Floor", x, y, 1, 7, 0, [0.1, 0.1, 0.1]);
+    }
+  }
 }
 
 function carveRooms() {
@@ -48,7 +52,7 @@ class Room {
 const rooms = [];
 
 function generateMap() {
-  const tries = 30;
+  const tries = 100;
   for (let i = 0; i < tries; i++) {
     const roomW = randomInt(3, 9);
     const roomH = randomInt(3, 9);
@@ -63,28 +67,32 @@ function generateMap() {
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
     const closestRoom = getClosestRoom(room);
+    const coin = randomInt(0, 1);
+    if (coin) {
+      carveCorridorX(
+        room.getCenter().x,
+        closestRoom.getCenter().x,
+        room.getCenter().y
+      );
 
-    carveCorridorX(
-      room.getCenter().x,
-      closestRoom.getCenter().x,
-      room.getCenter().y
-    );
-    carveCorridorX(
-      room.getCenter().x,
-      closestRoom.getCenter().x,
-      closestRoom.getCenter().y
-    );
+      carveCorridorY(
+        closestRoom.getCenter().y,
+        room.getCenter().y,
+        closestRoom.getCenter().x
+      );
+    } else {
+      carveCorridorX(
+        room.getCenter().x,
+        closestRoom.getCenter().x,
+        room.getCenter().y
+      );
 
-    carveCorridorY(
-      closestRoom.getCenter().y,
-      room.getCenter().y,
-      room.getCenter().x
-    );
-    carveCorridorY(
-      room.getCenter().y,
-      closestRoom.getCenter().y,
-      closestRoom.getCenter().x
-    );
+      carveCorridorY(
+        closestRoom.getCenter().y,
+        room.getCenter().y,
+        closestRoom.getCenter().x
+      );
+    }
   }
 }
 
