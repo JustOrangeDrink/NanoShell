@@ -6,7 +6,7 @@ import { randomInt } from "../../utils.js";
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[y].length; x++) {
-      const wall = new Entity("Wall", x, y, 3, 11, 13, [0.5, 0.5, 0.5]);
+      const wall = new Entity("Wall", x, y, 3, 0, 11, [0.1, 0.5, 0.1]);
       wall.addComponent(new Collision(true));
     }
   }
@@ -18,7 +18,7 @@ function carveTile(x, y) {
     const element = tile[i];
     if (element.name == "Wall") {
       tilemap[y][x].splice(i, 1);
-      new Entity("Floor", x, y, 1, 7, 0, [0.1, 0.1, 0.1]);
+      new Entity("Floor", x, y, 1, 7, 0, [0, 0.05, 0]);
     }
   }
 }
@@ -49,13 +49,70 @@ class Room {
     };
   }
 }
+
 const rooms = [];
+const disconnectedRooms = [];
+const connectedRooms = [];
 
 function generateMap() {
-  const tries = 100;
-  for (let i = 0; i < tries; i++) {
-    const roomW = randomInt(3, 9);
-    const roomH = randomInt(3, 9);
+  tryRooms(50);
+
+  disconnectedRooms.push(...rooms);
+
+  const startingRoom = disconnectedRooms.splice(
+    [randomInt(0, disconnectedRooms.length)],
+    1
+  )[0];
+  connectedRooms.push(startingRoom);
+
+  while (disconnectedRooms.length > 0) {
+    const currentConnected = connectedRooms[connectedRooms.length - 1];
+
+    const closestDisconnected = getClosestRoom(
+      currentConnected,
+      connectedRooms
+    );
+
+    const disconnectedRoomIndex =
+      disconnectedRooms.indexOf(closestDisconnected);
+
+    disconnectedRooms.splice(disconnectedRoomIndex, 1);
+    connectedRooms.push(closestDisconnected);
+
+    const coin = randomInt(0, 1);
+
+    if (coin) {
+      carveCorridorX(
+        currentConnected.getCenter().x,
+        closestDisconnected.getCenter().x,
+        currentConnected.getCenter().y
+      );
+
+      carveCorridorY(
+        closestDisconnected.getCenter().y,
+        currentConnected.getCenter().y,
+        closestDisconnected.getCenter().x
+      );
+    } else {
+      carveCorridorX(
+        currentConnected.getCenter().x,
+        closestDisconnected.getCenter().x,
+        currentConnected.getCenter().y
+      );
+
+      carveCorridorY(
+        closestDisconnected.getCenter().y,
+        currentConnected.getCenter().y,
+        closestDisconnected.getCenter().x
+      );
+    }
+  }
+}
+
+function tryRooms(attempts) {
+  for (let i = 0; i < attempts; i++) {
+    const roomW = randomInt(3, 10);
+    const roomH = randomInt(3, 10);
     const roomX = randomInt(1, tilemap[0].length - roomW - 1);
     const roomY = randomInt(1, tilemap.length - roomH - 1);
 
@@ -63,45 +120,15 @@ function generateMap() {
       new Room(roomX, roomY, roomW, roomH);
     else continue;
   }
-
-  for (let i = 0; i < rooms.length; i++) {
-    const room = rooms[i];
-    const closestRoom = getClosestRoom(room);
-    const coin = randomInt(0, 1);
-    if (coin) {
-      carveCorridorX(
-        room.getCenter().x,
-        closestRoom.getCenter().x,
-        room.getCenter().y
-      );
-
-      carveCorridorY(
-        closestRoom.getCenter().y,
-        room.getCenter().y,
-        closestRoom.getCenter().x
-      );
-    } else {
-      carveCorridorX(
-        room.getCenter().x,
-        closestRoom.getCenter().x,
-        room.getCenter().y
-      );
-
-      carveCorridorY(
-        closestRoom.getCenter().y,
-        room.getCenter().y,
-        closestRoom.getCenter().x
-      );
-    }
-  }
 }
 
-function getClosestRoom(targetRoom) {
+function getClosestRoom(targetRoom, ignoredRooms) {
   let minRoom;
   let minDistance = Infinity;
 
   for (const room of rooms) {
     if (room == targetRoom) continue;
+    if (ignoredRooms.includes(room)) continue;
 
     const distance = Math.floor(
       Math.sqrt(

@@ -33,9 +33,9 @@ function initEntities() {
     spawnRoom.getCenter().x,
     spawnRoom.getCenter().y,
     3,
-    4,
+    15,
     0,
-    [1, 1, 1]
+    [0, 1, 0]
   );
   player.addComponent(new Vector(0, 0));
   player.addComponent(new Collision());
