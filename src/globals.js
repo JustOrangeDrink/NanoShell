@@ -53,6 +53,8 @@ const viewPort = {
   },
 };
 
+const rooms = [];
+
 export {
   canvas,
   ctx,
@@ -64,4 +66,5 @@ export {
   spritesheet,
   viewPort,
   tilemap,
+  rooms,
 };

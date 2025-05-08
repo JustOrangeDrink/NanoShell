@@ -1,4 +1,4 @@
-import { tilemap } from "../globals.js";
+import { tilemap, rooms } from "../globals.js";
 import { Entity } from "../Entity/entities.js";
 import { Collision, Render } from "../Component/components.js";
 import { randomInt } from "../../utils.js";
@@ -50,7 +50,6 @@ class Room {
   }
 }
 
-const rooms = [];
 const disconnectedRooms = [];
 const connectedRooms = [];
 
@@ -197,4 +196,4 @@ function carveCorridorY(srcStart, srcEnd, x) {
   }
 }
 
-export { fillMap, carveTile, carveRooms, hasRoomInRect, rooms, generateMap };
+export { fillMap, carveTile, carveRooms, hasRoomInRect, generateMap };

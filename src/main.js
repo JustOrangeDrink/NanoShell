@@ -4,7 +4,7 @@ import {
   handleInput,
   getEntitiesUnder,
 } from "./System/engine.js";
-import { spritesheet, viewPort } from "./globals.js";
+import { spritesheet, viewPort, rooms } from "./globals.js";
 import { Entity } from "./Entity/entities.js";
 import { Vector, Render, Collision, Size } from "./Component/components.js";
 import {
@@ -12,7 +12,6 @@ import {
   fillMap,
   generateMap,
   hasRoomInRect,
-  rooms,
 } from "./System/mapgen.js";
 import { randomInt } from "../utils.js";
 
@@ -49,25 +48,27 @@ spritesheet.onload = () => {
   generateMap();
   carveRooms();
   initEntities();
+  initSystem();
   renderWorld();
 };
 
-document.addEventListener("keydown", (event) => handleInput(event, player));
+function initSystem() {
+  document.addEventListener("keydown", (event) => handleInput(event, player));
 
-document.addEventListener("moved", () => {
-  handleMovement();
-  viewPort.scrollTo(player.x, (viewPort.y = player.y));
-  renderWorld();
+  document.addEventListener("moved", () => {
+    handleMovement();
+    viewPort.scrollTo(player.x, (viewPort.y = player.y));
+    renderWorld();
 
-  const entitiesUnder = getEntitiesUnder(player, []);
+    const entitiesUnder = getEntitiesUnder(player, []);
 
-  let entitiesUnderNames = " ";
-  if (entitiesUnder)
-    entitiesUnder.forEach((el) => (entitiesUnderNames += "\n" + el.name));
-  console.log("Under:", entitiesUnderNames);
-  entitiesUnderNames = "";
-});
-
+    let entitiesUnderNames = " ";
+    if (entitiesUnder)
+      entitiesUnder.forEach((el) => (entitiesUnderNames += "\n" + el.name));
+    console.log("Under:", entitiesUnderNames);
+    entitiesUnderNames = "";
+  });
+}
 // setInterval(() => zombie.getComponent("Vector").dx++, 1000);
 // setInterval(() => letter.getComponent("Vector").dx++, 1000);
 // setInterval(() => gold.getComponent("Vector").dx++, 1000);
