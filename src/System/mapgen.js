@@ -94,16 +94,15 @@ function generateMap() {
         closestDisconnected.getCenter().x
       );
     } else {
-      carveCorridorX(
-        currentConnected.getCenter().x,
-        closestDisconnected.getCenter().x,
-        currentConnected.getCenter().y
-      );
-
       carveCorridorY(
-        closestDisconnected.getCenter().y,
         currentConnected.getCenter().y,
-        closestDisconnected.getCenter().x
+        closestDisconnected.getCenter().y,
+        currentConnected.getCenter().x
+      );
+      carveCorridorX(
+        closestDisconnected.getCenter().x,
+        currentConnected.getCenter().x,
+        closestDisconnected.getCenter().y
       );
     }
   }
@@ -176,7 +175,7 @@ function carveCorridorX(srcStart, srcEnd, y) {
     end = srcEnd;
   }
 
-  for (let i = start; i < end; i++) {
+  for (let i = start; i <= end; i++) {
     carveTile(i, y);
   }
 }
@@ -193,7 +192,7 @@ function carveCorridorY(srcStart, srcEnd, x) {
     end = srcEnd;
   }
 
-  for (let i = start; i < end; i++) {
+  for (let i = start; i <= end; i++) {
     carveTile(x, i);
   }
 }
