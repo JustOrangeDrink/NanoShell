@@ -4,7 +4,16 @@ import {
   handleInput,
   getEntitiesUnder,
 } from "./System/engine.js";
-import { spritesheet, viewPort, rooms } from "./globals.js";
+import {
+  spritesheet,
+  viewPort,
+  rooms,
+  ctx,
+  CANVAS_TILED_WIDTH,
+  CANVAS_TILED_HEIGHT,
+  MAP_TILED_WIDTH,
+  MAP_TILED_HEIGHT,
+} from "./globals.js";
 import { Entity } from "./Entity/entities.js";
 import { Vector, Render, Collision, Size } from "./Component/components.js";
 import {
@@ -12,6 +21,7 @@ import {
   fillMap,
   generateMap,
   hasRoomInRect,
+  sectionGrid,
 } from "./System/mapgen.js";
 import { randomInt } from "../utils.js";
 

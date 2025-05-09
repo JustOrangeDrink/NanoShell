@@ -11,6 +11,9 @@ const TILE_SIZE = 24;
 const CANVAS_TILED_WIDTH = Math.floor(SCREEN_WIDTH / TILE_SIZE);
 const CANVAS_TILED_HEIGHT = Math.floor(SCREEN_HEIGHT / TILE_SIZE);
 
+const MAP_TILED_WIDTH = 100;
+const MAP_TILED_HEIGHT = 100;
+
 canvas.width = CANVAS_TILED_WIDTH * TILE_SIZE;
 canvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
@@ -35,9 +38,9 @@ class Tile {
 }
 
 const tilemap = [];
-for (let y = 0; y < CANVAS_TILED_HEIGHT * 2; y++) {
+for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
   tilemap.push([]);
-  for (let x = 0; x < CANVAS_TILED_WIDTH * 3; x++) {
+  for (let x = 0; x < MAP_TILED_WIDTH; x++) {
     tilemap[y].push(new Tile());
   }
 }
@@ -63,6 +66,8 @@ export {
   TILE_SIZE,
   CANVAS_TILED_WIDTH,
   CANVAS_TILED_HEIGHT,
+  MAP_TILED_WIDTH,
+  MAP_TILED_HEIGHT,
   spritesheet,
   viewPort,
   tilemap,

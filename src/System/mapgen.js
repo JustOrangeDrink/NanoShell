@@ -1,4 +1,11 @@
-import { tilemap, rooms } from "../globals.js";
+import {
+  tilemap,
+  rooms,
+  CANVAS_TILED_WIDTH,
+  CANVAS_TILED_HEIGHT,
+  MAP_TILED_WIDTH,
+  MAP_TILED_HEIGHT,
+} from "../globals.js";
 import { Entity } from "../Entity/entities.js";
 import { Collision, Render } from "../Component/components.js";
 import { randomInt } from "../../utils.js";
@@ -14,11 +21,13 @@ function fillMap() {
 
 function carveTile(x, y) {
   const tile = tilemap[y][x];
+  if (x == 0 || x > MAP_TILED_WIDTH - 1) return;
+  if (y == 0 || y > MAP_TILED_HEIGHT - 1) return;
   for (let i = 0; i < tile.length; i++) {
     const element = tile[i];
     if (element.name == "Wall") {
       tilemap[y][x].splice(i, 1);
-      new Entity("Floor", x, y, 1, 7, 0, [0, 0.05, 0]);
+      new Entity("Floor", x, y, 1, 7, 0, [0, 0.03, 0]);
     }
   }
 }
@@ -34,12 +43,52 @@ function carveRooms() {
   }
 }
 
-class Room {
+class Section {
   constructor(x, y, w, h) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
+  }
+}
+
+const sectionGridsX = 7;
+const sectionGridsY = 7;
+
+const sectionWidth = Math.floor(MAP_TILED_WIDTH / sectionGridsX);
+const sectionHeight = Math.floor(MAP_TILED_HEIGHT / sectionGridsY);
+
+const sectionGrid = [];
+for (let y = 0; y < sectionGridsY; y++) {
+  sectionGrid.push([]);
+  for (let x = 0; x < sectionGridsX; x++) {
+    sectionGrid[y].push([]);
+  }
+}
+
+function generateSections() {
+  for (let y = 0; y < sectionGrid.length; y++) {
+    for (let x = 0; x < sectionGrid[0].length; x++) {
+      const element = sectionGrid[y][x];
+      element.push(
+        new Section(
+          x * sectionWidth,
+          y * sectionHeight,
+          sectionWidth - 1,
+          sectionHeight - 1
+        )
+      );
+    }
+  }
+}
+
+class Room {
+  constructor(x, y, w, h, section) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.section = section;
     rooms.push(this);
   }
   getCenter() {
@@ -54,69 +103,94 @@ const disconnectedRooms = [];
 const connectedRooms = [];
 
 function generateMap() {
-  tryRooms(50);
+  generateSections();
+  generateRooms();
 
   disconnectedRooms.push(...rooms);
 
   const startingRoom = disconnectedRooms.splice(
-    [randomInt(0, disconnectedRooms.length)],
+    [randomInt(0, disconnectedRooms.length - 1)],
     1
   )[0];
+
   connectedRooms.push(startingRoom);
 
   while (disconnectedRooms.length > 0) {
-    const currentConnected = connectedRooms[connectedRooms.length - 1];
+    for (let i = 0; i < disconnectedRooms.length; i++) {
+      const disconnectedRoom = disconnectedRooms[i];
 
-    const closestDisconnected = getClosestRoom(
-      currentConnected,
-      connectedRooms
-    );
+      const disconnectedSection = disconnectedRoom.section;
+      const connectedNeighbors = [];
 
-    const disconnectedRoomIndex =
-      disconnectedRooms.indexOf(closestDisconnected);
+      for (let k = 0; k < connectedRooms.length; k++) {
+        const connectedRoom = connectedRooms[k];
+        const connectedSection = connectedRoom.section;
+        if (
+          disconnectedSection.x + disconnectedSection.w + 1 ==
+            connectedSection.x &&
+          disconnectedSection.y === connectedSection.y
+        ) {
+          connectedNeighbors.push(connectedRoom);
+        }
+        if (
+          disconnectedSection.x - disconnectedSection.w - 1 ==
+            connectedSection.x &&
+          disconnectedSection.y === connectedSection.y
+        ) {
+          connectedNeighbors.push(connectedRoom);
+        }
+        if (
+          disconnectedSection.y + disconnectedSection.h + 1 ==
+            connectedSection.y &&
+          disconnectedSection.x === connectedSection.x
+        ) {
+          connectedNeighbors.push(connectedRoom);
+        }
+        if (
+          disconnectedSection.y - disconnectedSection.h - 1 ==
+            connectedSection.y &&
+          disconnectedSection.x === connectedSection.x
+        ) {
+          connectedNeighbors.push(connectedRoom);
+        }
+      }
 
-    disconnectedRooms.splice(disconnectedRoomIndex, 1);
-    connectedRooms.push(closestDisconnected);
+      if (connectedNeighbors.length === 0) continue;
+      disconnectedRooms.splice(i, 1);
 
-    const coin = randomInt(0, 1);
+      const randomIndex = randomInt(0, connectedNeighbors.length - 1);
+      const randomConnectedNeighbor = connectedNeighbors[randomIndex];
 
-    if (coin) {
-      carveCorridorX(
-        currentConnected.getCenter().x,
-        closestDisconnected.getCenter().x,
-        currentConnected.getCenter().y
-      );
+      const connectedCopy = [];
+      connectedCopy.push(...connectedNeighbors);
+      connectedCopy.splice(randomIndex, 1);
 
-      carveCorridorY(
-        closestDisconnected.getCenter().y,
-        currentConnected.getCenter().y,
-        closestDisconnected.getCenter().x
-      );
-    } else {
-      carveCorridorY(
-        currentConnected.getCenter().y,
-        closestDisconnected.getCenter().y,
-        currentConnected.getCenter().x
-      );
-      carveCorridorX(
-        closestDisconnected.getCenter().x,
-        currentConnected.getCenter().x,
-        closestDisconnected.getCenter().y
-      );
+      carveRandomCorridor(disconnectedRoom, randomConnectedNeighbor);
+
+      connectedRooms.push(disconnectedRoom);
+
+      if (connectedCopy.length === 0) continue;
+      if (randomInt(0, 100) > 75) {
+        const randomConnectedNeighbor =
+          connectedCopy[randomInt(0, connectedCopy.length - 1)];
+        carveRandomCorridor(disconnectedRoom, randomConnectedNeighbor);
+      }
     }
   }
 }
 
-function tryRooms(attempts) {
-  for (let i = 0; i < attempts; i++) {
-    const roomW = randomInt(3, 10);
-    const roomH = randomInt(3, 10);
-    const roomX = randomInt(1, tilemap[0].length - roomW - 1);
-    const roomY = randomInt(1, tilemap.length - roomH - 1);
+function generateRooms() {
+  for (let y = 0; y < sectionGrid.length; y++) {
+    for (let x = 0; x < sectionGrid[0].length; x++) {
+      const section = sectionGrid[y][x][0];
 
-    if (!hasRoomInRect(roomX, roomY, roomW, roomH))
-      new Room(roomX, roomY, roomW, roomH);
-    else continue;
+      const roomW = randomInt(3, section.w);
+      const roomH = randomInt(3, section.h);
+      const roomX = randomInt(section.x, section.x + section.w - roomW);
+      const roomY = randomInt(section.y, section.y + section.h - roomH);
+
+      new Room(roomX, roomY, roomW, roomH, sectionGrid[y][x][0]);
+    }
   }
 }
 
@@ -162,6 +236,35 @@ function hasRoomInRect(x, y, w, h) {
   return false;
 }
 
+function carveRandomCorridor(srcRoom, dstRoom) {
+  const coin = randomInt(0, 1);
+
+  if (coin) {
+    carveCorridorX(
+      srcRoom.getCenter().x,
+      dstRoom.getCenter().x,
+      srcRoom.getCenter().y
+    );
+
+    carveCorridorY(
+      dstRoom.getCenter().y,
+      srcRoom.getCenter().y,
+      dstRoom.getCenter().x
+    );
+  } else {
+    carveCorridorY(
+      srcRoom.getCenter().y,
+      dstRoom.getCenter().y,
+      srcRoom.getCenter().x
+    );
+    carveCorridorX(
+      dstRoom.getCenter().x,
+      srcRoom.getCenter().x,
+      dstRoom.getCenter().y
+    );
+  }
+}
+
 function carveCorridorX(srcStart, srcEnd, y) {
   let start;
   let end;
@@ -196,4 +299,11 @@ function carveCorridorY(srcStart, srcEnd, x) {
   }
 }
 
-export { fillMap, carveTile, carveRooms, hasRoomInRect, generateMap };
+export {
+  fillMap,
+  carveTile,
+  carveRooms,
+  hasRoomInRect,
+  generateMap,
+  sectionGrid,
+};
