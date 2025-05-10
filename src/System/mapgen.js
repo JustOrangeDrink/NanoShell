@@ -237,6 +237,32 @@ function hasRoomInRect(x, y, w, h) {
 }
 
 function carveRandomCorridor(srcRoom, dstRoom) {
+  const commonX = [];
+  const commonY = [];
+  for (let i = srcRoom.x; i < srcRoom.x + srcRoom.w; i++) {
+    if (dstRoom.x <= i && i <= dstRoom.x + dstRoom.w) {
+      commonX.push(i);
+    }
+  }
+  for (let k = srcRoom.y; k < srcRoom.y + srcRoom.h; k++) {
+    if (dstRoom.y <= k && k <= dstRoom.y + dstRoom.h) {
+      commonY.push(k);
+    }
+  }
+  console.log(srcRoom, dstRoom);
+  console.log(commonX, commonY);
+
+  if (commonX.length !== 0) {
+    const middleX = commonX[Math.floor((commonX.length - 1) / 2)];
+    carveCorridorY(srcRoom.y + srcRoom.h - 1, dstRoom.y, middleX);
+    return;
+  }
+  if (commonY.length !== 0) {
+    const middleY = commonY[Math.floor((commonY.length - 1) / 2)];
+    carveCorridorX(srcRoom.x + srcRoom.w - 1, dstRoom.x, middleY);
+    return;
+  }
+
   const coin = randomInt(0, 1);
 
   if (coin) {
