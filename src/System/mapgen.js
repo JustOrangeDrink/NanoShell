@@ -240,17 +240,15 @@ function carveRandomCorridor(srcRoom, dstRoom) {
   const commonX = [];
   const commonY = [];
   for (let i = srcRoom.x; i < srcRoom.x + srcRoom.w; i++) {
-    if (dstRoom.x <= i && i <= dstRoom.x + dstRoom.w) {
+    if (dstRoom.x <= i && i < dstRoom.x + dstRoom.w) {
       commonX.push(i);
     }
   }
   for (let k = srcRoom.y; k < srcRoom.y + srcRoom.h; k++) {
-    if (dstRoom.y <= k && k <= dstRoom.y + dstRoom.h) {
+    if (dstRoom.y <= k && k < dstRoom.y + dstRoom.h) {
       commonY.push(k);
     }
   }
-  console.log(srcRoom, dstRoom);
-  console.log(commonX, commonY);
 
   if (commonX.length !== 0) {
     const middleX = commonX[Math.floor((commonX.length - 1) / 2)];
