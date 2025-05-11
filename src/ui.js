@@ -58,6 +58,6 @@ function writeLogs() {
   }
 }
 
-setTimeout(() => updateUi(), 100);
+updateUi();
 
 export { addLog, addBelow };
