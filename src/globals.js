@@ -8,14 +8,20 @@ const ctx = canvas.getContext("2d");
 
 const TILE_SIZE = 24;
 
-const CANVAS_TILED_WIDTH = Math.floor(SCREEN_WIDTH / TILE_SIZE);
+const CANVAS_TILED_WIDTH = Math.floor((SCREEN_WIDTH * 0.7) / TILE_SIZE);
 const CANVAS_TILED_HEIGHT = Math.floor(SCREEN_HEIGHT / TILE_SIZE);
 
-const MAP_TILED_WIDTH = 100;
-const MAP_TILED_HEIGHT = 100;
+const uiCanvas = document.querySelectorAll("canvas")[1];
+const uiCtx = uiCanvas.getContext("2d");
+
+uiCanvas.width = CANVAS_TILED_WIDTH * 0.5 * TILE_SIZE;
+uiCanvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
 canvas.width = CANVAS_TILED_WIDTH * TILE_SIZE;
 canvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
+
+const MAP_TILED_WIDTH = 100;
+const MAP_TILED_HEIGHT = 100;
 
 const spritesheet = document.createElement("img");
 
@@ -48,11 +54,17 @@ for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
 const viewPort = {
   x: 0,
   y: 0,
-  w: 60,
-  h: 60,
+  w: 66,
+  h: 66,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);
+
+    if (viewPort.x < -14) viewPort.x = -14;
+    if (viewPort.x > 47) viewPort.x = 47;
+
+    if (viewPort.y < -20) viewPort.y = -20;
+    if (viewPort.y > 53) viewPort.y = 53;
   },
 };
 
@@ -61,6 +73,8 @@ const rooms = [];
 export {
   canvas,
   ctx,
+  uiCanvas,
+  uiCtx,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   TILE_SIZE,

@@ -10,7 +10,7 @@ class Vector {
         set: (target, prop, value) => {
           target[prop] = value;
           if (value === 0) return true;
-          document.dispatchEvent(new Event("moved"));
+          document.dispatchEvent(new Event("gameTurn"));
           return true;
         },
       }
@@ -33,4 +33,17 @@ class Size {
   }
 }
 
-export { Vector, Collision, Size };
+class Combat {
+  constructor(maxHp, hp, dmg) {
+    this.type = "Combat";
+    this.maxHp = maxHp;
+    this.hp = hp;
+    this.dmg = dmg;
+  }
+  takeDamage(amount, self, src) {
+    this.hp -= amount;
+    return `${self.name} took ${amount} damage from ${src.name}!`;
+  }
+}
+
+export { Vector, Collision, Size, Combat };

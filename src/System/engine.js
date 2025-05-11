@@ -9,6 +9,7 @@ import {
   tilemap,
 } from "../globals.js";
 import { uniqueAssets, vectorEntities } from "../Entity/entities.js";
+import { addLog } from "../ui.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -125,7 +126,22 @@ function handleCollision(entity) {
   vector.dx = 0;
   vector.dy = 0;
   console.log(`Collision with ${blockingEntity.name}!`);
+
   // other stuff like fighting system etc...
+  const trgCombat = blockingEntity.getComponent("Combat");
+  if (!(trgCombat && entity.getComponent("Combat"))) return;
+
+  const log = trgCombat.takeDamage(
+    entity.getComponent("Combat").dmg,
+    blockingEntity,
+    entity
+  );
+  addLog(log);
+
+  if (trgCombat.hp <= 0) {
+    tilemap[blockingEntity.y][blockingEntity.x].splice(-1, 1);
+    addLog(`${blockingEntity.name} is dead!`);
+  }
 }
 
 function handleInput(event, player) {
