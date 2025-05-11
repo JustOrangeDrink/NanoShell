@@ -261,6 +261,21 @@ function carveRandomCorridor(srcRoom, dstRoom) {
     return;
   }
 
+  for (let i = srcRoom.y + srcRoom.h - 1; i < dstRoom.y + dstRoom.h; i++) {
+    if (tilemap[i][srcRoom.getCenter().x][0].name == "Floor") {
+      console.log(tilemap[i][srcRoom.getCenter().x][0]);
+      carveCorridorY(srcRoom.getCenter().y, i, srcRoom.getCenter().x);
+      return;
+    }
+  }
+  for (let i = srcRoom.getCenter().x; i < dstRoom.x + dstRoom.w; i++) {
+    if (tilemap[srcRoom.getCenter().y][i][0].name == "Floor") {
+      console.log(tilemap[srcRoom.getCenter().y][i][0]);
+      carveCorridorX(srcRoom.getCenter().x, i, srcRoom.getCenter().y);
+      return;
+    }
+  }
+
   const coin = randomInt(0, 1);
 
   if (coin) {

@@ -70,13 +70,14 @@ function initSystem() {
     viewPort.scrollTo(player.x, (viewPort.y = player.y));
     renderWorld();
 
-    const entitiesUnder = getEntitiesUnder(player, []);
+    const entitiesUnder = getEntitiesUnder(player, [""]);
 
     let entitiesUnderNames = " ";
     if (entitiesUnder)
       entitiesUnder.forEach((el) => (entitiesUnderNames += "\n" + el.name));
     console.log("Under:", entitiesUnderNames);
     entitiesUnderNames = "";
+    console.log(player.x, player.y);
   });
 }
 // setInterval(() => zombie.getComponent("Vector").dx++, 1000);
