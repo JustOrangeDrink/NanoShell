@@ -12,7 +12,12 @@ import {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from "./globals.js";
-import { carveRooms, fillMap, generateMap } from "./System/mapgen.js";
+import {
+  carveRooms,
+  fillMap,
+  generateMap,
+  populateMap,
+} from "./System/mapgen.js";
 import { randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow } from "./ui.js";
@@ -23,6 +28,7 @@ spritesheet.onload = () => {
   generateMap();
   carveRooms();
   initSpecialEntities();
+  populateMap();
   initSystem();
   renderWorld();
 };
@@ -53,7 +59,9 @@ function initSystem() {
 function writeItemsBelow() {
   const entitiesUnder = getEntitiesUnder(player, [""]);
   const entitiesUnderNames = [];
-  entitiesUnder.forEach((el) => entitiesUnderNames.push(el.name));
+  entitiesUnder.forEach((el) => {
+    entitiesUnderNames.push(el.name);
+  });
   addBelow(entitiesUnderNames);
 }
 

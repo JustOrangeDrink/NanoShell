@@ -136,7 +136,7 @@ function handleCollision(entity) {
     blockingEntity,
     entity
   );
-  addLog(log);
+  addLog(log, "red");
 
   if (trgCombat.hp <= 0) {
     tilemap[blockingEntity.y][blockingEntity.x].splice(-1, 1);

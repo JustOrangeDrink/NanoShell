@@ -332,6 +332,17 @@ function carveCorridorY(srcStart, srcEnd, x) {
   }
 }
 
+function populateMap() {
+  for (let i = 0; i < rooms.length; i++) {
+    const room = rooms[i];
+    if (randomInt(0, 100) > 50) {
+      const spawnX = randomInt(room.x, room.x + room.w - 1);
+      const spawnY = randomInt(room.y, room.y + room.h - 1);
+      tiles.Zombie.init(spawnX, spawnY);
+    }
+  }
+}
+
 export {
   fillMap,
   carveTile,
@@ -339,4 +350,5 @@ export {
   hasRoomInRect,
   generateMap,
   sectionGrid,
+  populateMap,
 };

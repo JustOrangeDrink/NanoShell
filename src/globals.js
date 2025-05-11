@@ -54,7 +54,7 @@ for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
 const viewPort = {
   x: 0,
   y: 0,
-  w: 66,
+  w: 67,
   h: 66,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);

@@ -46,15 +46,18 @@ function writeBelow() {
   }
 }
 
-function addLog(text) {
-  logs.unshift(text);
+function addLog(text, color) {
+  logs.unshift([text, color]);
+  if (logs.length > 8) logs.pop();
   updateUi();
 }
 
 function writeLogs() {
   for (let i = 0; i < logs.length; i++) {
-    const log = logs[i];
+    uiCtx.fillStyle = logs[i][1];
+    const log = logs[i][0];
     uiCtx.fillText(log, 10, uiCanvas.height - 12 - i * 30);
+    uiCtx.fillStyle = "lime";
   }
 }
 
