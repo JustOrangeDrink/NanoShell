@@ -1,4 +1,4 @@
-import { TILE_SIZE, spritesheet } from "./src/globals.js";
+import { TILE_SIZE, spritesheet } from "./globals.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);

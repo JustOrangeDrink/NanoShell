@@ -1,4 +1,4 @@
-import { colorize } from "../../utils.js";
+import { colorize } from "../utils.js";
 import { tilemap } from "../globals.js";
 
 let entityId = 0;

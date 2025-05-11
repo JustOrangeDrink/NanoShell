@@ -4,65 +4,37 @@ import {
   handleInput,
   getEntitiesUnder,
 } from "./System/engine.js";
-import {
-  spritesheet,
-  viewPort,
-  rooms,
-  ctx,
-  CANVAS_TILED_WIDTH,
-  CANVAS_TILED_HEIGHT,
-  MAP_TILED_WIDTH,
-  MAP_TILED_HEIGHT,
-} from "./globals.js";
-import { Entity } from "./Entity/entities.js";
-import { Vector, Render, Collision, Size } from "./Component/components.js";
-import {
-  carveRooms,
-  fillMap,
-  generateMap,
-  hasRoomInRect,
-  sectionGrid,
-} from "./System/mapgen.js";
-import { randomInt } from "../utils.js";
-
-function initEntities() {
-  const zombie = new Entity("Zombie", 23, 8, 2, 10, 5, [0, 1, 0]);
-  zombie.addComponent(new Vector(0, 0));
-  zombie.addComponent(new Collision());
-
-  const gold = new Entity("Gold", 25, 12, 1, 7, 4, [0.6, 0.5, 0.5]);
-  gold.addComponent(new Size("tiny"));
-
-  const letter = new Entity("Letter", 23, 12, 1, 5, 15, [1, 0.6, 0.6]);
-  letter.addComponent(new Size("tiny"));
-
-  const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
-  player = new Entity(
-    "Player",
-    spawnRoom.getCenter().x,
-    spawnRoom.getCenter().y,
-    3,
-    15,
-    0,
-    [0, 1, 0]
-  );
-  player.addComponent(new Vector(0, 0));
-  player.addComponent(new Collision());
-  viewPort.scrollTo(player.x, player.y);
-}
-let player;
+import { spritesheet, viewPort, rooms } from "./globals.js";
+import { carveRooms, fillMap, generateMap } from "./System/mapgen.js";
+import { randomInt } from "./utils.js";
+import { tiles } from "./tiles.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
   fillMap();
   generateMap();
   carveRooms();
-  initEntities();
+  initSpecialEntities();
   initSystem();
   renderWorld();
 };
 
+let player;
+
+function initSpecialEntities() {
+  const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
+
+  // tiles.Zombie.init(
+  //   spawnRoom.getCenter().x - 1,
+  //   spawnRoom.getCenter().y - 1
+  // );
+
+  player = tiles.Player.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y);
+}
+
 function initSystem() {
+  viewPort.scrollTo(player.x, player.y);
+
   document.addEventListener("keydown", (event) => handleInput(event, player));
 
   document.addEventListener("moved", () => {
@@ -80,8 +52,3 @@ function initSystem() {
     console.log(player.x, player.y);
   });
 }
-// setInterval(() => zombie.getComponent("Vector").dx++, 1000);
-// setInterval(() => letter.getComponent("Vector").dx++, 1000);
-// setInterval(() => gold.getComponent("Vector").dx++, 1000);
-// letter.addComponent(new Vector(0, 0));
-// gold.addComponent(new Vector(0, 0));

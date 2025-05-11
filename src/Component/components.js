@@ -18,15 +18,6 @@ class Vector {
   }
 }
 
-class Render {
-  constructor(charX, charY, color) {
-    this.type = "Render";
-    this.charX = charX;
-    this.charY = charY;
-    this.color = color;
-  }
-}
-
 class Collision {
   constructor(smallCollision = false) {
     this.type = "Collision";
@@ -42,4 +33,4 @@ class Size {
   }
 }
 
-export { Vector, Render, Collision, Size };
+export { Vector, Collision, Size };

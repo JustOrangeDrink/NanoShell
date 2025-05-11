@@ -1,20 +1,16 @@
 import {
   tilemap,
   rooms,
-  CANVAS_TILED_WIDTH,
-  CANVAS_TILED_HEIGHT,
   MAP_TILED_WIDTH,
   MAP_TILED_HEIGHT,
 } from "../globals.js";
-import { Entity } from "../Entity/entities.js";
-import { Collision, Render } from "../Component/components.js";
-import { randomInt } from "../../utils.js";
+import { randomInt } from "../utils.js";
+import { tiles } from "../tiles.js";
 
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[y].length; x++) {
-      const wall = new Entity("Wall", x, y, 3, 0, 11, [0.1, 0.5, 0.1]);
-      wall.addComponent(new Collision(true));
+      tiles.Wall.init(x, y);
     }
   }
 }
@@ -27,7 +23,7 @@ function carveTile(x, y) {
     const element = tile[i];
     if (element.name == "Wall") {
       tilemap[y][x].splice(i, 1);
-      new Entity("Floor", x, y, 1, 7, 0, [0, 0.03, 0]);
+      tiles.Floor.init(x, y);
     }
   }
 }
@@ -263,14 +259,12 @@ function carveRandomCorridor(srcRoom, dstRoom) {
 
   for (let i = srcRoom.y + srcRoom.h - 1; i < dstRoom.y + dstRoom.h; i++) {
     if (tilemap[i][srcRoom.getCenter().x][0].name == "Floor") {
-      console.log(tilemap[i][srcRoom.getCenter().x][0]);
       carveCorridorY(srcRoom.getCenter().y, i, srcRoom.getCenter().x);
       return;
     }
   }
   for (let i = srcRoom.getCenter().x; i < dstRoom.x + dstRoom.w; i++) {
     if (tilemap[srcRoom.getCenter().y][i][0].name == "Floor") {
-      console.log(tilemap[srcRoom.getCenter().y][i][0]);
       carveCorridorX(srcRoom.getCenter().x, i, srcRoom.getCenter().y);
       return;
     }
