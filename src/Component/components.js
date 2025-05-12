@@ -46,4 +46,34 @@ class Combat {
   }
 }
 
+class Turn {
+  constructor(actions) {
+    this.type = "Turn";
+    this.actions = actions;
+  }
+}
+
+/*
+
+entity.actions = 4
+
+{
+  name: superPunch,
+  owner: entity,
+  cost: 1,
+  action: () => {}
+}
+
+makeAction(action) {
+  action.make();
+  entity.actions -= action.cost; // 3
+
+  for (let i = entity.actions; i <= 0; i++) {
+    endTurn();
+    entity.actions = entity.quickness; // 1
+  }
+}
+      
+*/
+
 export { Vector, Collision, Size, Combat };
