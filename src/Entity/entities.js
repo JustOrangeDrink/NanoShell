@@ -29,8 +29,16 @@ class Entity {
     if (component.type == "Vector") vectorEntities.push(this);
     this.components[component.type] = component;
   }
+
   getComponent(type) {
     return this.components[type];
+  }
+
+  destroy() {
+    vectorEntities.splice(vectorEntities.indexOf(this), 1);
+    for (const key in this) {
+      delete this[key];
+    }
   }
 }
 

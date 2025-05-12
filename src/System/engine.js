@@ -145,8 +145,9 @@ function handleCollision(entity) {
   addLog(log, "red");
 
   if (trgCombat.hp <= 0) {
-    tilemap[blockingEntity.y][blockingEntity.x].splice(-1, 1);
     addLog(`${blockingEntity.name} is dead!`);
+    tilemap[blockingEntity.y][blockingEntity.x].splice(-1, 1);
+    blockingEntity.destroy();
   }
 }
 
