@@ -36,9 +36,15 @@ function renderWorld() {
         0,
         TILE_SIZE,
         TILE_SIZE,
-        (entity.x - viewPort.x + CANVAS_TILED_WIDTH / 2 - viewPort.w / 2) *
+        (entity.x -
+          viewPort.x +
+          Math.floor(CANVAS_TILED_WIDTH / 2) -
+          Math.floor(viewPort.w / 2)) *
           TILE_SIZE,
-        (entity.y - viewPort.y + CANVAS_TILED_HEIGHT / 2 - viewPort.h / 2) *
+        (entity.y -
+          viewPort.y +
+          Math.floor(CANVAS_TILED_HEIGHT / 2) -
+          Math.floor(viewPort.h / 2)) *
           TILE_SIZE,
         TILE_SIZE,
         TILE_SIZE
