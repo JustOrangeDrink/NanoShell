@@ -37,8 +37,9 @@ class Entity {
   destroy() {
     if (this.name === "Player") {
       alert("You are dead!");
-      throw new Error("Death");
     }
+
+    tilemap[this.y][this.x].splice(-1, 1);
     vectorEntities.splice(vectorEntities.indexOf(this), 1);
     for (const key in this) {
       delete this[key];
