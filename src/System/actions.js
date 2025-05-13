@@ -11,6 +11,7 @@ class Action {
     this.action(...args);
 
     const turnsComponent = entity.getComponent("Turns");
+    if (!turnsComponent) return;
 
     turnsComponent.turns -= this.cost;
 
