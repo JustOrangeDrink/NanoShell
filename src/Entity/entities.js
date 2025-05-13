@@ -35,6 +35,10 @@ class Entity {
   }
 
   destroy() {
+    if (this.name === "Player") {
+      alert("You are dead!");
+      throw new Error("Death");
+    }
     vectorEntities.splice(vectorEntities.indexOf(this), 1);
     for (const key in this) {
       delete this[key];
