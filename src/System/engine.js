@@ -156,16 +156,16 @@ function handleInput(event, player) {
   const vector = player.getComponent("Vector");
   switch (event.key) {
     case "a":
-      moveAction.action(vector, -1);
+      moveAction.makeAction(player, vector, -1);
       break;
     case "d":
-      moveAction.action(vector, 1);
+      moveAction.makeAction(player, vector, 1);
       break;
     case "w":
-      moveAction.action(vector, 0, -1);
+      moveAction.makeAction(player, vector, 0, -1);
       break;
     case "s":
-      moveAction.action(vector, 0, 1);
+      moveAction.makeAction(player, vector, 0, 1);
       break;
 
     default:
