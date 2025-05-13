@@ -59,12 +59,6 @@ const viewPort = {
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);
-
-    if (viewPort.x < -14) viewPort.x = -14;
-    if (viewPort.x > 47) viewPort.x = 47;
-
-    if (viewPort.y < -20) viewPort.y = -20;
-    if (viewPort.y > 53) viewPort.y = 53;
   },
 };
 
