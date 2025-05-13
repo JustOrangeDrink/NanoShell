@@ -1,4 +1,10 @@
-import { Collision, Vector, Size, Combat } from "./Component/components.js";
+import {
+  Collision,
+  Vector,
+  Size,
+  Combat,
+  Turns,
+} from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 
 const tiles = {};
@@ -47,6 +53,7 @@ new Tile(
     [Vector, [0, 0]],
     [Collision, [0, 0]],
     [Combat, [10, 10, 10]],
+    [Turns, [1, 1]],
   ]
 );
 

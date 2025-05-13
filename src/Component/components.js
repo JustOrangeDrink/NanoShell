@@ -46,10 +46,11 @@ class Combat {
   }
 }
 
-class Turn {
-  constructor(actions) {
-    this.type = "Turn";
-    this.actions = actions;
+class Turns {
+  constructor(defaultTurns, turns) {
+    this.type = "Turns";
+    this.defaultTurns = defaultTurns;
+    this.turns = turns;
   }
 }
 
@@ -76,4 +77,4 @@ makeAction(action) {
       
 */
 
-export { Vector, Collision, Size, Combat };
+export { Vector, Collision, Size, Combat, Turns };
