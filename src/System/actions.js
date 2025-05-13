@@ -5,3 +5,10 @@ class Action {
     this.action = action;
   }
 }
+
+const moveAction = new Action("Move", 1, (vectorComponent, dx = 0, dy = 0) => {
+  vectorComponent.dx += dx;
+  vectorComponent.dy += dy;
+});
+
+export { moveAction };
