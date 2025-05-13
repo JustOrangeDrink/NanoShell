@@ -10,6 +10,7 @@ import {
 } from "../globals.js";
 import { uniqueAssets, vectorEntities } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
+import { moveAction } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -155,16 +156,16 @@ function handleInput(event, player) {
   const vector = player.getComponent("Vector");
   switch (event.key) {
     case "a":
-      vector.dx--;
+      moveAction.action(vector, -1);
       break;
     case "d":
-      vector.dx++;
+      moveAction.action(vector, 1);
       break;
     case "w":
-      vector.dy--;
+      moveAction.action(vector, 0, -1);
       break;
     case "s":
-      vector.dy++;
+      moveAction.action(vector, 0, 1);
       break;
 
     default:
