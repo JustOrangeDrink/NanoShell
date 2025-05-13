@@ -74,12 +74,16 @@ function handleMovement() {
       return;
     }
 
-    handleCollision(entity);
+    if (handleCollision(entity)) {
+      vector.dx = 0;
+      vector.dy = 0;
+      return;
+    }
+
     tilemap[entity.y][entity.x].splice(-1, 1);
     tilemap[entity.y + vector.dy][entity.x + vector.dx].push(entity);
 
-    entity.x += vector.dx;
-    entity.y += vector.dy;
+    moveAction.makeAction(entity, entity, vector);
     vector.dx = 0;
     vector.dy = 0;
   }
@@ -151,22 +155,23 @@ function handleCollision(entity) {
     addLog(`${blockingEntity.name} is dead!`);
     blockingEntity.destroy();
   }
+  return true;
 }
 
 function handleInput(event, player) {
   const vector = player.getComponent("Vector");
   switch (event.key) {
     case "a":
-      moveAction.makeAction(player, vector, -1);
+      vector.dx -= 1;
       break;
     case "d":
-      moveAction.makeAction(player, vector, 1);
+      vector.dx += 1;
       break;
     case "w":
-      moveAction.makeAction(player, vector, 0, -1);
+      vector.dy -= 1;
       break;
     case "s":
-      moveAction.makeAction(player, vector, 0, 1);
+      vector.dy += 1;
       break;
 
     default:

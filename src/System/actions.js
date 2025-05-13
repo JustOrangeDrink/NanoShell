@@ -16,16 +16,16 @@ class Action {
 
     if (turnsComponent.turns <= 0) {
       for (let i = turnsComponent.turns; i <= 0; i++) {
-        // do other entities turns
+        console.log("Skip turn!");
       }
       turnsComponent.turns = turnsComponent.defaultTurns;
     }
   }
 }
 
-const moveAction = new Action("Move", 1, (trgVector, dx = 0, dy = 0) => {
-  trgVector.dx += dx;
-  trgVector.dy += dy;
+const moveAction = new Action("Move", 1, (entity, trgVector) => {
+  entity.x += trgVector.dx;
+  entity.y += trgVector.dy;
 });
 
 const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
