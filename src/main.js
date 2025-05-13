@@ -20,7 +20,7 @@ import {
 } from "./System/mapgen.js";
 import { randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
-import { addBelow } from "./ui.js";
+import { addBelow, updateUi } from "./ui.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
@@ -31,6 +31,7 @@ spritesheet.onload = () => {
   populateMap();
   initSystem();
   renderWorld();
+  updateUi();
 };
 
 let player;

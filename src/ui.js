@@ -1,16 +1,16 @@
 import { uiCanvas, uiCtx } from "./globals.js";
 import { tiles } from "./tiles.js";
+import { getEntity } from "./utils.js";
 
 const logs = [];
 const below = [];
 
-const player = tiles.Player;
-const playerCombat = player.components[2][1];
-let playerMaxHp = playerCombat[0];
-let playerCurrentHp = playerCombat[1];
-let playerDamage = playerCombat[2];
-
 function updateUi() {
+  const player = getEntity(false, "Player");
+  let playerCurrentHp = player.getComponent("Health").hp;
+  let playerMaxHp = player.getComponent("Health").maxHp;
+  let playerDamage = player.getComponent("Damage").dmg;
+
   uiCtx.clearRect(0, 0, 1000, 1000);
 
   uiCtx.font = "bold 25px courier";
@@ -61,6 +61,4 @@ function writeLogs() {
   }
 }
 
-updateUi();
-
-export { addLog, addBelow };
+export { addLog, addBelow, updateUi };
