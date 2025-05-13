@@ -51,6 +51,8 @@ for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
   }
 }
 
+const entities = [];
+
 const viewPort = {
   x: 0,
   y: 0,
@@ -79,5 +81,6 @@ export {
   spritesheet,
   viewPort,
   tilemap,
+  entities,
   rooms,
 };

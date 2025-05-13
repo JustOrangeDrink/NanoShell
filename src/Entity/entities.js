@@ -1,5 +1,5 @@
 import { colorize } from "../utils.js";
-import { tilemap } from "../globals.js";
+import { entities, tilemap } from "../globals.js";
 
 let entityId = 0;
 class Entity {
@@ -23,6 +23,8 @@ class Entity {
     if (this.name !== "Wall" && this.name !== "Floor") {
       tilemap[y][x].sort((a, b) => a.z - b.z);
     }
+
+    entities.push(this);
   }
 
   addComponent(component) {

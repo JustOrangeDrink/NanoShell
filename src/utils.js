@@ -1,4 +1,4 @@
-import { TILE_SIZE, spritesheet } from "./globals.js";
+import { TILE_SIZE, entities, spritesheet } from "./globals.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -34,4 +34,13 @@ function colorize(charX, charY, [r, g, b]) {
   return offscreen;
 }
 
-export { randomInt, colorize };
+function getEntity(id, name) {
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i];
+    if (name === entity.name && !id) {
+      return entity;
+    }
+  }
+}
+
+export { randomInt, colorize, getEntity };
