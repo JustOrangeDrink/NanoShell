@@ -53,7 +53,7 @@ new Tile(
   [
     [Vector, [0, 0]],
     [Collision, [0, 0]],
-    [Health, [10, 10, 10]],
+    [Health, [30, 30]],
     [Damage, [10]],
     [Turns, [1, 1]],
   ]
@@ -69,7 +69,7 @@ new Tile(
     [Vector, [0, 0]],
     [Collision, []],
     [Health, [30, 30]],
-    [Damage, [10]],
+    [Damage, [5]],
   ]
 );
 new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);
