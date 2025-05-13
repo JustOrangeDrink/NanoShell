@@ -29,9 +29,13 @@ const moveAction = new Action("Move", 1, (entity, trgVector) => {
   entity.y += trgVector.dy;
 });
 
-const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
-  trgHealth.takeDamage(dmg);
-  addLog(`${trg.name} took ${dmg} damage from ${src.name}!`, "red");
-});
+const attackAction = new Action(
+  "Attack",
+  1,
+  (srcName, trgName, trgHealth, dmg) => {
+    trgHealth.takeDamage(dmg);
+    addLog(`${trgName} took ${dmg} damage from ${srcName}!`, "red");
+  }
+);
 
 export { moveAction, attackAction };

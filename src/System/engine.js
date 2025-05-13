@@ -145,8 +145,8 @@ function handleCollision(entity) {
 
   attackAction.makeAction(
     entity,
-    entity,
-    blockingEntity,
+    entity.name,
+    blockingEntity.name,
     trgHealth,
     srcDamage.dmg
   );
