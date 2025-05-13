@@ -33,16 +33,21 @@ class Size {
   }
 }
 
-class Combat {
-  constructor(maxHp, hp, dmg) {
-    this.type = "Combat";
+class Health {
+  constructor(maxHp, hp) {
+    this.type = "Health";
     this.maxHp = maxHp;
     this.hp = hp;
-    this.dmg = dmg;
   }
-  takeDamage(amount, self, src) {
+  takeDamage(amount) {
     this.hp -= amount;
-    return `${self.name} took ${amount} damage from ${src.name}!`;
+  }
+}
+
+class Damage {
+  constructor(dmg) {
+    this.type = "Damage";
+    this.dmg = dmg;
   }
 }
 
@@ -77,4 +82,4 @@ makeAction(action) {
       
 */
 
-export { Vector, Collision, Size, Combat, Turns };
+export { Vector, Collision, Size, Health, Turns, Damage };

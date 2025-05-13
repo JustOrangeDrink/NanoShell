@@ -2,8 +2,9 @@ import {
   Collision,
   Vector,
   Size,
-  Combat,
+  Health,
   Turns,
+  Damage,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 
@@ -52,7 +53,8 @@ new Tile(
   [
     [Vector, [0, 0]],
     [Collision, [0, 0]],
-    [Combat, [10, 10, 10]],
+    [Health, [10, 10, 10]],
+    [Damage, [10]],
     [Turns, [1, 1]],
   ]
 );
@@ -66,7 +68,8 @@ new Tile(
   [
     [Vector, [0, 0]],
     [Collision, []],
-    [Combat, [30, 30, 10]],
+    [Health, [30, 30]],
+    [Damage, [10]],
   ]
 );
 new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);

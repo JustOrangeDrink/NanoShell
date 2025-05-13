@@ -10,7 +10,7 @@ import {
 } from "../globals.js";
 import { uniqueAssets, vectorEntities } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
-import { moveAction } from "./actions.js";
+import { attackAction, moveAction } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -130,24 +130,25 @@ function handleCollision(entity) {
 
   if (!collision) return;
 
+  console.log(`Collision with ${blockingEntity.name}!`);
   vector.dx = 0;
   vector.dy = 0;
-  console.log(`Collision with ${blockingEntity.name}!`);
 
   // other stuff like fighting system etc...
-  const trgCombat = blockingEntity.getComponent("Combat");
-  if (!(trgCombat && entity.getComponent("Combat"))) return;
+  const trgHealth = blockingEntity.getComponent("Health");
+  const srcDamage = entity.getComponent("Damage");
+  if (!srcDamage || !trgHealth) return;
 
-  const log = trgCombat.takeDamage(
-    entity.getComponent("Combat").dmg,
+  attackAction.makeAction(
+    entity,
+    entity,
     blockingEntity,
-    entity
+    trgHealth,
+    srcDamage.dmg
   );
-  addLog(log, "red");
 
-  if (trgCombat.hp <= 0) {
+  if (trgHealth.hp <= 0) {
     addLog(`${blockingEntity.name} is dead!`);
-    tilemap[blockingEntity.y][blockingEntity.x].splice(-1, 1);
     blockingEntity.destroy();
   }
 }

@@ -1,4 +1,5 @@
 import { vectorEntities } from "../Entity/entities.js";
+import { addLog } from "../ui.js";
 
 class Action {
   constructor(name, cost, action) {
@@ -22,9 +23,14 @@ class Action {
   }
 }
 
-const moveAction = new Action("Move", 1, (vectorComponent, dx = 0, dy = 0) => {
-  vectorComponent.dx += dx;
-  vectorComponent.dy += dy;
+const moveAction = new Action("Move", 1, (trgVector, dx = 0, dy = 0) => {
+  trgVector.dx += dx;
+  trgVector.dy += dy;
 });
 
-export { moveAction };
+const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
+  trgHealth.takeDamage(dmg);
+  addLog(`${trg.name} took ${dmg} damage from ${src.name}!`, "red");
+});
+
+export { moveAction, attackAction };
