@@ -47,8 +47,8 @@ class Tile {
 new Tile(
   "Player",
   3,
-  15,
   0,
+  4,
   [1, 1, 1],
   [
     [Vector, [0, 0]],
