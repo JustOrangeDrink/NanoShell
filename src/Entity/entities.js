@@ -40,7 +40,7 @@ class Entity {
   destroy() {
     tilemap[this.y][this.x].splice(-1, 1);
     vectorEntities.splice(vectorEntities.indexOf(this), 1);
-    actionEntities.splice(actionEntities.indexOf(this), 1);
+    turnsEntities.splice(turnsEntities.indexOf(this), 1);
     for (const key in this) {
       delete this[key];
     }
