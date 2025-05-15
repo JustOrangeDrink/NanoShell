@@ -55,7 +55,7 @@ new Tile(
     [Collision, [0, 0]],
     [Health, [30, 30]],
     [Damage, [10]],
-    [Turns, [1, 1]],
+    [Turns, [1, 1, true]],
   ]
 );
 

@@ -52,10 +52,11 @@ class Damage {
 }
 
 class Turns {
-  constructor(defaultTurns, turns) {
+  constructor(defaultTurns, turns, hasTurn) {
     this.type = "Turns";
     this.defaultTurns = defaultTurns;
     this.turns = turns;
+    this.hasTurn = hasTurn;
   }
 }
 
