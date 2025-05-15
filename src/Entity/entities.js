@@ -29,6 +29,7 @@ class Entity {
 
   addComponent(component) {
     if (component.type == "Vector") vectorEntities.push(this);
+    if (component.type == "Turns") turnsEntities.push(this);
     this.components[component.type] = component;
   }
 
@@ -39,6 +40,7 @@ class Entity {
   destroy() {
     tilemap[this.y][this.x].splice(-1, 1);
     vectorEntities.splice(vectorEntities.indexOf(this), 1);
+    actionEntities.splice(actionEntities.indexOf(this), 1);
     for (const key in this) {
       delete this[key];
     }
@@ -48,5 +50,6 @@ class Entity {
 const uniqueAssets = {};
 
 const vectorEntities = [];
+const turnsEntities = [];
 
-export { Entity, vectorEntities, uniqueAssets };
+export { Entity, vectorEntities, turnsEntities, uniqueAssets };
