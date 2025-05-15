@@ -1,4 +1,3 @@
-import { vectorEntities } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
 
 class Action {
