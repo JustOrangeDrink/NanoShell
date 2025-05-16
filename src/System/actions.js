@@ -23,9 +23,9 @@ class Action {
   }
 }
 
-const moveAction = new Action("Move", 1, (entity, trgVector) => {
-  entity.x += trgVector.dx;
-  entity.y += trgVector.dy;
+const moveAction = new Action("Move", 1, (trgVector, dx, dy) => {
+  trgVector.dx += dx;
+  trgVector.dy += dy;
 });
 
 const attackAction = new Action(

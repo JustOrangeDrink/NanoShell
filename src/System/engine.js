@@ -60,30 +60,28 @@ function handleMovement() {
     const vector = entity.getComponent("Vector");
     if (vector.dx == 0 && vector.dy == 0) continue;
 
-    const targetCoordX = entity.x + vector.dx;
-    const targetCoordY = entity.y + vector.dy;
+    const dstX = entity.x + vector.dx;
+    const dstY = entity.y + vector.dy;
 
     if (
-      targetCoordX > tilemap[0].length - 1 ||
-      targetCoordY > tilemap.length - 1 ||
-      targetCoordX < 0 ||
-      targetCoordY < 0
+      dstX > tilemap[0].length - 1 ||
+      dstY > tilemap.length - 1 ||
+      dstX < 0 ||
+      dstY < 0
     ) {
       vector.dx = 0;
       vector.dy = 0;
       return;
     }
 
-    if (handleCollision(entity)) {
-      vector.dx = 0;
-      vector.dy = 0;
-      return;
-    }
+    handleCollision(entity);
 
     tilemap[entity.y][entity.x].splice(-1, 1);
     tilemap[entity.y + vector.dy][entity.x + vector.dx].push(entity);
 
-    moveAction.makeAction(entity, entity, vector);
+    entity.x += vector.dx;
+    entity.y += vector.dy;
+
     vector.dx = 0;
     vector.dy = 0;
   }
@@ -155,23 +153,22 @@ function handleCollision(entity) {
     addLog(`${blockingEntity.name} is dead!`);
     blockingEntity.destroy();
   }
-  return true;
 }
 
 function handleInput(event, player) {
   const vector = player.getComponent("Vector");
   switch (event.key) {
     case "a":
-      vector.dx -= 1;
+      moveAction.makeAction(player, vector, -1, 0);
       break;
     case "d":
-      vector.dx += 1;
+      moveAction.makeAction(player, vector, 1, 0);
       break;
     case "w":
-      vector.dy -= 1;
+      moveAction.makeAction(player, vector, 0, -1);
       break;
     case "s":
-      vector.dy += 1;
+      moveAction.makeAction(player, vector, 0, 1);
       break;
 
     default:
