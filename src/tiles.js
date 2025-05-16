@@ -55,7 +55,7 @@ new Tile(
     [Collision, [0, 0]],
     [Health, [30, 30]],
     [Damage, [10]],
-    [Turns, [1, 1, true]],
+    [Turns, [1, 1, 0]],
   ]
 );
 
@@ -70,6 +70,7 @@ new Tile(
     [Collision, []],
     [Health, [30, 30]],
     [Damage, [5]],
+    [Turns, [1, 1, 0]],
   ]
 );
 new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);
