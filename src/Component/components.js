@@ -40,7 +40,7 @@ class Health {
     this.currentHp = currentHp;
   }
   takeDamage(amount) {
-    this.hp -= amount;
+    this.currentHp -= amount;
   }
 }
 
