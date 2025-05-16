@@ -1,22 +1,4 @@
-class Vector {
-  constructor(dx = 0, dy = 0) {
-    return new Proxy(
-      {
-        type: "Vector",
-        dx: dx,
-        dy: dy,
-      },
-      {
-        set: (target, prop, value) => {
-          target[prop] = value;
-          if (value === 0) return true;
-          document.dispatchEvent(new Event("gameTurn"));
-          return true;
-        },
-      }
-    );
-  }
-}
+import { addLog } from "../ui.js";
 
 class Collision {
   constructor(smallCollision = false) {
@@ -39,8 +21,12 @@ class Health {
     this.maxHp = maxHp;
     this.currentHp = currentHp;
   }
-  takeDamage(amount) {
+  takeDamage(entity, amount) {
     this.currentHp -= amount;
+    if (this.currentHp === 0) {
+      addLog(`${entity.name} is dead!`);
+      entity.destroy();
+    }
   }
 }
 
@@ -60,4 +46,11 @@ class Turns {
   }
 }
 
-export { Vector, Collision, Size, Health, Turns, Damage };
+class Alignment {
+  constructor(alignment) {
+    this.type = "Alignment";
+    this.alignment = alignment;
+  }
+}
+
+export { Collision, Size, Health, Turns, Damage, Alignment };

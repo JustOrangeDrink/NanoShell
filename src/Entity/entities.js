@@ -44,6 +44,7 @@ class Entity {
     for (const key in this) {
       delete this[key];
     }
+    document.dispatchEvent(new Event("gameTurn"));
   }
 }
 

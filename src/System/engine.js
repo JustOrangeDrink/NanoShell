@@ -8,9 +8,9 @@ import {
   CANVAS_TILED_HEIGHT,
   tilemap,
 } from "../globals.js";
-import { uniqueAssets, vectorEntities } from "../Entity/entities.js";
+import { uniqueAssets } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
-import { attackAction, moveAction } from "./actions.js";
+import { attackAction, moveAction, passTime } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -54,37 +54,29 @@ function renderWorld() {
   }
 }
 
-function handleMovement() {
-  for (let i = 0; i < vectorEntities.length; i++) {
-    const entity = vectorEntities[i];
-    const vector = entity.getComponent("Vector");
-    if (vector.dx == 0 && vector.dy == 0) continue;
+function tryMovement(entity, dx, dy) {
+  if (dx == 0 && dy == 0) return;
 
-    const dstX = entity.x + vector.dx;
-    const dstY = entity.y + vector.dy;
+  const dstX = entity.x + dx;
+  const dstY = entity.y + dy;
 
-    if (
-      dstX > tilemap[0].length - 1 ||
-      dstY > tilemap.length - 1 ||
-      dstX < 0 ||
-      dstY < 0
-    ) {
-      vector.dx = 0;
-      vector.dy = 0;
-      return;
-    }
-
-    handleCollision(entity);
-
-    tilemap[entity.y][entity.x].splice(-1, 1);
-    tilemap[entity.y + vector.dy][entity.x + vector.dx].push(entity);
-
-    entity.x += vector.dx;
-    entity.y += vector.dy;
-
-    vector.dx = 0;
-    vector.dy = 0;
+  if (
+    dstX > tilemap[0].length - 1 ||
+    dstY > tilemap.length - 1 ||
+    dstX < 0 ||
+    dstY < 0
+  ) {
+    return;
   }
+
+  if (handleCollision(entity, dx, dy)) {
+    return;
+  }
+
+  tilemap[entity.y][entity.x].splice(-1, 1);
+  tilemap[entity.y + dy][entity.x + dx].push(entity);
+
+  moveAction.makeAction(entity, entity, dx, dy);
 }
 
 function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
@@ -110,12 +102,10 @@ function getBlockingEntity(entitiesOnTile) {
   return false;
 }
 
-function handleCollision(entity) {
-  const vector = entity.getComponent("Vector");
+function handleCollision(entity, dx, dy) {
   const collision = entity.getComponent("Collision");
-  if (vector.dx == 0 && vector.dy == 0) return;
 
-  const targetEntities = tilemap[entity.y + vector.dy][entity.x + vector.dx];
+  const targetEntities = tilemap[entity.y + dy][entity.x + dx];
 
   const blockingEntity = getBlockingEntity(targetEntities);
   if (!blockingEntity) return;
@@ -125,55 +115,60 @@ function handleCollision(entity) {
   const smallCollision =
     blockingEntity.getComponent("Collision").smallCollision;
   if (size && size.size == "tiny" && smallCollision) {
-    vector.dx = 0;
-    vector.dy = 0;
     console.log(`Collision with ${blockingEntity.name}!`);
+    return true;
   }
 
   if (!collision) return;
 
   console.log(`Collision with ${blockingEntity.name}!`);
-  vector.dx = 0;
-  vector.dy = 0;
 
   // other stuff like fighting system etc...
   const trgHealth = blockingEntity.getComponent("Health");
   const srcDamage = entity.getComponent("Damage");
-  if (!srcDamage || !trgHealth) return;
+  if (!srcDamage || !trgHealth) return true;
+
+  if (
+    entity.getComponent("Alignment").alignment ===
+    blockingEntity.getComponent("Alignment").alignment
+  )
+    return true;
 
   attackAction.makeAction(
     entity,
-    entity.name,
-    blockingEntity.name,
+    entity,
+    blockingEntity,
     trgHealth,
     srcDamage.dmg
   );
 
-  if (trgHealth.currentHp <= 0) {
-    addLog(`${blockingEntity.name} is dead!`);
-    blockingEntity.destroy();
-  }
+  passTime();
+
+  return true;
 }
 
 function handleInput(event, player) {
-  const vector = player.getComponent("Vector");
+  let dx = 0;
+  let dy = 0;
+
   switch (event.key) {
     case "a":
-      moveAction.makeAction(player, vector, -1, 0);
+      dx += -1;
       break;
     case "d":
-      moveAction.makeAction(player, vector, 1, 0);
+      dx += 1;
       break;
     case "w":
-      moveAction.makeAction(player, vector, 0, -1);
+      dy += -1;
       break;
     case "s":
-      moveAction.makeAction(player, vector, 0, 1);
+      dy += 1;
       break;
-
     default:
       break;
   }
+
+  tryMovement(player, dx, dy);
 }
 
-export { renderWorld, handleMovement, handleInput, getEntitiesUnder };
+export { renderWorld, tryMovement, handleInput, getEntitiesUnder };

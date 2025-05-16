@@ -1,10 +1,10 @@
 import {
   Collision,
-  Vector,
   Size,
   Health,
   Turns,
   Damage,
+  Alignment,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 
@@ -51,11 +51,11 @@ new Tile(
   4,
   [1, 1, 1],
   [
-    [Vector, [0, 0]],
     [Collision, [0, 0]],
     [Health, [30, 30]],
     [Damage, [10]],
     [Turns, [1, 1, 0]],
+    [Alignment, ["Good"]],
   ]
 );
 
@@ -66,11 +66,11 @@ new Tile(
   5,
   [0, 1, 0],
   [
-    [Vector, [0, 0]],
     [Collision, []],
     [Health, [30, 30]],
     [Damage, [5]],
     [Turns, [1, 1, 0]],
+    [Alignment, ["Bad"]],
   ]
 );
 new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);

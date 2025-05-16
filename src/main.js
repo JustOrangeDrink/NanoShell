@@ -1,17 +1,5 @@
-import {
-  handleMovement,
-  renderWorld,
-  handleInput,
-  getEntitiesUnder,
-} from "./System/engine.js";
-import {
-  spritesheet,
-  viewPort,
-  rooms,
-  ctx,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "./globals.js";
+import { renderWorld, handleInput, getEntitiesUnder } from "./System/engine.js";
+import { spritesheet, viewPort, rooms } from "./globals.js";
 import {
   carveRooms,
   fillMap,
@@ -67,7 +55,6 @@ function writeItemsBelow() {
 }
 
 function handleTurn() {
-  handleMovement();
   viewPort.scrollTo(player.x, player.y);
   renderWorld();
 }
