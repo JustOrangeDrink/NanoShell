@@ -10,7 +10,7 @@ import {
 } from "../globals.js";
 import { uniqueAssets } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
-import { attackAction, moveAction, passTime } from "./actions.js";
+import { attackAction, moveAction, skipAction } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -142,8 +142,6 @@ function handleCollision(entity, dx, dy) {
     srcDamage.dmg
   );
 
-  passTime();
-
   return true;
 }
 
@@ -163,6 +161,9 @@ function handleInput(event, player) {
       break;
     case "s":
       dy += 1;
+      break;
+    case " ":
+      skipAction.makeAction(player);
       break;
     default:
       break;

@@ -20,6 +20,7 @@ class Action {
     if (entity.name == "Player") {
       time += this.timeCost;
       passTime();
+      addLog(`Time: ${time}`, "yellow");
     }
     document.dispatchEvent(new Event("gameTurn"));
   }
@@ -48,6 +49,8 @@ function passTime() {
   }
 }
 
+const skipAction = new Action("Skip", 1, () => {});
+
 const moveAction = new Action("Move", 1, (entity, dx, dy) => {
   entity.x += dx;
   entity.y += dy;
@@ -58,4 +61,4 @@ const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
   trgHealth.takeDamage(trg, dmg);
 });
 
-export { moveAction, attackAction, passTime };
+export { moveAction, attackAction, skipAction };
