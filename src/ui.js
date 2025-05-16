@@ -7,7 +7,7 @@ const below = [];
 
 function updateUi() {
   const player = getEntity(false, "Player");
-  let playerCurrentHp = player.getComponent("Health").hp;
+  let playerCurrentHp = player.getComponent("Health").currentHp;
   let playerMaxHp = player.getComponent("Health").maxHp;
   let playerDamage = player.getComponent("Damage").dmg;
 
