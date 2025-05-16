@@ -1,5 +1,4 @@
 import { uiCanvas, uiCtx } from "./globals.js";
-import { tiles } from "./tiles.js";
 import { getEntity } from "./utils.js";
 
 const logs = [];
