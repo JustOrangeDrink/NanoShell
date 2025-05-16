@@ -20,7 +20,6 @@ class Action {
     if (entity.name == "Player") {
       time += this.timeCost;
       passTime();
-      addLog(`Time: ${time}`, "yellow");
     }
     document.dispatchEvent(new Event("gameTurn"));
   }
@@ -61,4 +60,4 @@ const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
   trgHealth.takeDamage(trg, dmg);
 });
 
-export { moveAction, attackAction, skipAction };
+export { moveAction, attackAction, skipAction, time };

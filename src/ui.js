@@ -1,4 +1,5 @@
 import { uiCanvas, uiCtx } from "./globals.js";
+import { time } from "./System/actions.js";
 import { getEntity } from "./utils.js";
 
 const logs = [];
@@ -24,6 +25,10 @@ function updateUi() {
     100
   );
   uiCtx.fillText(`Attack Potential: ${playerDamage}`, 10, 130);
+
+  uiCtx.fillStyle = "yellow";
+  uiCtx.fillText(`Time: ${time}`, 10, 200);
+  uiCtx.fillStyle = "lime";
 
   writeLogs();
   writeBelow();
