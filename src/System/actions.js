@@ -12,13 +12,13 @@ class Action {
     const turnsComponent = entity.getComponent("Turns");
     if (!turnsComponent) return;
 
-    turnsComponent.turns -= this.cost;
+    turnsComponent.currentTurns -= this.cost;
 
-    if (turnsComponent.turns <= 0) {
-      for (let i = turnsComponent.turns; i <= 0; i++) {
+    if (turnsComponent.currentTurns <= 0) {
+      for (let i = turnsComponent.currentTurns; i <= 0; i++) {
         console.log("Skip turn!");
       }
-      turnsComponent.turns = turnsComponent.defaultTurns;
+      turnsComponent.currentTurns = turnsComponent.defaultTurns;
     }
   }
 }
