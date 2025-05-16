@@ -151,7 +151,7 @@ function handleCollision(entity) {
     srcDamage.dmg
   );
 
-  if (trgHealth.hp <= 0) {
+  if (trgHealth.currentHp <= 0) {
     addLog(`${blockingEntity.name} is dead!`);
     blockingEntity.destroy();
   }

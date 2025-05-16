@@ -34,10 +34,10 @@ class Size {
 }
 
 class Health {
-  constructor(maxHp, hp) {
+  constructor(maxHp, currentHp) {
     this.type = "Health";
     this.maxHp = maxHp;
-    this.hp = hp;
+    this.currentHp = currentHp;
   }
   takeDamage(amount) {
     this.hp -= amount;
@@ -52,10 +52,10 @@ class Damage {
 }
 
 class Turns {
-  constructor(defaultTurns, turns, hasTurn) {
+  constructor(defaultTurns, currentTurns, hasTurn) {
     this.type = "Turns";
     this.defaultTurns = defaultTurns;
-    this.turns = turns;
+    this.currentTurns = currentTurns;
     this.hasTurn = hasTurn;
   }
 }
