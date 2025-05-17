@@ -71,7 +71,6 @@ function tryMovement(entity, dx, dy) {
   }
 
   if (handleCollision(entity, dx, dy)) {
-    moveAction.makeAction(entity, entity, 0, 0);
     return;
   }
 
@@ -128,13 +127,18 @@ function handleCollision(entity, dx, dy) {
   // other stuff like fighting system etc...
   const trgHealth = blockingEntity.getComponent("Health");
   const srcDamage = entity.getComponent("Damage");
-  if (!srcDamage || !trgHealth) return true;
+  if (!srcDamage || !trgHealth) {
+    moveAction.makeAction(entity, entity, 0, 0);
+    return true;
+  }
 
   if (
     entity.getComponent("Alignment").alignment ===
     blockingEntity.getComponent("Alignment").alignment
-  )
+  ) {
+    moveAction.makeAction(entity, entity, 0, 0);
     return true;
+  }
 
   attackAction.makeAction(
     entity,
