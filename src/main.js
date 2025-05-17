@@ -27,8 +27,8 @@ let player;
 function initSpecialEntities() {
   const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
 
-  tiles.Zombie.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
-  tiles.Gold.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+  tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
+  tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 
   player = tiles.Player.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y);
 }

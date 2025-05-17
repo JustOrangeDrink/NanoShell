@@ -2,7 +2,7 @@ import { getEntity, randomInt } from "../utils.js";
 import { tryMovement } from "./engine.js";
 
 let player;
-function zombieBehavior(entity) {
+function guardBehavior(entity) {
   if (!player) player = getEntity(0, "Player");
 
   let dx;
@@ -29,4 +29,4 @@ function zombieBehavior(entity) {
   // }
 }
 
-export { zombieBehavior };
+export { guardBehavior };

@@ -8,7 +8,7 @@ import {
   Behavior,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
-import { zombieBehavior } from "./System/ai.js";
+import { guardBehavior } from "./System/ai.js";
 
 const tiles = {};
 
@@ -62,21 +62,21 @@ new Tile(
 );
 
 new Tile(
-  "Zombie",
+  "Guard",
   2,
-  10,
-  5,
-  [0, 1, 0],
+  7,
+  4,
+  [1, 0, 1],
   [
     [Collision, []],
     [Health, [30, 30]],
     [Damage, [5]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
-    [Behavior, [zombieBehavior]],
+    [Behavior, [guardBehavior]],
   ]
 );
-new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);
+new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["tiny"]]]);
 new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["tiny"]]]);
 new Tile("Floor", 1, 7, 0, [0, 0, 0]);
 new Tile("Wall", 3, 0, 11, [0.1, 0.5, 0.1], [[Collision, [true]]]);
