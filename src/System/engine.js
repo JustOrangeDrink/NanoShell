@@ -66,10 +66,12 @@ function tryMovement(entity, dx, dy) {
     dstX < 0 ||
     dstY < 0
   ) {
+    moveAction.makeAction(entity, entity, 0, 0);
     return;
   }
 
   if (handleCollision(entity, dx, dy)) {
+    moveAction.makeAction(entity, entity, 0, 0);
     return;
   }
 
