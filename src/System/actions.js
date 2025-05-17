@@ -21,6 +21,8 @@ class Action {
       time += this.timeCost;
       passTime();
     }
+
+    turnsComponent.currentTime += this.timeCost;
     document.dispatchEvent(new Event("gameTurn"));
   }
 }
@@ -32,8 +34,7 @@ function passTime() {
 
     if (entity.name == "Player") continue;
 
-    while (turnsComponent.currentTime + moveAction.timeCost <= time) {
-      turnsComponent.currentTime += moveAction.timeCost;
+    while (turnsComponent.currentTime < time) {
       const axisCoin = randomInt(0, 1);
       const directionCoin = randomInt(0, 1);
 
