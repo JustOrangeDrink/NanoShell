@@ -56,8 +56,14 @@ const moveAction = new Action("Move", 1, (entity, dx, dy) => {
 });
 
 const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
-  addLog(`${trg.name} took ${dmg} damage from ${src.name}!`, "red");
-  trgHealth.takeDamage(trg, dmg);
+  if (src.name === "Player") {
+    addLog(`You hit ${trg.name} for ${dmg} damage!`, "yellow");
+    trgHealth.takeDamage(trg, dmg);
+  }
+  if (trg.name == "Player") {
+    addLog(`${src.name} hit you for ${dmg} damage!`, "yellow");
+    trgHealth.takeDamage(trg, dmg);
+  }
 });
 
 export { moveAction, attackAction, skipAction, time };

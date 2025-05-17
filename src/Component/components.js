@@ -24,8 +24,13 @@ class Health {
   takeDamage(entity, amount) {
     this.currentHp -= amount;
     if (this.currentHp === 0) {
-      addLog(`${entity.name} is dead!`);
-      entity.destroy();
+      if (entity.name == "Player") {
+        addLog("You are dead!", "red");
+        entity.destroy();
+      } else {
+        addLog(`${entity.name} is dead!`, "lime");
+        entity.destroy();
+      }
     }
   }
 }
