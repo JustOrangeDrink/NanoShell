@@ -6,6 +6,7 @@ import {
   Damage,
   Alignment,
   Behavior,
+  Stats,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -58,6 +59,7 @@ new Tile(
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],
+    [Stats, [2, 65, 10]],
   ]
 );
 
@@ -69,11 +71,12 @@ new Tile(
   [1, 0, 1],
   [
     [Collision, []],
-    [Health, [30, 30]],
+    [Health, [15, 15]],
     [Damage, [5]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
     [Behavior, [guardBehavior]],
+    [Stats, [1, 40, 10]],
   ]
 );
 new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["tiny"]]]);

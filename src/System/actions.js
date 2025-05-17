@@ -56,14 +56,35 @@ const moveAction = new Action("Move", 1, (entity, dx, dy) => {
 });
 
 const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
+  const hitChance = randomInt(0, 100) + src.getComponent("Stats").acc;
+  const damage = randomInt(0, dmg) + src.getComponent("Stats").str;
+  const armor = trg.getComponent("Stats").armor;
+
   if (src.name === "Player") {
-    addLog(`You hit ${trg.name} for ${dmg} damage!`, "yellow");
-    trgHealth.takeDamage(trg, dmg);
+    if (hitChance < armor) {
+      addLog(`You miss ${trg.name}!`, "gray");
+      return;
+    }
+    addLog(`You hit ${trg.name} for ${damage} damage!`, "yellow");
+    trgHealth.takeDamage(trg, damage);
+    return;
   }
+
   if (trg.name == "Player") {
-    addLog(`${src.name} hit you for ${dmg} damage!`, "yellow");
-    trgHealth.takeDamage(trg, dmg);
+    if (hitChance < armor) {
+      addLog(`${src.name} miss you!`, "gray");
+      return;
+    }
+    addLog(`${src.name} hit you for ${damage} damage!`, "yellow");
+    trgHealth.takeDamage(trg, damage);
+    return;
   }
+
+  if (hitChance < armor) {
+    addLog(`${src.name} miss ${trg.name}!`, "yellow");
+  }
+  addLog(`${src.name} hit ${trg.name} for ${damage} damage!`, "yellow");
+  trgHealth.takeDamage(trg, damage);
 });
 
 export { moveAction, attackAction, skipAction, time };

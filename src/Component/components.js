@@ -23,7 +23,7 @@ class Health {
   }
   takeDamage(entity, amount) {
     this.currentHp -= amount;
-    if (this.currentHp === 0) {
+    if (this.currentHp <= 0) {
       if (entity.name == "Player") {
         addLog("You are dead!", "red");
         entity.destroy();
@@ -39,6 +39,15 @@ class Damage {
   constructor(dmg) {
     this.type = "Damage";
     this.dmg = dmg;
+  }
+}
+
+class Stats {
+  constructor(str, armor, acc) {
+    this.type = "Stats";
+    this.str = str;
+    this.armor = armor;
+    this.acc = acc;
   }
 }
 
@@ -66,4 +75,4 @@ class Behavior {
   }
 }
 
-export { Collision, Size, Health, Turns, Damage, Alignment, Behavior };
+export { Collision, Size, Health, Turns, Damage, Alignment, Behavior, Stats };
