@@ -55,7 +55,7 @@ function renderWorld() {
 }
 
 function tryMovement(entity, dx, dy) {
-  if (dx == 0 && dy == 0) return;
+  if (dx === 0 && dy === 0) moveAction.makeAction(entity, entity, 0, 0);
 
   const dstX = entity.x + dx;
   const dstY = entity.y + dy;
@@ -200,7 +200,7 @@ function handleInput(event, player) {
       break;
   }
 
-  tryMovement(player, dx, dy);
+  if (dx || dy) tryMovement(player, dx, dy);
 }
 
 export { renderWorld, tryMovement, handleInput, getEntitiesUnder };
