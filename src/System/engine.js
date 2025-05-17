@@ -156,21 +156,45 @@ function handleInput(event, player) {
   let dy = 0;
 
   switch (event.key) {
-    case "a":
+    case "4":
       dx += -1;
       break;
-    case "d":
+    case "6":
       dx += 1;
       break;
-    case "w":
+    case "8":
       dy += -1;
       break;
-    case "s":
+    case "2":
       dy += 1;
       break;
+    case "7":
+      dx -= 1;
+      dy -= 1;
+      break;
+    case "9":
+      dx += 1;
+      dy -= 1;
+      break;
+    case "1":
+      dx -= 1;
+      dy += 1;
+      break;
+    case "3":
+      dx += 1;
+      dy += 1;
+      break;
+
     case " ":
       skipAction.makeAction(player);
       break;
+    case "5":
+      skipAction.makeAction(player);
+      break;
+    case ".":
+      skipAction.makeAction(player);
+      break;
+
     default:
       break;
   }
