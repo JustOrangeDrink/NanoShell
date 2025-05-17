@@ -31,11 +31,19 @@ function passTime() {
   for (let i = 0; i < turnsEntities.length; i++) {
     const entity = turnsEntities[i];
     const turnsComponent = entity.getComponent("Turns");
+    const behavior = entity.getComponent("Behavior");
+
+    if (!behavior) continue;
+
+    if (behavior.active === false) {
+      turnsComponent.currentTime = time;
+      continue;
+    }
 
     if (entity.name == "Player") continue;
 
     while (turnsComponent.currentTime < time) {
-      entity.getComponent("Behavior").useBehavior(entity);
+      behavior.useBehavior(entity);
     }
   }
 }
