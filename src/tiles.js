@@ -5,8 +5,10 @@ import {
   Turns,
   Damage,
   Alignment,
+  Behavior,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
+import { zombieBehavior } from "./System/ai.js";
 
 const tiles = {};
 
@@ -71,6 +73,7 @@ new Tile(
     [Damage, [5]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
+    [Behavior, [zombieBehavior]],
   ]
 );
 new Tile("Gold", 1, 7, 4, [1, 1, 0], [[Size, ["tiny"]]]);

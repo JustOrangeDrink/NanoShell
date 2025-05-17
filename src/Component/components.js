@@ -53,4 +53,11 @@ class Alignment {
   }
 }
 
-export { Collision, Size, Health, Turns, Damage, Alignment };
+class Behavior {
+  constructor(behavior) {
+    this.type = "Behavior";
+    this.useBehavior = behavior;
+  }
+}
+
+export { Collision, Size, Health, Turns, Damage, Alignment, Behavior };
