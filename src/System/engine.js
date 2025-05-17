@@ -127,14 +127,15 @@ function handleCollision(entity, dx, dy) {
   // other stuff like fighting system etc...
   const trgHealth = blockingEntity.getComponent("Health");
   const srcDamage = entity.getComponent("Damage");
-  if (!srcDamage || !trgHealth) {
+  if (!srcDamage || (!trgHealth && entity.name != "Player")) {
     moveAction.makeAction(entity, entity, 0, 0);
     return true;
   }
 
   if (
     entity.getComponent("Alignment").alignment ===
-    blockingEntity.getComponent("Alignment").alignment
+      blockingEntity.getComponent("Alignment").alignment &&
+    entity.name != "Player"
   ) {
     moveAction.makeAction(entity, entity, 0, 0);
     return true;
