@@ -44,8 +44,11 @@ function writeBelow() {
   uiCtx.fillText("Below:", 10, 250);
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
-    uiCtx.fillStyle = "white";
-    uiCtx.fillText(entityBelow, 10, 275 + i * 20);
+    const red = entityBelow.color[0] * 255;
+    const green = entityBelow.color[1] * 255;
+    const blue = entityBelow.color[2] * 255;
+    uiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    uiCtx.fillText(entityBelow.name, 10, 275 + i * 20);
     uiCtx.fillStyle = "lime";
   }
 }

@@ -48,12 +48,8 @@ function initSystem() {
 }
 
 function writeItemsBelow() {
-  const entitiesUnder = getEntitiesUnder(player, [""]);
-  const entitiesUnderNames = [];
-  entitiesUnder.forEach((el) => {
-    entitiesUnderNames.push(el.name);
-  });
-  addBelow(entitiesUnderNames);
+  const entitiesUnder = getEntitiesUnder(player, ["Floor"]);
+  addBelow(entitiesUnder);
 }
 
 function handleTurn() {
