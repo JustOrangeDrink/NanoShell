@@ -1,4 +1,4 @@
-import { TILE_SIZE, entities, spritesheet } from "./globals.js";
+import { TILE_SIZE, entities, spritesheet, tilemap } from "./globals.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -43,4 +43,22 @@ function getEntity(id, name) {
   }
 }
 
-export { randomInt, colorize, getEntity };
+function getEnemyEntitiesAround(anchor, distance) {
+  const entities = [];
+  for (let i = anchor.y - distance; i < anchor.y + distance; i++) {
+    for (let k = anchor.x - distance; k < anchor.x + distance; k++) {
+      if (i < 0 || k < 0) continue;
+      for (let j = 0; j < tilemap[i][k].length; j++) {
+        const entity = tilemap[i][k][j];
+        if (
+          entity.getComponent("Alignment") &&
+          entity.getComponent("Alignment").alignment == "Bad"
+        )
+          entities.push(entity);
+      }
+    }
+  }
+  return entities;
+}
+
+export { randomInt, colorize, getEntity, getEnemyEntitiesAround };

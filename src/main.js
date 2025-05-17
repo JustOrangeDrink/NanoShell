@@ -1,12 +1,12 @@
 import { renderWorld, handleInput, getEntitiesUnder } from "./System/engine.js";
-import { spritesheet, viewPort, rooms } from "./globals.js";
+import { spritesheet, viewPort, rooms, entities } from "./globals.js";
 import {
   carveRooms,
   fillMap,
   generateMap,
   populateMap,
 } from "./System/mapgen.js";
-import { randomInt } from "./utils.js";
+import { getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui.js";
 
@@ -42,6 +42,8 @@ function initSystem() {
     handleTurn();
     writeItemsBelow();
   });
+
+  wakeUpSleepingEnemy();
   writeItemsBelow();
 }
 
@@ -55,6 +57,13 @@ function writeItemsBelow() {
 }
 
 function handleTurn() {
+  wakeUpSleepingEnemy();
   viewPort.scrollTo(player.x, player.y);
   renderWorld();
+}
+
+function wakeUpSleepingEnemy() {
+  const enemies = getEnemyEntitiesAround(player, 5);
+  if (enemies.length > 0)
+    enemies.forEach((el) => (el.getComponent("Behavior").active = true));
 }
