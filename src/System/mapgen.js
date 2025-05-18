@@ -218,7 +218,6 @@ function hasRoomInRect(x, y, w, h) {
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
 
-    // Проверяем если комната ВНЕ территории по какому-то из аттрибутов.
     const noOverlap =
       room.x + room.w < x ||
       room.x > x + w ||
