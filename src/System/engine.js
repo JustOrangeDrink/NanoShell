@@ -193,7 +193,9 @@ function handleInput(event, player) {
       skipAction.makeAction(player);
       break;
     case ".":
-      skipAction.makeAction(player);
+      for (let i = 0; i < 50; i++) {
+        skipAction.makeAction(player);
+      }
       break;
 
     default:
