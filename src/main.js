@@ -63,3 +63,5 @@ function wakeUpSleepingEnemy() {
   if (enemies.length > 0)
     enemies.forEach((el) => (el.getComponent("Behavior").active = true));
 }
+
+//
