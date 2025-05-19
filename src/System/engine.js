@@ -8,9 +8,10 @@ import {
   CANVAS_TILED_HEIGHT,
   tilemap,
 } from "../globals.js";
-import { uniqueAssets } from "../Entity/entities.js";
+import { uniqueAssets, uniqueAssetsDark } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
 import { attackAction, moveAction, skipAction } from "./actions.js";
+import { isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -22,27 +23,51 @@ function renderWorld() {
   let maxCameraY = viewPort.y + viewPort.h;
   if (maxCameraX > tilemap[0].length - 1) maxCameraX = tilemap[0].length;
   if (maxCameraY > tilemap.length - 1) maxCameraY = tilemap.length;
-  for (let y = cameraY; y < maxCameraY; y++) {
-    for (let x = cameraX; x < maxCameraX; x++) {
+  for (let y = 0; y < tilemap.length; y++) {
+    for (let x = 0; x < tilemap[0].length; x++) {
       const currentTile = tilemap[y][x];
       if (currentTile.length == 0) {
         continue;
       }
 
       const entity = currentTile[currentTile.length - 1];
+      const isInView = isInSquare(
+        entity.x,
+        entity.y,
+        cameraX,
+        cameraY,
+        maxCameraX,
+        maxCameraY
+      );
+
+      if (isInView) {
+        entity.revealed = true;
+        entity.lastX = entity.x;
+        entity.lastY = entity.y;
+      }
+
+      let asset;
+
+      if (isInView) {
+        asset = uniqueAssets[entity.name];
+      } else if (entity.revealed) {
+        asset = uniqueAssetsDark[entity.name];
+      } else {
+        continue;
+      }
 
       ctx.drawImage(
-        uniqueAssets[entity.name],
+        asset,
         0,
         0,
         TILE_SIZE,
         TILE_SIZE,
-        (entity.x -
+        (entity.lastX -
           viewPort.x +
           Math.floor(CANVAS_TILED_WIDTH / 2) -
           Math.floor(viewPort.w / 2)) *
           TILE_SIZE,
-        (entity.y -
+        (entity.lastY -
           viewPort.y +
           Math.floor(CANVAS_TILED_HEIGHT / 2) -
           Math.floor(viewPort.h / 2)) *

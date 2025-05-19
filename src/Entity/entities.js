@@ -16,8 +16,20 @@ class Entity {
     this.color = color;
     this.components = {};
 
-    if (!(this.name in uniqueAssets))
+    this.viewed = false;
+    this.revealed = false;
+
+    this.lastX = x;
+    this.lastY = y;
+
+    if (!(this.name in uniqueAssets)) {
       uniqueAssets[this.name] = colorize(charX, charY, color);
+      uniqueAssetsDark[this.name] = colorize(charX, charY, [
+        color[0] / 5,
+        color[1] / 5,
+        color[2] / 5,
+      ]);
+    }
 
     tilemap[y][x].push(this);
     if (this.name !== "Wall" && this.name !== "Floor") {
@@ -49,8 +61,15 @@ class Entity {
 }
 
 const uniqueAssets = {};
+const uniqueAssetsDark = {};
 
 const vectorEntities = [];
 const turnsEntities = [];
 
-export { Entity, vectorEntities, turnsEntities, uniqueAssets };
+export {
+  Entity,
+  vectorEntities,
+  turnsEntities,
+  uniqueAssets,
+  uniqueAssetsDark,
+};

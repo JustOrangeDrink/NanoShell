@@ -56,8 +56,8 @@ const entities = [];
 const viewPort = {
   x: 0,
   y: 0,
-  w: 66,
-  h: 66,
+  w: 15,
+  h: 15,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);
