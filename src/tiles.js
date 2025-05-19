@@ -92,7 +92,7 @@ new Tile(
   3,
   0,
   11,
-  [0.1, 0.5, 0.1],
+  [0, 0.8, 0],
   [
     [Collision, [true]],
     [Occlusion, [true]],

@@ -15,17 +15,17 @@ import { isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-  let cameraX = viewPort.x;
-  let cameraY = viewPort.y;
-  if (cameraX < 0) cameraX = 0;
-  if (cameraY < 0) cameraY = 0;
+  let cameraX = viewPort.x >= 0 ? viewPort.x : 0;
+  let cameraY = viewPort.y >= 0 ? viewPort.y : 0;
   let maxCameraX = viewPort.x + viewPort.w;
   let maxCameraY = viewPort.y + viewPort.h;
   if (maxCameraX > tilemap[0].length - 1) maxCameraX = tilemap[0].length;
   if (maxCameraY > tilemap.length - 1) maxCameraY = tilemap.length;
+
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[0].length; x++) {
       const currentTile = tilemap[y][x];
+
       if (currentTile.length == 0) {
         continue;
       }
