@@ -43,6 +43,11 @@ function getEntity(id, name) {
   }
 }
 
+function isInSquare(x, y, x0, y0, x1, y1) {
+  if (x >= x0 && x <= x1 && y >= y0 && y <= y1) return true;
+  return false;
+}
+
 function getEnemyEntitiesAround(anchor, distance) {
   const entities = [];
   for (let i = anchor.y - distance; i < anchor.y + distance; i++) {
@@ -61,4 +66,4 @@ function getEnemyEntitiesAround(anchor, distance) {
   return entities;
 }
 
-export { randomInt, colorize, getEntity, getEnemyEntitiesAround };
+export { randomInt, colorize, getEntity, isInSquare, getEnemyEntitiesAround };
