@@ -7,6 +7,7 @@ import {
   Alignment,
   Behavior,
   Stats,
+  Occlusion,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -79,9 +80,23 @@ new Tile(
     [Stats, [1, 40, 10]],
   ]
 );
+
 new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["tiny"]]]);
+
 new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["tiny"]]]);
+
 new Tile("Floor", 1, 7, 0, [0, 0, 0]);
-new Tile("Wall", 3, 0, 11, [0.1, 0.5, 0.1], [[Collision, [true]]]);
+
+new Tile(
+  "Wall",
+  3,
+  0,
+  11,
+  [0.1, 0.5, 0.1],
+  [
+    [Collision, [true]],
+    [Occlusion, [true]],
+  ]
+);
 
 export { tiles };

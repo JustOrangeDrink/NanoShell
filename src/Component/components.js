@@ -75,4 +75,21 @@ class Behavior {
   }
 }
 
-export { Collision, Size, Health, Turns, Damage, Alignment, Behavior, Stats };
+class Occlusion {
+  constructor(occlusion) {
+    this.type = "Occlusion";
+    this.occlusion = occlusion;
+  }
+}
+
+export {
+  Collision,
+  Size,
+  Health,
+  Turns,
+  Damage,
+  Alignment,
+  Behavior,
+  Stats,
+  Occlusion,
+};
