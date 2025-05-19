@@ -25,9 +25,9 @@ class Entity {
     if (!(this.name in uniqueAssets)) {
       uniqueAssets[this.name] = colorize(charX, charY, color);
       uniqueAssetsDark[this.name] = colorize(charX, charY, [
-        color[0] / 5,
-        color[1] / 5,
-        color[2] / 5,
+        color[0] / 2.5,
+        color[1] / 2.5,
+        color[2] / 2.5,
       ]);
     }
 

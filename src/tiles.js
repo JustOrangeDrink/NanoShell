@@ -85,14 +85,14 @@ new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["tiny"]]]);
 
 new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["tiny"]]]);
 
-new Tile("Floor", 1, 7, 0, [0, 0, 0]);
+new Tile("Floor", 0, 9, 15, [0.4, 0.4, 0.4]);
 
 new Tile(
   "Wall",
   3,
   0,
   11,
-  [0, 0.8, 0],
+  [0, 0.6, 0],
   [
     [Collision, [true]],
     [Occlusion, [true]],

@@ -15,6 +15,7 @@ import { isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
   let cameraX = viewPort.x >= 0 ? viewPort.x : 0;
   let cameraY = viewPort.y >= 0 ? viewPort.y : 0;
   let maxCameraX = viewPort.x + viewPort.w;
@@ -42,13 +43,14 @@ function renderWorld() {
 
       if (isInView) {
         entity.revealed = true;
+        entity.viewed = true;
         entity.lastX = entity.x;
         entity.lastY = entity.y;
-      }
+      } else entity.viewed = false;
 
       let asset;
 
-      if (isInView) {
+      if (entity.viewed) {
         asset = uniqueAssets[entity.name];
       } else if (entity.revealed) {
         asset = uniqueAssetsDark[entity.name];
@@ -157,9 +159,13 @@ function handleCollision(entity, dx, dy) {
     return true;
   }
 
+  const entityAlignment = entity.getComponent("Alignment");
+  const targetAlignment = blockingEntity.getComponent("Alignment");
+
+  if (!entityAlignment || !targetAlignment) return true;
+
   if (
-    entity.getComponent("Alignment").alignment ===
-      blockingEntity.getComponent("Alignment").alignment &&
+    entityAlignment.alignment === targetAlignment.alignment &&
     entity.name != "Player"
   ) {
     moveAction.makeAction(entity, entity, 0, 0);
