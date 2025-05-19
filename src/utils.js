@@ -9,6 +9,9 @@ function colorize(charX, charY, [r, g, b]) {
   const offscreen = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
   const ctx = offscreen.getContext("2d");
 
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, TILE_SIZE, TILE_SIZE);
+
   ctx.drawImage(
     spritesheet,
     charX * TILE_SIZE,
@@ -44,7 +47,7 @@ function getEntity(id, name) {
 }
 
 function isInSquare(x, y, x0, y0, x1, y1) {
-  if (x >= x0 && x <= x1 && y >= y0 && y <= y1) return true;
+  if (x > x0 && x < x1 && y > y0 && y < y1) return true;
   return false;
 }
 
@@ -53,6 +56,7 @@ function getEnemyEntitiesAround(anchor, distance) {
   for (let i = anchor.y - distance; i < anchor.y + distance; i++) {
     for (let k = anchor.x - distance; k < anchor.x + distance; k++) {
       if (i < 0 || k < 0) continue;
+      if (i > tilemap.length - 1 || k > tilemap[0].length - 1) continue;
       for (let j = 0; j < tilemap[i][k].length; j++) {
         const entity = tilemap[i][k][j];
         if (
