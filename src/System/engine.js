@@ -7,6 +7,7 @@ import {
   CANVAS_TILED_WIDTH,
   CANVAS_TILED_HEIGHT,
   tilemap,
+  knownMap,
 } from "../globals.js";
 import { uniqueAssets, uniqueAssetsDark } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
@@ -15,100 +16,71 @@ import { isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  updateKnownMap();
 
-  for (let y = 0; y < tilemap.length; y++) {
-    for (let x = 0; x < tilemap[0].length; x++) {
-      const currentTile = tilemap[y][x];
+  for (let y = 0; y < knownMap.length; y++) {
+    for (let x = 0; x < knownMap[y].length; x++) {
+      const knownTile = knownMap[y][x];
 
-      if (currentTile.length === 0) continue;
+      const entity = knownTile[0];
+      if (!entity) continue;
+
+      let asset;
 
       if (
         isInSquare(
           x,
           y,
-          viewPort.x,
-          viewPort.y,
+          viewPort.x - 1,
+          viewPort.y - 1,
           viewPort.x + viewPort.w,
           viewPort.y + viewPort.h
         )
-      )
-        currentTile.sort((a, b) => b.z - a.z);
+      ) {
+        asset = uniqueAssets[entity.name];
+      } else {
+        asset = uniqueAssetsDark[entity.name];
+      }
 
-      let entity = currentTile[0];
-
-      const isInView = isInSquare(
-        entity.x,
-        entity.y,
-        viewPort.x,
-        viewPort.y,
-        viewPort.x + viewPort.w,
-        viewPort.y + viewPort.h
+      ctx.drawImage(
+        asset,
+        0,
+        0,
+        TILE_SIZE,
+        TILE_SIZE,
+        (entity.x -
+          viewPort.x +
+          Math.floor(CANVAS_TILED_WIDTH / 2) -
+          Math.floor(viewPort.w / 2)) *
+          TILE_SIZE,
+        (entity.y -
+          viewPort.y +
+          Math.floor(CANVAS_TILED_HEIGHT / 2) -
+          Math.floor(viewPort.h / 2)) *
+          TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE
       );
-
-      if (isInView) {
-        entity.revealed = true;
-        entity.viewed = true;
-        entity.lastX = entity.x;
-        entity.lastY = entity.y;
-      } else if (entity.getComponent("Behavior")) {
-        entity.revealed = false;
-        entity.viewed = false;
-      } else {
-        entity.viewed = false;
-      }
-
-      for (let i = 0; i < currentTile.length; i++) {
-        const checkEntity = currentTile[i];
-        if (checkEntity.revealed) {
-          entity = currentTile[i];
-          break;
-        }
-      }
-
-      if (isInView) {
-        entity.revealed = true;
-        entity.viewed = true;
-        entity.lastX = entity.x;
-        entity.lastY = entity.y;
-      } else {
-        entity.viewed = false;
-      }
-
-      drawEntity(entity);
     }
   }
 }
 
-function drawEntity(entity) {
-  let asset;
+function updateKnownMap() {
+  for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
+    for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
+      if (!tilemap[y] || !tilemap[y][x]) continue;
+      const currentTile = tilemap[y][x];
 
-  if (entity.viewed) {
-    asset = uniqueAssets[entity.name];
-  } else if (entity.revealed) {
-    asset = uniqueAssetsDark[entity.name];
-  } else {
-    return;
+      if (currentTile.length === 0) continue;
+
+      knownMap[y][x].splice(0, knownMap[y][x].length);
+      for (let i = 0; i < currentTile.length; i++) {
+        const knownEntity = { ...currentTile[i] };
+        knownMap[y][x].push(knownEntity);
+        knownMap[y][x].sort((a, b) => b.z - a.z);
+      }
+    }
   }
-
-  ctx.drawImage(
-    asset,
-    0,
-    0,
-    TILE_SIZE,
-    TILE_SIZE,
-    (entity.lastX -
-      viewPort.x +
-      Math.floor(CANVAS_TILED_WIDTH / 2) -
-      Math.floor(viewPort.w / 2)) *
-      TILE_SIZE,
-    (entity.lastY -
-      viewPort.y +
-      Math.floor(CANVAS_TILED_HEIGHT / 2) -
-      Math.floor(viewPort.h / 2)) *
-      TILE_SIZE,
-    TILE_SIZE,
-    TILE_SIZE
-  );
 }
 
 function tryMovement(entity, dx, dy) {

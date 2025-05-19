@@ -26,10 +26,14 @@ const MAP_TILED_HEIGHT = 100;
 const spritesheet = document.createElement("img");
 
 const tilemap = [];
+const knownMap = [];
+
 for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
   tilemap.push([]);
+  knownMap.push([]);
   for (let x = 0; x < MAP_TILED_WIDTH; x++) {
     tilemap[y].push([]);
+    knownMap[y].push([]);
   }
 }
 
@@ -63,6 +67,7 @@ export {
   spritesheet,
   viewPort,
   tilemap,
+  knownMap,
   entities,
   rooms,
 };
