@@ -70,4 +70,26 @@ function getEnemyEntitiesAround(anchor, distance) {
   return entities;
 }
 
-export { randomInt, colorize, getEntity, isInSquare, getEnemyEntitiesAround };
+function getNeighbors(x, y) {
+  const offsets = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  return offsets.map(([dx, dy]) => [x + dx, y + dy]);
+}
+
+export {
+  randomInt,
+  colorize,
+  getEntity,
+  isInSquare,
+  getEnemyEntitiesAround,
+  getNeighbors,
+};
