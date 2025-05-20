@@ -12,7 +12,7 @@ import {
 import { uniqueAssets, uniqueAssetsDark } from "../Entity/entities.js";
 import { addLog } from "../ui.js";
 import { attackAction, moveAction, skipAction } from "./actions.js";
-import { isInSquare } from "../utils.js";
+import { getNeighbors, isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -78,6 +78,32 @@ function updateKnownMap() {
         const knownEntity = { ...currentTile[i] };
         knownMap[y][x].push(knownEntity);
         knownMap[y][x].sort((a, b) => b.z - a.z);
+
+        // remove duplicate neighbors
+        const neighbors = getNeighbors(x, y);
+
+        for (
+          let neighborIndex = 0;
+          neighborIndex < neighbors.length;
+          neighborIndex++
+        ) {
+          const neighbor = neighbors[neighborIndex];
+
+          //fallback in case neighbor is out of bounds
+          if (!knownMap[neighbor[1]] || !knownMap[neighbor[1]][neighbor[0]])
+            continue;
+          const neighborTile = knownMap[neighbor[1]][neighbor[0]];
+
+          for (
+            let entityIndex = 0;
+            entityIndex < neighborTile.length;
+            entityIndex++
+          ) {
+            const entity = neighborTile[entityIndex];
+            if (entity.id == knownEntity.id)
+              neighborTile.splice(entityIndex, 1);
+          }
+        }
       }
     }
   }
