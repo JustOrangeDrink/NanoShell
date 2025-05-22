@@ -3,18 +3,20 @@ import { spritesheet, viewPort, rooms, entities } from "./globals.js";
 import {
   carveRooms,
   fillMap,
-  generateMap,
+  connectRooms,
+  generateRooms,
   populateMap,
 } from "./System/mapgen.js";
-import { getEnemyEntitiesAround, randomInt } from "./utils.js";
+import { getEnemyEntitiesAround, getEntity, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
   fillMap();
-  generateMap();
+  generateRooms();
   carveRooms();
+  connectRooms();
   initSpecialEntities();
   populateMap();
   initSystem();

@@ -98,10 +98,7 @@ class Room {
 const disconnectedRooms = [];
 const connectedRooms = [];
 
-function generateMap() {
-  generateSections();
-  generateRooms();
-
+function connectRooms() {
   disconnectedRooms.push(...rooms);
 
   const startingRoom = disconnectedRooms.splice(
@@ -176,6 +173,7 @@ function generateMap() {
 }
 
 function generateRooms() {
+  generateSections();
   for (let y = 0; y < sectionGrid.length; y++) {
     for (let x = 0; x < sectionGrid[0].length; x++) {
       const section = sectionGrid[y][x][0];
@@ -347,7 +345,8 @@ export {
   carveTile,
   carveRooms,
   hasRoomInRect,
-  generateMap,
+  connectRooms,
   sectionGrid,
   populateMap,
+  generateRooms,
 };
