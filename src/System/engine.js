@@ -10,9 +10,7 @@ import {
   knownMap,
 } from "../globals.js";
 import { uniqueAssets, uniqueAssetsDark } from "../Entity/entities.js";
-import { addLog } from "../ui.js";
 import { attackAction, moveAction, skipAction } from "./actions.js";
-import { getNeighbors, isInSquare } from "../utils.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -24,19 +22,9 @@ function renderWorld() {
 
       const entity = knownTile[0];
       if (!entity) continue;
-
       let asset;
 
-      if (
-        isInSquare(
-          x,
-          y,
-          viewPort.x - 1,
-          viewPort.y - 1,
-          viewPort.x + viewPort.w,
-          viewPort.y + viewPort.h
-        )
-      ) {
+      if (entity.viewed) {
         asset = uniqueAssets[entity.name];
       } else {
         asset = uniqueAssetsDark[entity.name];
@@ -65,46 +53,97 @@ function renderWorld() {
   }
 }
 
+function revealLine(x0, y0, x1, y1) {
+  const startX = x0;
+  const startY = y0;
+
+  let dx = Math.abs(x1 - x0);
+  let dy = -Math.abs(y1 - y0);
+
+  let sx = x0 < x1 ? 1 : -1;
+  let sy = y0 < y1 ? 1 : -1;
+
+  let error = dx + dy;
+
+  mainLoop: while (true) {
+    // Вызов функции для отображения точки
+    if (tilemap[y0] && tilemap[y0][x0]) {
+      for (let i = 0; i < tilemap[y0][x0].length; i++) {
+        const entity = tilemap[y0][x0][i];
+        entity.viewed = true;
+
+        const knownEntity = { ...tilemap[y0][x0][i] };
+
+        knownMap[y0][x0].splice(i, 1);
+        knownMap[y0][x0].push(knownEntity);
+        knownMap[y0][x0].sort((a, b) => b.z - a.z);
+
+        // this is needed to avoid "blindness" when starting point is occluded
+        if (entity.x == startX && entity.y == startY) continue;
+
+        if (entity.getComponent("Occlusion")) break mainLoop;
+      }
+    }
+
+    let e2 = 2 * error;
+
+    if (e2 >= dy) {
+      if (x0 === x1) break;
+      error += dy;
+      x0 += sx;
+    }
+
+    if (e2 <= dx) {
+      if (y0 === y1) break;
+      error += dx;
+      y0 += sy;
+    }
+  }
+}
+
+function clearVision() {
+  for (let y = 0; y < knownMap.length; y++) {
+    for (let x = 0; x < knownMap[0].length; x++) {
+      knownMap[y][x].forEach((el) => {
+        el.viewed = false;
+      });
+    }
+  }
+  for (let y = 0; y < tilemap.length; y++) {
+    for (let x = 0; x < tilemap[0].length; x++) {
+      tilemap[y][x].forEach((el) => {
+        el.viewed = false;
+      });
+    }
+  }
+}
+
 function updateKnownMap() {
+  clearVision();
+
   for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
     for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
       if (!tilemap[y] || !tilemap[y][x]) continue;
-      const currentTile = tilemap[y][x];
+      if (
+        !(
+          y == viewPort.y ||
+          y == 0 ||
+          y == viewPort.y + viewPort.h - 1 ||
+          y == tilemap.length - 1 ||
+          x == viewPort.x ||
+          x == 0 ||
+          x == viewPort.x + viewPort.w - 1 ||
+          x == tilemap[0].length - 1
+        )
+      )
+        continue;
 
-      if (currentTile.length === 0) continue;
-
-      knownMap[y][x].splice(0, knownMap[y][x].length);
-      for (let i = 0; i < currentTile.length; i++) {
-        const knownEntity = { ...currentTile[i] };
-        knownMap[y][x].push(knownEntity);
-        knownMap[y][x].sort((a, b) => b.z - a.z);
-
-        // remove duplicate neighbors
-        const neighbors = getNeighbors(x, y);
-
-        for (
-          let neighborIndex = 0;
-          neighborIndex < neighbors.length;
-          neighborIndex++
-        ) {
-          const neighbor = neighbors[neighborIndex];
-
-          //fallback in case neighbor is out of bounds
-          if (!knownMap[neighbor[1]] || !knownMap[neighbor[1]][neighbor[0]])
-            continue;
-          const neighborTile = knownMap[neighbor[1]][neighbor[0]];
-
-          for (
-            let entityIndex = 0;
-            entityIndex < neighborTile.length;
-            entityIndex++
-          ) {
-            const entity = neighborTile[entityIndex];
-            if (entity.id == knownEntity.id)
-              neighborTile.splice(entityIndex, 1);
-          }
-        }
-      }
+      revealLine(
+        Math.floor(viewPort.x + viewPort.w / 2),
+        Math.floor(viewPort.y + viewPort.h / 2),
+        x,
+        y
+      );
     }
   }
 }
