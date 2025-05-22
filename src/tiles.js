@@ -50,7 +50,7 @@ class Tile {
 
 new Tile(
   "Player",
-  3,
+  4,
   0,
   4,
   [1, 1, 1],
@@ -66,7 +66,7 @@ new Tile(
 
 new Tile(
   "Guard",
-  2,
+  3,
   7,
   4,
   [1, 0, 1],
