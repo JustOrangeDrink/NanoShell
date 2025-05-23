@@ -3,9 +3,8 @@ import { spritesheet, viewPort, rooms, entities } from "./globals.js";
 import {
   carveRooms,
   fillMap,
-  connectRooms,
-  generateRooms,
   populateMap,
+  generateMap,
 } from "./System/mapgen.js";
 import { getEnemyEntitiesAround, getEntity, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
@@ -14,9 +13,8 @@ import { addBelow, updateUi } from "./ui.js";
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
   fillMap();
-  generateRooms();
+  generateMap();
   carveRooms();
-  connectRooms();
   initSpecialEntities();
   populateMap();
   initSystem();
