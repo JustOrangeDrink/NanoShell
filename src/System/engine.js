@@ -195,7 +195,8 @@ function getBlockingEntity(entitiesOnTile) {
   for (let i = 0; i < entitiesOnTile.length; i++) {
     const entityOnTile = entitiesOnTile[i];
     const collisionComponent = entityOnTile.getComponent("Collision");
-    if (collisionComponent) return entitiesOnTile[i];
+    if (collisionComponent && collisionComponent.collision)
+      return entitiesOnTile[i];
   }
   return false;
 }
@@ -217,7 +218,7 @@ function handleCollision(entity, dx, dy) {
     return true;
   }
 
-  if (!collision) return;
+  if (!collision.collision) return;
 
   console.log(`Collision with ${blockingEntity.name}!`);
 
@@ -288,7 +289,8 @@ function handleInput(event, player) {
       break;
 
     case " ":
-      skipAction.makeAction(player);
+      player.getComponent("Collision").collision =
+        !player.getComponent("Collision").collision;
       break;
     case "5":
       skipAction.makeAction(player);
