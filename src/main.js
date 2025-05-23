@@ -61,5 +61,8 @@ function handleTurn() {
 function wakeUpSleepingEnemy() {
   const enemies = getEnemyEntitiesAround(player, 5);
   if (enemies.length > 0)
-    enemies.forEach((el) => (el.getComponent("Behavior").active = true));
+    enemies.forEach((el) => {
+      if (el.getComponent("Behavior"))
+        el.getComponent("Behavior").active = true;
+    });
 }
