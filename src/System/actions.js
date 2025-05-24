@@ -56,13 +56,25 @@ const moveAction = new Action("Move", 1, (entity, dx, dy) => {
 });
 
 const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
-  const hitChance = randomInt(0, 100) + src.getComponent("Stats").acc;
-  const damage = randomInt(0, dmg) + src.getComponent("Stats").str;
-  const armor = trg.getComponent("Stats").armor;
+  const srcAttributes = src.getComponent("Attributes");
+  const trgStats = trg.getComponent("Stats");
+  const trgAttributes = trg.getComponent("Attributes");
+
+  const dv = trgStats.dv + trgAttributes.agi;
+  const isHit = randomInt(0, 100) + srcAttributes.agi > dv;
+
+  let damage =
+    randomInt(0, dmg) +
+    randomInt(0, srcAttributes.str) -
+    randomInt(0, trgStats.av);
 
   if (src.name === "Player") {
-    if (hitChance < armor) {
+    if (!isHit) {
       addLog(`You miss ${trg.name}!`, "gray");
+      return;
+    }
+    if (damage <= 0) {
+      addLog(`${trg.name} blocks your attack!`, "gray");
       return;
     }
     addLog(`You hit ${trg.name} for ${damage} damage!`, "yellow");
@@ -71,8 +83,12 @@ const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
   }
 
   if (trg.name == "Player") {
-    if (hitChance < armor) {
+    if (!isHit) {
       addLog(`${src.name} miss you!`, "gray");
+      return;
+    }
+    if (damage <= 0) {
+      addLog(`You block ${src.name}'s attack!`, "gray");
       return;
     }
     addLog(`${src.name} hit you for ${damage} damage!`, "yellow");
@@ -80,9 +96,14 @@ const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
     return;
   }
 
-  if (hitChance < armor) {
+  if (!isHit) {
     addLog(`${src.name} miss ${trg.name}!`, "yellow");
   }
+  if (damage <= 0) {
+    addLog(`${trg.name} blocks ${src.name}'s attack!`, "gray");
+    return;
+  }
+
   addLog(`${src.name} hit ${trg.name} for ${damage} damage!`, "yellow");
   trgHealth.takeDamage(trg, damage);
 });

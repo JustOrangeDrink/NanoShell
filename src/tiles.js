@@ -8,6 +8,8 @@ import {
   Behavior,
   Stats,
   Occlusion,
+  Nanites,
+  Attributes,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -57,10 +59,12 @@ new Tile(
   [
     [Collision, [0, 0]],
     [Health, [30, 30]],
+    [Nanites, [10]],
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],
-    [Stats, [2, 65, 10]],
+    [Stats, [65, 10]],
+    [Attributes, [3, 5, 3]],
   ]
 );
 
@@ -77,7 +81,8 @@ new Tile(
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
     [Behavior, [guardBehavior]],
-    [Stats, [1, 40, 10]],
+    [Stats, [40, 1]],
+    [Attributes, [1, 1, 1]],
   ]
 );
 

@@ -35,6 +35,14 @@ class Health {
   }
 }
 
+class Nanites {
+  constructor(nanites) {
+    this.type = "Nanites";
+    this.currentNanites = nanites;
+    this.maxNanites = nanites;
+  }
+}
+
 class Damage {
   constructor(dmg) {
     this.type = "Damage";
@@ -42,12 +50,20 @@ class Damage {
   }
 }
 
-class Stats {
-  constructor(str, armor, acc) {
-    this.type = "Stats";
+class Attributes {
+  constructor(str, agi, dur) {
+    this.type = "Attributes";
     this.str = str;
-    this.armor = armor;
-    this.acc = acc;
+    this.agi = agi;
+    this.dur = dur;
+  }
+}
+
+class Stats {
+  constructor(dv, av) {
+    this.type = "Stats";
+    this.dv = dv;
+    this.av = av;
   }
 }
 
@@ -86,6 +102,8 @@ export {
   Collision,
   Size,
   Health,
+  Attributes,
+  Nanites,
   Turns,
   Damage,
   Alignment,
