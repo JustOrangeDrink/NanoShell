@@ -5,29 +5,47 @@ import { getEntity } from "./utils.js";
 const logs = [];
 const below = [];
 
+let player;
 function updateUi() {
-  const player = getEntity(false, "Player");
-  let playerCurrentHp = player.getComponent("Health").currentHp;
-  let playerMaxHp = player.getComponent("Health").maxHp;
-  let playerDamage = player.getComponent("Damage").dmg;
+  if (!player) player = getEntity(false, "Player");
+
+  const healthComponent = player.getComponent("Health");
+  const statsComponent = player.getComponent("Stats");
+  const attributesComponent = player.getComponent("Attributes");
+  const nanitesComponent = player.getComponent("Nanites");
+
+  const currentHp = healthComponent.currentHp;
+  const maxHp = healthComponent.maxHp;
+  const currentNanites = nanitesComponent.currentNanites;
+  const maxNanites = nanitesComponent.maxNanites;
+
+  const dv = statsComponent.dv;
+  const av = statsComponent.av;
+
+  const str = attributesComponent.str;
+  const agi = attributesComponent.agi;
+  const dur = attributesComponent.dur;
 
   uiCtx.clearRect(0, 0, 1000, 1000);
 
   uiCtx.font = "bold 25px courier";
   uiCtx.fillStyle = "lime";
 
-  uiCtx.fillText(`Performance Indicators`, 60, 50);
+  uiCtx.fillText(`Performance Indicators`, 60, 40);
 
   uiCtx.font = "20px courier";
-  uiCtx.fillText(
-    `System Integrity: ${playerCurrentHp}/${playerMaxHp}`,
-    10,
-    100
-  );
-  uiCtx.fillText(`Attack Potential: ${playerDamage}`, 10, 130);
+  uiCtx.fillText(`System Integrity: ${currentHp}/${maxHp}`, 10, 100);
+  uiCtx.fillText(`Nanite Reservoir: ${currentNanites}/${maxNanites}`, 10, 130);
+
+  uiCtx.fillText(`Str: ${str}`, 10, 175);
+  uiCtx.fillText(`Agi: ${agi}`, 10, 200);
+  uiCtx.fillText(`Dur: ${dur}`, 10, 225);
+
+  uiCtx.fillText(`DV: ${dv}`, 125, 175);
+  uiCtx.fillText(`AV: ${av}`, 125, 200);
 
   uiCtx.fillStyle = "yellow";
-  uiCtx.fillText(`Time: ${time}`, 10, 200);
+  uiCtx.fillText(`Time: ${time}`, 10, 325);
   uiCtx.fillStyle = "lime";
 
   writeLogs();
@@ -41,21 +59,21 @@ function addBelow(entities) {
 }
 
 function writeBelow() {
-  uiCtx.fillText("Below:", 10, 250);
+  uiCtx.fillText("Below:", 10, 350);
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
     const red = entityBelow.color[0] * 255;
     const green = entityBelow.color[1] * 255;
     const blue = entityBelow.color[2] * 255;
     uiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-    uiCtx.fillText(entityBelow.name, 10, 275 + i * 20);
+    uiCtx.fillText(entityBelow.name, 10, 375 + i * 20);
     uiCtx.fillStyle = "lime";
   }
 }
 
 function addLog(text, color) {
   logs.unshift([text, color]);
-  if (logs.length > 8) logs.pop();
+  if (logs.length > 5) logs.pop();
   updateUi();
 }
 
