@@ -243,13 +243,7 @@ function handleCollision(entity, dx, dy) {
     return true;
   }
 
-  attackAction.makeAction(
-    entity,
-    entity,
-    blockingEntity,
-    trgHealth,
-    srcDamage.dmg
-  );
+  attackAction.makeAction(entity, entity, blockingEntity, srcDamage.dmg);
 
   return true;
 }

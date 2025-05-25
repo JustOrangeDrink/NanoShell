@@ -55,7 +55,9 @@ const moveAction = new Action("Move", 1, (entity, dx, dy) => {
   entity.y += dy;
 });
 
-const attackAction = new Action("Attack", 1, (src, trg, trgHealth, dmg) => {
+const attackAction = new Action("Attack", 1, (src, trg, dmg) => {
+  const trgHealth = trg.getComponent("Health");
+
   const srcAttributes = src.getComponent("Attributes");
   const trgStats = trg.getComponent("Stats");
   const trgAttributes = trg.getComponent("Attributes");
