@@ -1,4 +1,5 @@
 import { turnsEntities } from "../Entity/entities.js";
+import { tilemap } from "../globals.js";
 import { addLog } from "../ui.js";
 import { randomInt } from "../utils.js";
 import { tryMovement } from "./engine.js";
@@ -110,4 +111,19 @@ const attackAction = new Action("Attack", 1, (src, trg, dmg) => {
   trgHealth.takeDamage(trg, damage);
 });
 
-export { moveAction, attackAction, skipAction, time };
+const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
+  const inventoryComponent = src.getComponent("Inventory");
+  const trgSizeComponent = trg.getComponent("Size");
+  if (!inventoryComponent || !trgSizeComponent) return;
+  if (trgSizeComponent.size !== "Tiny") {
+    addLog(`${trg.name} is too big!`, "white");
+    return;
+  }
+
+  inventoryComponent.inventory.push(trg);
+  addLog(`Picked up ${trg.name}`, "white");
+
+  tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
+});
+
+export { moveAction, attackAction, skipAction, pickUpAction, time };

@@ -1,5 +1,6 @@
-import { skipAction } from "./actions.js";
-import { tryMovement } from "./engine.js";
+import { addLog } from "../ui.js";
+import { pickUpAction, skipAction } from "./actions.js";
+import { getEntitiesUnder, tryMovement } from "./engine.js";
 
 function handleInput(event, player) {
   let dx = 0;
@@ -33,6 +34,15 @@ function handleInput(event, player) {
     case "3":
       dx += 1;
       dy += 1;
+      break;
+
+    case "g":
+      const itemsBelow = getEntitiesUnder(player, ["Floor"]);
+      if (itemsBelow.length === 0) {
+        addLog("There is nothing to pick up!", "white");
+        break;
+      }
+      pickUpAction.makeAction(player, player, itemsBelow[0]);
       break;
 
     case " ":
