@@ -18,12 +18,12 @@ import { guardBehavior } from "./System/ai.js";
 const tiles = {};
 
 class Tile {
-  constructor(name, z, charX, charY, rgb, components) {
+  constructor(name, z, charX, charY, color, components) {
     this.name = name;
     this.z = z;
     this.charX = charX;
     this.charY = charY;
-    this.rgb = rgb;
+    this.color = color;
     this.components = components;
 
     tiles[name] = this;
@@ -37,7 +37,7 @@ class Tile {
       this.z,
       this.charX,
       this.charY,
-      this.rgb
+      this.color
     );
 
     if (this.components) {
@@ -88,9 +88,9 @@ new Tile(
   ]
 );
 
-new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["tiny"]]]);
+new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["Tiny"]]]);
 
-new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["tiny"]]]);
+new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["Tiny"]]]);
 
 new Tile("Floor", 0, 9, 15, [0.4, 0.4, 0.4]);
 
