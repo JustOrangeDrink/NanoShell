@@ -1,4 +1,4 @@
-import { renderWorld, handleInput, getEntitiesUnder } from "./System/engine.js";
+import { renderWorld, getEntitiesUnder } from "./System/engine.js";
 import { spritesheet, viewPort, rooms, entities } from "./globals.js";
 import {
   carveRooms,
@@ -9,6 +9,7 @@ import {
 import { getEnemyEntitiesAround, getEntity, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui.js";
+import { handleInput } from "./System/controls.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
