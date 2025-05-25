@@ -12,12 +12,12 @@ function updateUi() {
   const healthComponent = player.getComponent("Health");
   const statsComponent = player.getComponent("Stats");
   const attributesComponent = player.getComponent("Attributes");
-  const nanitesComponent = player.getComponent("Nanites");
+  const cpuComponent = player.getComponent("CPU");
 
   const currentHp = healthComponent.currentHp;
   const maxHp = healthComponent.maxHp;
-  const currentNanites = nanitesComponent.currentNanites;
-  const maxNanites = nanitesComponent.maxNanites;
+  const currentTemperature = cpuComponent.currentTemperature;
+  const maxTemperature = cpuComponent.maxTemperature;
 
   const dv = statsComponent.dv;
   const av = statsComponent.av;
@@ -35,7 +35,11 @@ function updateUi() {
 
   uiCtx.font = "20px courier";
   uiCtx.fillText(`System Integrity: ${currentHp}/${maxHp}`, 10, 100);
-  uiCtx.fillText(`Nanite Reservoir: ${currentNanites}/${maxNanites}`, 10, 130);
+  uiCtx.fillText(
+    `CPU Temperature: ${currentTemperature}/${maxTemperature}`,
+    10,
+    130
+  );
 
   uiCtx.fillText(`Str: ${str}`, 10, 175);
   uiCtx.fillText(`Agi: ${agi}`, 10, 200);

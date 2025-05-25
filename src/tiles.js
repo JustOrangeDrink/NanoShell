@@ -8,7 +8,7 @@ import {
   Behavior,
   Stats,
   Occlusion,
-  Nanites,
+  CPU,
   Attributes,
   Inventory,
 } from "./Component/components.js";
@@ -60,7 +60,7 @@ new Tile(
   [
     [Collision, [0, 0]],
     [Health, [30, 30]],
-    [Nanites, [10]],
+    [CPU, [10]],
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],

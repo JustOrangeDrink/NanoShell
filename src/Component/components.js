@@ -35,11 +35,11 @@ class Health {
   }
 }
 
-class Nanites {
-  constructor(nanites) {
-    this.type = "Nanites";
-    this.currentNanites = nanites;
-    this.maxNanites = nanites;
+class CPU {
+  constructor(maxTemperature) {
+    this.type = "CPU";
+    this.currentTemperature = 0;
+    this.maxTemperature = maxTemperature;
   }
 }
 
@@ -110,7 +110,7 @@ export {
   Size,
   Health,
   Attributes,
-  Nanites,
+  CPU,
   Turns,
   Damage,
   Alignment,
