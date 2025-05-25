@@ -10,6 +10,7 @@ import {
   Occlusion,
   Nanites,
   Attributes,
+  Inventory,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -65,6 +66,7 @@ new Tile(
     [Alignment, ["Good"]],
     [Stats, [65, 10]],
     [Attributes, [3, 5, 3]],
+    [Inventory, []],
   ]
 );
 

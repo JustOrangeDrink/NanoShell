@@ -98,6 +98,13 @@ class Occlusion {
   }
 }
 
+class Inventory {
+  constructor() {
+    this.type = "Inventory";
+    this.inventory = [];
+  }
+}
+
 export {
   Collision,
   Size,
@@ -110,4 +117,5 @@ export {
   Behavior,
   Stats,
   Occlusion,
+  Inventory,
 };
