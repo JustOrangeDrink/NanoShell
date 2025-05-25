@@ -149,7 +149,7 @@ function updateKnownMap() {
 }
 
 function tryMovement(entity, dx, dy) {
-  if (dx === 0 && dy === 0) moveAction.makeAction(entity, entity, 0, 0);
+  if (dx === 0 && dy === 0) skipAction.makeAction(entity);
 
   const dstX = entity.x + dx;
   const dstY = entity.y + dy;
@@ -160,7 +160,7 @@ function tryMovement(entity, dx, dy) {
     dstX < 0 ||
     dstY < 0
   ) {
-    moveAction.makeAction(entity, entity, 0, 0);
+    skipAction.makeAction(entity);
     return;
   }
 
@@ -226,7 +226,7 @@ function handleCollision(entity, dx, dy) {
   const trgHealth = blockingEntity.getComponent("Health");
   const srcDamage = entity.getComponent("Damage");
   if (!srcDamage || (!trgHealth && entity.name != "Player")) {
-    moveAction.makeAction(entity, entity, 0, 0);
+    skipAction.makeAction(entity);
     return true;
   }
 
@@ -239,7 +239,7 @@ function handleCollision(entity, dx, dy) {
     entityAlignment.alignment === targetAlignment.alignment &&
     entity.name != "Player"
   ) {
-    moveAction.makeAction(entity, entity, 0, 0);
+    skipAction.makeAction(entity);
     return true;
   }
 
