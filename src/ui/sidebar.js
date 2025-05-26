@@ -54,7 +54,6 @@ function updateUi() {
   uiCtx.fillText(`QKN: ${qkn}`, 125, 225);
 
   timeShift = countDigits(time.currentTime) * 10 + 100;
-  console.log(timeShift);
   uiCtx.fillStyle = "yellow";
   uiCtx.fillText(`Time: ${time.currentTime}`, 10, 325);
   uiCtx.fillText(`(${time.timeJump})`, timeShift, 325);

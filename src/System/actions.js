@@ -69,13 +69,13 @@ const attackAction = new Action("Attack", 1, (src, trg, dmg) => {
   const trgStats = trg.getComponent("Stats");
   const trgAttributes = trg.getComponent("Attributes");
 
-  const dv = trgStats.dv + trgAttributes.agi;
-  const isHit = randomInt(0, 100) + srcAttributes.agi > dv;
+  const ddg = trgStats.ddg + trgAttributes.agi;
+  const isHit = randomInt(0, 100) + srcAttributes.agi > ddg;
 
   let damage =
     randomInt(0, dmg) +
     randomInt(0, srcAttributes.str) -
-    randomInt(0, trgStats.av);
+    randomInt(0, trgStats.arm);
 
   if (src.name === "Player") {
     if (!isHit) {
