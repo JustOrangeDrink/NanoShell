@@ -1,10 +1,8 @@
 import { turnsEntities } from "../Entity/entities.js";
-import { tilemap } from "../globals.js";
+import { tilemap, time } from "../globals.js";
 import { addLog } from "../ui/sidebar.js";
 import { randomInt } from "../utils.js";
 import { tryMovement } from "./engine.js";
-
-let time = 0;
 
 class Action {
   constructor(name, timeCost, action) {
@@ -19,7 +17,8 @@ class Action {
     if (!turnsComponent) return;
 
     if (entity.name == "Player") {
-      time += this.timeCost;
+      time.currentTime += this.timeCost;
+      time.timeJump = this.timeCost;
       passTime();
     }
 
@@ -37,19 +36,20 @@ function passTime() {
     if (!behavior) continue;
 
     if (behavior.active === false) {
-      turnsComponent.currentTime = time;
+      turnsComponent.currentTime = time.currentTime;
       continue;
     }
 
     if (entity.name == "Player") continue;
 
-    while (turnsComponent.currentTime < time) {
+    while (turnsComponent.currentTime < time.currentTime) {
       behavior.useBehavior(entity);
     }
   }
 }
 
 const skipAction = new Action("Skip", 1, () => {});
+const longSkipAction = new Action("Long Skip", 50, () => {});
 
 const moveAction = new Action("Move", 1, (entity, dx, dy) => {
   entity.x += dx;
@@ -126,4 +126,4 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
   tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
 });
 
-export { moveAction, attackAction, skipAction, pickUpAction, time };
+export { moveAction, attackAction, skipAction, pickUpAction, longSkipAction };

@@ -1,11 +1,15 @@
 import { uiCanvas, uiCtx } from "../globals.js";
-import { time } from "../System/actions.js";
+import { time } from "../globals.js";
 import { getEntity } from "../utils.js";
 
 const logs = [];
 const below = [];
 
 let player;
+
+let timeShiftLimit = 10;
+let timeShift = 100;
+
 function updateUi() {
   if (!player) player = getEntity(false, "Player");
 
@@ -48,8 +52,13 @@ function updateUi() {
   uiCtx.fillText(`DV: ${dv}`, 125, 175);
   uiCtx.fillText(`AV: ${av}`, 125, 200);
 
+  if (time.currentTime >= timeShiftLimit) {
+    timeShiftLimit *= 10;
+    timeShift += 12;
+  }
   uiCtx.fillStyle = "yellow";
-  uiCtx.fillText(`Time: ${time}`, 10, 325);
+  uiCtx.fillText(`Time: ${time.currentTime}`, 10, 325);
+  uiCtx.fillText(`(${time.timeJump})`, timeShift, 325);
   uiCtx.fillStyle = "lime";
 
   writeLogs();

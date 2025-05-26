@@ -52,6 +52,11 @@ const viewPort = {
 
 const rooms = [];
 
+const time = {
+  currentTime: 0,
+  timeJump: 0,
+};
+
 export {
   canvas,
   ctx,
@@ -70,4 +75,5 @@ export {
   knownMap,
   entities,
   rooms,
+  time,
 };
