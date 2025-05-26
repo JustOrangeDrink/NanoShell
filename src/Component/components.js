@@ -60,10 +60,11 @@ class Attributes {
 }
 
 class Stats {
-  constructor(dv, av) {
+  constructor(ddg, arm, qkn) {
     this.type = "Stats";
-    this.dv = dv;
-    this.av = av;
+    this.ddg = ddg;
+    this.arm = arm;
+    this.qkn = qkn;
   }
 }
 

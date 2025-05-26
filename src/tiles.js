@@ -64,7 +64,7 @@ new Tile(
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],
-    [Stats, [65, 10]],
+    [Stats, [65, 10, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
   ]
@@ -83,7 +83,7 @@ new Tile(
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
     [Behavior, [guardBehavior]],
-    [Stats, [40, 1]],
+    [Stats, [40, 1, 1]],
     [Attributes, [1, 1, 1]],
   ]
 );

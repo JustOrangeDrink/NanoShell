@@ -1,13 +1,12 @@
 import { uiCanvas, uiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import { getEntity } from "../utils.js";
+import { countDigits, getEntity } from "../utils.js";
 
 const logs = [];
 const below = [];
 
 let player;
 
-let timeShiftLimit = 10;
 let timeShift = 100;
 
 function updateUi() {
@@ -23,8 +22,9 @@ function updateUi() {
   const currentTemperature = cpuComponent.currentTemperature;
   const maxTemperature = cpuComponent.maxTemperature;
 
-  const dv = statsComponent.dv;
-  const av = statsComponent.av;
+  const ddg = statsComponent.ddg;
+  const arm = statsComponent.arm;
+  const qkn = statsComponent.qkn;
 
   const str = attributesComponent.str;
   const agi = attributesComponent.agi;
@@ -49,13 +49,12 @@ function updateUi() {
   uiCtx.fillText(`Agi: ${agi}`, 10, 200);
   uiCtx.fillText(`Dur: ${dur}`, 10, 225);
 
-  uiCtx.fillText(`DV: ${dv}`, 125, 175);
-  uiCtx.fillText(`AV: ${av}`, 125, 200);
+  uiCtx.fillText(`DDG: ${ddg}`, 125, 175);
+  uiCtx.fillText(`ARM: ${arm}`, 125, 200);
+  uiCtx.fillText(`QKN: ${qkn}`, 125, 225);
 
-  if (time.currentTime >= timeShiftLimit) {
-    timeShiftLimit *= 10;
-    timeShift += 12;
-  }
+  timeShift = countDigits(time.currentTime) * 10 + 100;
+  console.log(timeShift);
   uiCtx.fillStyle = "yellow";
   uiCtx.fillText(`Time: ${time.currentTime}`, 10, 325);
   uiCtx.fillText(`(${time.timeJump})`, timeShift, 325);

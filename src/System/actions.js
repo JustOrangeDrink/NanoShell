@@ -1,7 +1,7 @@
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { addLog } from "../ui/sidebar.js";
-import { randomInt } from "../utils.js";
+import { randomInt, roundToOne } from "../utils.js";
 import { tryMovement } from "./engine.js";
 
 class Action {
@@ -16,13 +16,19 @@ class Action {
     const turnsComponent = entity.getComponent("Turns");
     if (!turnsComponent) return;
 
+    const totalTimeCost = roundToOne(
+      this.timeCost / entity.getComponent("Stats").qkn
+    );
+
     if (entity.name == "Player") {
-      time.currentTime += this.timeCost;
-      time.timeJump = this.timeCost;
+      time.currentTime = roundToOne(time.currentTime + totalTimeCost);
+      time.timeJump = totalTimeCost;
       passTime();
     }
 
-    turnsComponent.currentTime += this.timeCost;
+    turnsComponent.currentTime = roundToOne(
+      turnsComponent.currentTime + totalTimeCost
+    );
     document.dispatchEvent(new Event("gameTurn"));
   }
 }
@@ -51,9 +57,9 @@ function passTime() {
 const skipAction = new Action("Skip", 1, () => {});
 const longSkipAction = new Action("Long Skip", 50, () => {});
 
-const moveAction = new Action("Move", 1, (entity, dx, dy) => {
-  entity.x += dx;
-  entity.y += dy;
+const moveAction = new Action("Move", 1, (src, dx, dy) => {
+  src.x += dx;
+  src.y += dy;
 });
 
 const attackAction = new Action("Attack", 1, (src, trg, dmg) => {

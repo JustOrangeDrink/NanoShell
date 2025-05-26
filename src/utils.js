@@ -85,6 +85,14 @@ function getNeighbors(x, y) {
   return offsets.map(([dx, dy]) => [x + dx, y + dy]);
 }
 
+function roundToOne(num) {
+  return Math.round(num * 10) / 10;
+}
+
+function countDigits(num) {
+  return num.toString().replace(",", "").length;
+}
+
 export {
   randomInt,
   colorize,
@@ -92,4 +100,6 @@ export {
   isInSquare,
   getEnemyEntitiesAround,
   getNeighbors,
+  roundToOne,
+  countDigits,
 };
