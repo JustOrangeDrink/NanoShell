@@ -8,7 +8,7 @@ import {
 } from "./System/mapgen.js";
 import { getEnemyEntitiesAround, getEntity, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
-import { addBelow, updateUi } from "./ui.js";
+import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
 
 spritesheet.src = "../assets/spritesheet.png";

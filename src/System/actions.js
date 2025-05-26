@@ -1,6 +1,6 @@
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap } from "../globals.js";
-import { addLog } from "../ui.js";
+import { addLog } from "../ui/sidebar.js";
 import { randomInt } from "../utils.js";
 import { tryMovement } from "./engine.js";
 

@@ -1,4 +1,4 @@
-import { addLog } from "../ui.js";
+import { addLog } from "../ui/sidebar.js";
 import { pickUpAction, skipAction } from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 

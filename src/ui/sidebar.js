@@ -1,6 +1,6 @@
-import { uiCanvas, uiCtx } from "./globals.js";
-import { time } from "./System/actions.js";
-import { getEntity } from "./utils.js";
+import { uiCanvas, uiCtx } from "../globals.js";
+import { time } from "../System/actions.js";
+import { getEntity } from "../utils.js";
 
 const logs = [];
 const below = [];
