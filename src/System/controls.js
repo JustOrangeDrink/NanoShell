@@ -1,5 +1,5 @@
 import { addLog } from "../ui/sidebar.js";
-import { pickUpAction, skipAction } from "./actions.js";
+import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 
 function handleInput(event, player) {
@@ -53,9 +53,7 @@ function handleInput(event, player) {
       skipAction.makeAction(player);
       break;
     case ".":
-      for (let i = 0; i < 50; i++) {
-        skipAction.makeAction(player);
-      }
+      longSkipAction.makeAction(player);
       break;
 
     default:
