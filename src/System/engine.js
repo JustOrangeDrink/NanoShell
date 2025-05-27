@@ -24,7 +24,7 @@ function renderWorld() {
       if (!entity) continue;
       let asset;
 
-      if (entity.viewed) {
+      if (entity.isViewed) {
         asset = uniqueAssets[entity.name];
       } else {
         asset = uniqueAssetsDark[entity.name];
@@ -70,7 +70,7 @@ function revealLine(x0, y0, x1, y1) {
     if (tilemap[y0] && tilemap[y0][x0]) {
       for (let i = 0; i < tilemap[y0][x0].length; i++) {
         const entity = tilemap[y0][x0][i];
-        entity.viewed = true;
+        entity.isViewed = true;
 
         const knownEntity = { ...tilemap[y0][x0][i] };
 
@@ -105,14 +105,14 @@ function clearVision() {
   for (let y = 0; y < knownMap.length; y++) {
     for (let x = 0; x < knownMap[0].length; x++) {
       knownMap[y][x].forEach((el) => {
-        el.viewed = false;
+        el.isViewed = false;
       });
     }
   }
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[0].length; x++) {
       tilemap[y][x].forEach((el) => {
-        el.viewed = false;
+        el.isViewed = false;
       });
     }
   }

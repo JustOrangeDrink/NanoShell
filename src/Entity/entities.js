@@ -16,7 +16,7 @@ class Entity {
     this.color = color;
     this.components = {};
 
-    this.viewed = false;
+    this.isViewed = false;
     this.revealed = false;
 
     this.lastX = x;
