@@ -124,7 +124,7 @@ function updateKnownMap() {
 
   for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
     for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
-      if (!tilemap[y] || !tilemap[y][x]) continue;
+      if (!tilemap[y]?.[x]) continue;
       if (
         !(
           y == viewPort.y ||
