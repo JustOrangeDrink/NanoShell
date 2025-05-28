@@ -99,6 +99,7 @@ const disconnectedRooms = [];
 const connectedRooms = [];
 
 function generateMap() {
+  fillMap();
   generateSections();
   generateRooms();
   disconnectedRooms.push(...rooms);
@@ -172,6 +173,8 @@ function generateMap() {
       }
     }
   }
+
+  carveRooms();
 }
 
 function generateRooms() {

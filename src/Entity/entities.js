@@ -1,4 +1,3 @@
-import { colorize } from "../utils.js";
 import { entities, tilemap } from "../globals.js";
 
 let entityId = 0;
@@ -21,15 +20,6 @@ class Entity {
 
     this.lastX = x;
     this.lastY = y;
-
-    if (!(this.name in uniqueAssets)) {
-      uniqueAssets[this.name] = colorize(charX, charY, color);
-      uniqueAssetsDark[this.name] = colorize(charX, charY, [
-        color[0] / 4,
-        color[1] / 4,
-        color[2] / 4,
-      ]);
-    }
 
     tilemap[y][x].push(this);
     if (this.name !== "Wall" && this.name !== "Floor") {
@@ -60,16 +50,7 @@ class Entity {
   }
 }
 
-const uniqueAssets = {};
-const uniqueAssetsDark = {};
-
 const vectorEntities = [];
 const turnsEntities = [];
 
-export {
-  Entity,
-  vectorEntities,
-  turnsEntities,
-  uniqueAssets,
-  uniqueAssetsDark,
-};
+export { Entity, vectorEntities, turnsEntities };

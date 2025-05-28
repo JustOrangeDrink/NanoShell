@@ -42,8 +42,8 @@ const entities = [];
 const viewPort = {
   x: 0,
   y: 0,
-  w: 100,
-  h: 100,
+  w: 50,
+  h: 50,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);
@@ -56,6 +56,9 @@ const time = {
   currentTime: 0,
   timeJump: 0,
 };
+
+const uniqueAssets = {};
+const uniqueAssetsDark = {};
 
 export {
   canvas,
@@ -76,4 +79,6 @@ export {
   entities,
   rooms,
   time,
+  uniqueAssets,
+  uniqueAssetsDark,
 };

@@ -2,7 +2,6 @@ import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { addLog } from "../ui/sidebar.js";
 import { randomInt, roundToOne } from "../utils.js";
-import { tryMovement } from "./engine.js";
 
 class Action {
   constructor(name, timeCost, action) {

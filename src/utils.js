@@ -1,4 +1,11 @@
-import { TILE_SIZE, entities, spritesheet, tilemap } from "./globals.js";
+import {
+  TILE_SIZE,
+  entities,
+  spritesheet,
+  tilemap,
+  uniqueAssets,
+  uniqueAssetsDark,
+} from "./globals.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -90,6 +97,21 @@ function countDigits(num) {
   return num.toString().replace(",", "").length;
 }
 
+function addEntityAsset(entity) {
+  if (!(entity.name in uniqueAssets)) {
+    uniqueAssets[entity.name] = colorize(
+      entity.charX,
+      entity.charY,
+      entity.color
+    );
+    uniqueAssetsDark[entity.name] = colorize(entity.charX, entity.charY, [
+      entity.color[0] / 4,
+      entity.color[1] / 4,
+      entity.color[2] / 4,
+    ]);
+  }
+}
+
 export {
   randomInt,
   colorize,
@@ -99,4 +121,5 @@ export {
   getNeighbors,
   roundToOne,
   countDigits,
+  addEntityAsset,
 };

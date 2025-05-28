@@ -1,65 +1,56 @@
 import { renderWorld, getEntitiesUnder } from "./System/engine.js";
-import { spritesheet, viewPort, rooms, entities } from "./globals.js";
+import { spritesheet, viewPort, rooms, uniqueAssets } from "./globals.js";
 import {
   carveRooms,
   fillMap,
   populateMap,
   generateMap,
 } from "./System/mapgen.js";
-import { getEnemyEntitiesAround, getEntity, randomInt } from "./utils.js";
+import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
-  fillMap();
-  generateMap();
-  carveRooms();
-  initSpecialEntities();
-  populateMap();
-  initSystem();
+  for (const key in tiles) {
+    addEntityAsset(tiles[key]);
+  }
   renderWorld();
-  updateUi();
 };
 
-let player;
+generateMap();
+populateMap();
 
-function initSpecialEntities() {
-  const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
+const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
 
-  tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
-  tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+const player = tiles.Player.init(
+  spawnRoom.getCenter().x,
+  spawnRoom.getCenter().y
+);
 
-  player = tiles.Player.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y);
-}
+viewPort.scrollTo(player.x, player.y);
+updateUi();
+wakeUpSleepingEnemies();
+addBelow(getEntitiesUnder(player, []));
 
-function initSystem() {
-  viewPort.scrollTo(player.x, player.y);
+tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 
-  document.addEventListener("keydown", (event) => handleInput(event, player));
+document.addEventListener("keydown", (event) => handleInput(event, player));
 
-  document.addEventListener("gameTurn", () => {
-    handleTurn();
-    writeItemsBelow();
-  });
-
-  wakeUpSleepingEnemy();
-  writeItemsBelow();
-}
-
-function writeItemsBelow() {
-  const entitiesUnder = getEntitiesUnder(player, ["Floor"]);
-  addBelow(entitiesUnder);
-}
+document.addEventListener("gameTurn", () => {
+  handleTurn();
+});
 
 function handleTurn() {
-  wakeUpSleepingEnemy();
+  addBelow(getEntitiesUnder(player, []));
+  wakeUpSleepingEnemies();
   viewPort.scrollTo(player.x, player.y);
   renderWorld();
 }
 
-function wakeUpSleepingEnemy() {
+function wakeUpSleepingEnemies() {
   const enemies = getEnemyEntitiesAround(player, 5);
   if (enemies.length > 0)
     enemies.forEach((el) => {

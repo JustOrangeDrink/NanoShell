@@ -8,8 +8,9 @@ import {
   CANVAS_TILED_HEIGHT,
   tilemap,
   knownMap,
+  uniqueAssets,
+  uniqueAssetsDark,
 } from "../globals.js";
-import { uniqueAssets, uniqueAssetsDark } from "../Entity/entities.js";
 import { attackAction, moveAction, skipAction } from "./actions.js";
 
 function renderWorld() {
@@ -124,21 +125,6 @@ function updateKnownMap() {
 
   for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
     for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
-      if (!tilemap[y]?.[x]) continue;
-      if (
-        !(
-          y == viewPort.y ||
-          y == 0 ||
-          y == viewPort.y + viewPort.h - 1 ||
-          y == tilemap.length - 1 ||
-          x == viewPort.x ||
-          x == 0 ||
-          x == viewPort.x + viewPort.w - 1 ||
-          x == tilemap[0].length - 1
-        )
-      )
-        continue;
-
       revealLine(
         Math.floor(viewPort.x + viewPort.w / 2),
         Math.floor(viewPort.y + viewPort.h / 2),
