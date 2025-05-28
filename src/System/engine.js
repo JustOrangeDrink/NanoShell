@@ -103,16 +103,18 @@ function revealLine(x0, y0, x1, y1) {
 function clearVision() {
   for (let y = 0; y < knownMap.length; y++) {
     for (let x = 0; x < knownMap[0].length; x++) {
-      knownMap[y][x].forEach((el) => {
-        el.isViewed = false;
-      });
+      const tile = knownMap[y][x];
+      for (let i = 0; i < tile.length; i++) {
+        tile[i].isViewed = false;
+      }
     }
   }
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[0].length; x++) {
-      tilemap[y][x].forEach((el) => {
-        el.isViewed = false;
-      });
+      const tile = tilemap[y][x];
+      for (let i = 0; i < tile.length; i++) {
+        tile[i].isViewed = false;
+      }
     }
   }
 }
