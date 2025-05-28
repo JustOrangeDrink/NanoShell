@@ -1,11 +1,6 @@
 import { renderWorld, getEntitiesUnder } from "./System/engine.js";
-import { spritesheet, viewPort, rooms, uniqueAssets } from "./globals.js";
-import {
-  carveRooms,
-  fillMap,
-  populateMap,
-  generateMap,
-} from "./System/mapgen.js";
+import { spritesheet, viewPort, rooms } from "./globals.js";
+import { populateMap, generateMap } from "./System/mapgen.js";
 import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui/sidebar.js";
