@@ -59,10 +59,7 @@ function getEnemyEntitiesAround(anchor, distance) {
       if (i > tilemap.length - 1 || k > tilemap[0].length - 1) continue;
       for (let j = 0; j < tilemap[i][k].length; j++) {
         const entity = tilemap[i][k][j];
-        if (
-          entity.getComponent("Alignment") &&
-          entity.getComponent("Alignment").alignment == "Bad"
-        )
+        if (entity.getComponent("Alignment")?.alignment == "Bad")
           entities.push(entity);
       }
     }

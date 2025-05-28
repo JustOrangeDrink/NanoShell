@@ -66,8 +66,7 @@ function revealLine(x0, y0, x1, y1) {
   let error = dx + dy;
 
   mainLoop: while (true) {
-    // Вызов функции для отображения точки
-    if (tilemap[y0] && tilemap[y0][x0]) {
+    if (tilemap?.[y0]?.[x0]) {
       for (let i = 0; i < tilemap[y0][x0].length; i++) {
         const entity = tilemap[y0][x0][i];
         entity.isViewed = true;
@@ -195,8 +194,7 @@ function getBlockingEntity(entitiesOnTile) {
   for (let i = 0; i < entitiesOnTile.length; i++) {
     const entityOnTile = entitiesOnTile[i];
     const collisionComponent = entityOnTile.getComponent("Collision");
-    if (collisionComponent && collisionComponent.collision)
-      return entitiesOnTile[i];
+    if (collisionComponent?.collision) return entitiesOnTile[i];
   }
   return false;
 }
@@ -213,7 +211,7 @@ function handleCollision(entity, dx, dy) {
   const size = entity.getComponent("Size");
   const smallCollision =
     blockingEntity.getComponent("Collision").smallCollision;
-  if (size && size.size == "tiny" && smallCollision) {
+  if (size?.size == "tiny" && smallCollision) {
     console.log(`Collision with ${blockingEntity.name}!`);
     return true;
   }
