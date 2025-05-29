@@ -79,41 +79,41 @@ const attackAction = new Action("Attack", 1, (src, trg, dmg) => {
 
   if (src.name === "Player") {
     if (!isHit) {
-      addLog(`You miss ${trg.name}!`, "gray");
+      addLog(`You miss ${trg.title}!`, "gray");
       return;
     }
     if (damage <= 0) {
-      addLog(`${trg.name} blocks your attack!`, "gray");
+      addLog(`${trg.title} blocks your attack!`, "gray");
       return;
     }
-    addLog(`You hit ${trg.name} for ${damage} damage!`, "yellow");
+    addLog(`You hit ${trg.title} for ${damage} damage!`, "yellow");
     trgHealth.takeDamage(trg, damage);
     return;
   }
 
   if (trg.name == "Player") {
     if (!isHit) {
-      addLog(`${src.name} miss you!`, "gray");
+      addLog(`${src.title} miss you!`, "gray");
       return;
     }
     if (damage <= 0) {
-      addLog(`You block ${src.name}'s attack!`, "gray");
+      addLog(`You block ${src.title}'s attack!`, "gray");
       return;
     }
-    addLog(`${src.name} hit you for ${damage} damage!`, "yellow");
+    addLog(`${src.title} hit you for ${damage} damage!`, "yellow");
     trgHealth.takeDamage(trg, damage);
     return;
   }
 
   if (!isHit) {
-    addLog(`${src.name} miss ${trg.name}!`, "yellow");
+    addLog(`${src.title} miss ${trg.title}!`, "yellow");
   }
   if (damage <= 0) {
-    addLog(`${trg.name} blocks ${src.name}'s attack!`, "gray");
+    addLog(`${trg.title} blocks ${src.title}'s attack!`, "gray");
     return;
   }
 
-  addLog(`${src.name} hit ${trg.name} for ${damage} damage!`, "yellow");
+  addLog(`${src.title} hit ${trg.title} for ${damage} damage!`, "yellow");
   trgHealth.takeDamage(trg, damage);
 });
 
@@ -122,13 +122,13 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
   const isPickable = trg.getComponent("Pickable");
   if (!inventoryComponent) return;
   if (!isPickable) {
-    addLog(`Cant pick up ${trg.name}!`, "white");
+    addLog(`Cant pick up ${trg.title}!`, "white");
     return;
   }
 
   inventoryComponent.inventory.push(trg);
   updateInventoryUi();
-  addLog(`You have picked up ${trg.name}!`, "white");
+  addLog(`You have picked up ${trg.title}!`, "white");
 
   tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
 });

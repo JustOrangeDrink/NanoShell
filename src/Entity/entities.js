@@ -2,9 +2,10 @@ import { entities, tilemap } from "../globals.js";
 
 let entityId = 0;
 class Entity {
-  constructor(name, x, y, z, charX, charY, color) {
+  constructor(name, title, x, y, z, charX, charY, color) {
     this.id = entityId++;
     this.name = name;
+    this.title = title;
 
     this.x = x;
     this.y = y;
@@ -21,11 +22,19 @@ class Entity {
     this.lastX = x;
     this.lastY = y;
 
+    for (let i = 0; i < tilemap[y][x].length; i++) {
+      const entity = tilemap[y][x][i];
+      if (entity.getComponent("Stack") && entity.name == this.name) {
+        entity.getComponent("Stack").amount++;
+        entity.title = `${entity.getComponent("Stack").amount} ${entity.name}s`;
+        return;
+      }
+    }
+
     tilemap[y][x].push(this);
     if (this.name !== "Wall" && this.name !== "Floor") {
       tilemap[y][x].sort((a, b) => a.z - b.z);
     }
-
     entities.push(this);
   }
 

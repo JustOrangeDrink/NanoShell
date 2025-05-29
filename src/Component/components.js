@@ -113,6 +113,14 @@ class Pickable {
   }
 }
 
+class Stack {
+  constructor() {
+    this.type = "Stack";
+    this.amount = 1;
+    this.stackable = true;
+  }
+}
+
 export {
   Collision,
   Size,
@@ -127,4 +135,5 @@ export {
   Occlusion,
   Inventory,
   Pickable,
+  Stack,
 };

@@ -12,6 +12,7 @@ import {
   Attributes,
   Inventory,
   Pickable,
+  Stack,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -19,8 +20,9 @@ import { guardBehavior } from "./System/ai.js";
 const tiles = {};
 
 class Tile {
-  constructor(name, z, charX, charY, color, components) {
+  constructor(name, title, z, charX, charY, color, components) {
     this.name = name;
+    this.title = title;
     this.z = z;
     this.charX = charX;
     this.charY = charY;
@@ -33,6 +35,7 @@ class Tile {
   init(x, y) {
     const entity = new Entity(
       this.name,
+      this.title,
       x,
       y,
       this.z,
@@ -54,6 +57,7 @@ class Tile {
 
 new Tile(
   "Player",
+  "Player",
   4,
   0,
   4,
@@ -73,6 +77,7 @@ new Tile(
 
 new Tile(
   "Guard",
+  "Guard",
   3,
   7,
   4,
@@ -91,6 +96,7 @@ new Tile(
 
 new Tile(
   "Bit",
+  "Bit",
   1,
   13,
   14,
@@ -98,10 +104,12 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, []],
+    [Stack, []],
   ]
 );
 
 new Tile(
+  "Letter",
   "Letter",
   1,
   5,
@@ -113,9 +121,10 @@ new Tile(
   ]
 );
 
-new Tile("Floor", 0, 9, 15, [0.4, 0.4, 0.4]);
+new Tile("Floor", "Floor", 0, 9, 15, [0.4, 0.4, 0.4]);
 
 new Tile(
+  "Wall",
   "Wall",
   2,
   3,

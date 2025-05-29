@@ -77,7 +77,7 @@ function writeBelow() {
     const green = entityBelow.color[1] * 255;
     const blue = entityBelow.color[2] * 255;
     mainUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-    mainUiCtx.fillText(entityBelow.name, 10, 375 + i * 20);
+    mainUiCtx.fillText(entityBelow.title, 10, 375 + i * 20);
     mainUiCtx.fillStyle = "lime";
   }
 }
