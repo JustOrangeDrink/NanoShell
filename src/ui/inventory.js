@@ -61,8 +61,8 @@ function updateInventoryUi() {
       MENU_Y + 14 + i * 36
     );
     inventoryUiCtx.fillText(
-      `a ${item.name}`,
-      MENU_X + 45,
+      `- a ${item.name}`,
+      MENU_X + 36,
       MENU_Y + 30 + i * 36
     );
   }
