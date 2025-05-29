@@ -11,6 +11,7 @@ import {
   CPU,
   Attributes,
   Inventory,
+  Pickable,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -88,9 +89,29 @@ new Tile(
   ]
 );
 
-new Tile("Bit", 1, 13, 14, [1, 1, 0], [[Size, ["Tiny"]]]);
+new Tile(
+  "Bit",
+  1,
+  13,
+  14,
+  [1, 1, 0],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, []],
+  ]
+);
 
-new Tile("Letter", 1, 5, 15, [1, 0.6, 0.6], [[Size, ["Tiny"]]]);
+new Tile(
+  "Letter",
+  1,
+  5,
+  15,
+  [1, 0.6, 0.6],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, []],
+  ]
+);
 
 new Tile("Floor", 0, 9, 15, [0.4, 0.4, 0.4]);
 

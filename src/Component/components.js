@@ -106,6 +106,13 @@ class Inventory {
   }
 }
 
+class Pickable {
+  constructor() {
+    this.type = "Pickable";
+    this.pickable = true;
+  }
+}
+
 export {
   Collision,
   Size,
@@ -119,4 +126,5 @@ export {
   Stats,
   Occlusion,
   Inventory,
+  Pickable,
 };

@@ -119,10 +119,10 @@ const attackAction = new Action("Attack", 1, (src, trg, dmg) => {
 
 const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
   const inventoryComponent = src.getComponent("Inventory");
-  const trgSizeComponent = trg.getComponent("Size");
-  if (!inventoryComponent || !trgSizeComponent) return;
-  if (trgSizeComponent.size !== "Tiny") {
-    addLog(`${trg.name} is too big!`, "white");
+  const isPickable = trg.getComponent("Pickable");
+  if (!inventoryComponent) return;
+  if (!isPickable) {
+    addLog(`Cant pick up ${trg.name}!`, "white");
     return;
   }
 
