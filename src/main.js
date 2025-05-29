@@ -26,11 +26,12 @@ const player = tiles.Player.init(
 
 viewPort.scrollTo(player.x, player.y);
 updateUi();
-wakeUpSleepingEnemies();
-addBelow(getEntitiesUnder(player, []));
 
 tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
 tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+
+wakeUpSleepingEnemies();
+addBelow(getEntitiesUnder(player, []));
 
 document.addEventListener("keydown", (event) => handleInput(event, player));
 
