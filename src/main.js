@@ -30,10 +30,7 @@ updateUi();
 updateInventoryUi();
 
 tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
-tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
-tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
-tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
-tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+
 tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 
 wakeUpSleepingEnemies();
