@@ -1,3 +1,8 @@
+import {
+  closeInventory,
+  isInventoryOpen,
+  openInventory,
+} from "../ui/inventory.js";
 import { addLog } from "../ui/sidebar.js";
 import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
@@ -6,6 +11,17 @@ function handleInput(event, player) {
   let dx = 0;
   let dy = 0;
 
+  // inventory ui
+  switch (event.key) {
+    case "Escape":
+      closeInventory();
+      break;
+    default:
+      break;
+  }
+
+  // main ui
+  if (isInventoryOpen) return;
   switch (event.key) {
     case "4":
       dx += -1;
@@ -43,6 +59,10 @@ function handleInput(event, player) {
         break;
       }
       pickUpAction.makeAction(player, player, itemsBelow[0]);
+      break;
+
+    case "i":
+      openInventory();
       break;
 
     case " ":

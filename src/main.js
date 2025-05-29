@@ -5,6 +5,7 @@ import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
+import { isInventoryOpen, updateInventoryUi } from "./ui/inventory.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
@@ -26,14 +27,21 @@ const player = tiles.Player.init(
 
 viewPort.scrollTo(player.x, player.y);
 updateUi();
+updateInventoryUi();
 
 tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 
 wakeUpSleepingEnemies();
 addBelow(getEntitiesUnder(player, []));
 
-document.addEventListener("keydown", (event) => handleInput(event, player));
+document.addEventListener("keydown", (event) => {
+  handleInput(event, player);
+});
 
 document.addEventListener("gameTurn", () => {
   handleTurn();

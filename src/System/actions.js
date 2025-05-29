@@ -1,5 +1,6 @@
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
+import { updateInventoryUi } from "../ui/inventory.js";
 import { addLog } from "../ui/sidebar.js";
 import { randomInt, roundToOne } from "../utils.js";
 
@@ -126,6 +127,7 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
   }
 
   inventoryComponent.inventory.push(trg);
+  updateInventoryUi();
   addLog(`You have picked up ${trg.name}!`, "white");
 
   tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);

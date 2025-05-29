@@ -1,29 +1,35 @@
 const html = document.querySelector("html");
 
+const TILE_SIZE = 24;
+
+const spritesheet = document.createElement("img");
+
 const SCREEN_WIDTH = html.clientWidth;
 const SCREEN_HEIGHT = html.clientHeight;
-
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
-const TILE_SIZE = 24;
 
 const CANVAS_TILED_WIDTH = Math.floor((SCREEN_WIDTH * 0.7) / TILE_SIZE);
 const CANVAS_TILED_HEIGHT = Math.floor(SCREEN_HEIGHT / TILE_SIZE);
 
-const uiCanvas = document.querySelectorAll("canvas")[1];
-const uiCtx = uiCanvas.getContext("2d");
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 
-uiCanvas.width = CANVAS_TILED_WIDTH * 0.5 * TILE_SIZE;
-uiCanvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
+const mainUiCanvas = document.querySelectorAll("canvas")[1];
+const mainUiCtx = mainUiCanvas.getContext("2d");
+
+const inventoryUiCanvas = document.querySelectorAll("canvas")[2];
+const inventoryUiCtx = inventoryUiCanvas.getContext("2d");
+
+inventoryUiCanvas.width = SCREEN_WIDTH;
+inventoryUiCanvas.height = SCREEN_HEIGHT;
 
 canvas.width = CANVAS_TILED_WIDTH * TILE_SIZE;
 canvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
+mainUiCanvas.width = CANVAS_TILED_WIDTH * 0.5 * TILE_SIZE;
+mainUiCanvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
+
 const MAP_TILED_WIDTH = 100;
 const MAP_TILED_HEIGHT = 100;
-
-const spritesheet = document.createElement("img");
 
 const tilemap = [];
 const knownMap = [];
@@ -42,8 +48,8 @@ const entities = [];
 const viewPort = {
   x: 0,
   y: 0,
-  w: 50,
-  h: 50,
+  w: 30,
+  h: 30,
   scrollTo(x, y) {
     this.x = x - Math.floor(this.w / 2);
     this.y = y - Math.floor(this.h / 2);
@@ -63,8 +69,10 @@ const uniqueAssetsDark = {};
 export {
   canvas,
   ctx,
-  uiCanvas,
-  uiCtx,
+  mainUiCanvas,
+  mainUiCtx,
+  inventoryUiCanvas,
+  inventoryUiCtx,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   TILE_SIZE,

@@ -14,6 +14,12 @@ canvas {
   background-color: black;
 }
 
-.ui {
+.main_ui {
   border-left: 4px solid rgb(0, 255, 0);
+}
+
+.inventory_ui {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
 }
