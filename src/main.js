@@ -34,7 +34,7 @@ tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
 tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 tiles.Bit.init(spawnRoom.getCenter().x + 2, spawnRoom.getCenter().y);
 
-tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y - 1);
 
 wakeUpSleepingEnemies();
 addBelow(getEntitiesUnder(player, ["Floor"]));

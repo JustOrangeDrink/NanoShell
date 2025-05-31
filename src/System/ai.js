@@ -15,7 +15,9 @@ function guardBehavior(entity) {
   if (player.y === entity.y) dy = 0;
   if (player.y < entity.y) dy = -1;
   if (player.y > entity.y) dy = 1;
+
   tryMovement(entity, dx, dy);
+
   return;
 }
 

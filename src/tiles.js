@@ -13,6 +13,8 @@ import {
   Inventory,
   Pickable,
   Stack,
+  WeaponSlots,
+  Weapon,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -72,6 +74,7 @@ new Tile(
     [Stats, [65, 10, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
+    [WeaponSlots, [1]],
   ]
 );
 
@@ -146,6 +149,7 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, []],
+    [Weapon, [6]],
   ]
 );
 

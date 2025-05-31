@@ -136,35 +136,20 @@ function updateKnownMap() {
 }
 
 function tryMovement(entity, dx, dy) {
-  if (dx === 0 && dy === 0) skipAction.makeAction(entity);
+  const trgEnemy = handleCollision(entity, dx, dy);
 
-  const dstX = entity.x + dx;
-  const dstY = entity.y + dy;
-
-  if (
-    dstX > tilemap[0].length - 1 ||
-    dstY > tilemap.length - 1 ||
-    dstX < 0 ||
-    dstY < 0
-  ) {
-    skipAction.makeAction(entity);
-    return;
-  }
-
-  if (handleCollision(entity, dx, dy)) {
-    return;
-  }
-
-  tilemap[entity.y][entity.x].splice(
-    tilemap[entity.y][entity.x].indexOf(entity),
-    1
-  );
-  tilemap[entity.y + dy][entity.x + dx].push(entity);
-
-  moveAction.makeAction(entity, entity, dx, dy);
+  if (trgEnemy) {
+    const srcDamage = entity.getComponent("Damage");
+    attackAction.makeAction(
+      entity,
+      [entity, trgEnemy, srcDamage.dmg],
+      [entity, trgEnemy]
+    );
+  } else moveAction.makeAction(entity, [entity, dx, dy], [entity, dx, dy]);
 }
 
 function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
+  if (!targetEntity) return;
   if (targetEntity.y > tilemap.length - 1 || targetEntity.y < 0) return;
   if (targetEntity.x > tilemap[0].length - 1 || targetEntity.x < 0) return;
   const entities = tilemap[targetEntity.y][targetEntity.x];
@@ -201,37 +186,19 @@ function handleCollision(entity, dx, dy) {
     blockingEntity.getComponent("Collision").smallCollision;
   if (size?.size == "tiny" && smallCollision) {
     console.log(`Collision with ${blockingEntity.name}!`);
-    return true;
+    return blockingEntity;
   }
 
   if (!collision.collision) return;
 
   console.log(`Collision with ${blockingEntity.name}!`);
-
-  // other stuff like fighting system etc...
-  const trgHealth = blockingEntity.getComponent("Health");
-  const srcDamage = entity.getComponent("Damage");
-  if (!srcDamage || (!trgHealth && entity.name != "Player")) {
-    skipAction.makeAction(entity);
-    return true;
-  }
-
-  const entityAlignment = entity.getComponent("Alignment");
-  const targetAlignment = blockingEntity.getComponent("Alignment");
-
-  if (!entityAlignment || !targetAlignment) return true;
-
-  if (
-    entityAlignment.alignment === targetAlignment.alignment &&
-    entity.name != "Player"
-  ) {
-    skipAction.makeAction(entity);
-    return true;
-  }
-
-  attackAction.makeAction(entity, entity, blockingEntity, srcDamage.dmg);
-
-  return true;
+  return blockingEntity;
 }
 
-export { renderWorld, tryMovement, getEntitiesUnder };
+export {
+  renderWorld,
+  getEntitiesUnder,
+  handleCollision,
+  getBlockingEntity,
+  tryMovement,
+};

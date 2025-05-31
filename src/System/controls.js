@@ -1,10 +1,15 @@
+import { tiles } from "../tiles.js";
 import {
   closeInventory,
   isInventoryOpen,
   openInventory,
 } from "../ui/inventory.js";
-import { addLog } from "../ui/sidebar.js";
-import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
+import {
+  longSkipAction,
+  pickUpAction,
+  skipAction,
+  wieldAction,
+} from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 
 function handleInput(event, player) {
@@ -53,12 +58,19 @@ function handleInput(event, player) {
       break;
 
     case "g":
-      const itemsBelow = getEntitiesUnder(player, ["Floor"]);
-      if (itemsBelow.length === 0) {
-        addLog("There is nothing to pick up!", "white");
-        break;
-      }
-      pickUpAction.makeAction(player, player, itemsBelow[0]);
+      pickUpAction.makeAction(
+        player,
+        [player, getEntitiesUnder(player, "Floor")[0]],
+        [player, getEntitiesUnder(player, "Floor")[0]]
+      );
+      break;
+
+    case "w":
+      wieldAction.makeAction(
+        player,
+        [player, tiles.Sword.init(0, 0)],
+        [tiles.Sword.init(0, 0)]
+      );
       break;
 
     case "i":
