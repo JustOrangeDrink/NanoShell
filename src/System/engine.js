@@ -4,14 +4,13 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   viewPort,
-  CANVAS_TILED_WIDTH,
-  CANVAS_TILED_HEIGHT,
   tilemap,
   knownMap,
   uniqueAssets,
   uniqueAssetsDark,
 } from "../globals.js";
-import { attackAction, moveAction, skipAction } from "./actions.js";
+import { getRelativeCoords } from "../utils.js";
+import { attackAction, moveAction } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -31,24 +30,32 @@ function renderWorld() {
         asset = uniqueAssetsDark[entity.name];
       }
 
+      const [relativeX, relativeY] = getRelativeCoords([entity.x, entity.y]);
       ctx.drawImage(
         asset,
         0,
         0,
         TILE_SIZE,
         TILE_SIZE,
-        (entity.x -
-          viewPort.x +
-          Math.floor(CANVAS_TILED_WIDTH / 2) -
-          Math.floor(viewPort.w / 2)) *
-          TILE_SIZE,
-        (entity.y -
-          viewPort.y +
-          Math.floor(CANVAS_TILED_HEIGHT / 2) -
-          Math.floor(viewPort.h / 2)) *
-          TILE_SIZE,
+        relativeX,
+        relativeY,
         TILE_SIZE,
         TILE_SIZE
+      );
+    }
+  }
+}
+
+function updateKnownMap() {
+  clearVision();
+
+  for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
+    for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
+      revealLine(
+        Math.floor(viewPort.x + viewPort.w / 2),
+        Math.floor(viewPort.y + viewPort.h / 2),
+        x,
+        y
       );
     }
   }
@@ -116,21 +123,6 @@ function clearVision() {
       for (let i = 0; i < tile.length; i++) {
         tile[i].isViewed = false;
       }
-    }
-  }
-}
-
-function updateKnownMap() {
-  clearVision();
-
-  for (let y = viewPort.y; y < viewPort.y + viewPort.h; y++) {
-    for (let x = viewPort.x; x < viewPort.x + viewPort.w; x++) {
-      revealLine(
-        Math.floor(viewPort.x + viewPort.w / 2),
-        Math.floor(viewPort.y + viewPort.h / 2),
-        x,
-        y
-      );
     }
   }
 }

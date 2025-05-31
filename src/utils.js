@@ -1,10 +1,13 @@
 import {
+  CANVAS_TILED_HEIGHT,
+  CANVAS_TILED_WIDTH,
   TILE_SIZE,
   entities,
   spritesheet,
   tilemap,
   uniqueAssets,
   uniqueAssetsDark,
+  viewPort,
 } from "./globals.js";
 
 function randomInt(min, max) {
@@ -113,6 +116,23 @@ function addEntityAsset(entity) {
   }
 }
 
+function getRelativeCoords([x, y]) {
+  const relativeX =
+    (x -
+      viewPort.x +
+      Math.floor(CANVAS_TILED_WIDTH / 2) -
+      Math.floor(viewPort.w / 2)) *
+    TILE_SIZE;
+  const relativeY =
+    (y -
+      viewPort.y +
+      Math.floor(CANVAS_TILED_HEIGHT / 2) -
+      Math.floor(viewPort.h / 2)) *
+    TILE_SIZE;
+
+  return [relativeX, relativeY];
+}
+
 export {
   randomInt,
   randomFloat,
@@ -124,4 +144,5 @@ export {
   roundToOne,
   countDigits,
   addEntityAsset,
+  getRelativeCoords,
 };
