@@ -2,7 +2,7 @@ import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { updateInventoryUi } from "../ui/inventory.js";
 import { addLog } from "../ui/sidebar.js";
-import { randomInt, roundToOne } from "../utils.js";
+import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
 
 class Action {
   constructor(name, timeCost, action) {
@@ -126,10 +126,28 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
     return;
   }
 
-  inventoryComponent.inventory.push(trg);
+  const inventoryItem = getEntityFromArray(
+    false,
+    trg.name,
+    inventoryComponent.inventory
+  );
+
+  if (trg.getComponent("Stack") && inventoryItem) {
+    inventoryItem.getComponent("Stack").amount++;
+    inventoryItem.title = `${inventoryItem.getComponent("Stack").amount} ${
+      inventoryItem.name
+    }s`;
+  } else inventoryComponent.inventory.push(trg);
+
   updateInventoryUi();
   addLog(`You have picked up ${trg.title}!`, "white");
-
+  if (inventoryItem)
+    addLog(
+      `You now have ${inventoryItem.getComponent("Stack").amount} ${
+        inventoryItem.name
+      }s.`,
+      "white"
+    );
   tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
 });
 
