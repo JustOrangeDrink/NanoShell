@@ -48,9 +48,9 @@ function colorize(charX, charY, [r, g, b]) {
   return offscreen;
 }
 
-function getEntity(id, name) {
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
+function getEntityFromArray(id, name, array) {
+  for (let i = 0; i < array.length; i++) {
+    const entity = array[i];
     if (name === entity.name && !id) {
       return entity;
     }
@@ -120,7 +120,7 @@ export {
   randomInt,
   randomFloat,
   colorize,
-  getEntity,
+  getEntityFromArray,
   isInSquare,
   getEnemyEntitiesAround,
   getNeighbors,

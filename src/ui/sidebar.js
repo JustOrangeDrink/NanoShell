@@ -1,6 +1,6 @@
-import { mainUiCanvas, mainUiCtx } from "../globals.js";
+import { entities, mainUiCanvas, mainUiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import { countDigits, getEntity } from "../utils.js";
+import { countDigits, getEntityFromArray } from "../utils.js";
 
 const logs = [];
 const below = [];
@@ -10,7 +10,7 @@ let player;
 let timeShift = 100;
 
 function updateUi() {
-  if (!player) player = getEntity(false, "Player");
+  if (!player) player = getEntityFromArray(false, "Player", entities);
 
   const healthComponent = player.getComponent("Health");
   const statsComponent = player.getComponent("Stats");

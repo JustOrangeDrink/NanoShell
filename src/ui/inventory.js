@@ -1,5 +1,6 @@
 import {
   canvas,
+  entities,
   inventoryUiCanvas,
   inventoryUiCtx,
   mainUiCanvas,
@@ -7,7 +8,7 @@ import {
   SCREEN_WIDTH,
   uniqueAssets,
 } from "../globals.js";
-import { getEntity } from "../utils.js";
+import { getEntityFromArray } from "../utils.js";
 
 const MENU_WIDTH = 500;
 const MENU_HEIGHT = SCREEN_HEIGHT - 120;
@@ -45,7 +46,7 @@ function updateInventoryUi() {
   inventoryUiCtx.fillRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
   inventoryUiCtx.strokeRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
 
-  if (!player) player = getEntity(false, "Player");
+  if (!player) player = getEntityFromArray(false, "Player", entities);
   const inventory = player.getComponent("Inventory").inventory;
 
   for (let i = 0; i < inventory.length; i++) {

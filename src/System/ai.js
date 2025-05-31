@@ -1,9 +1,10 @@
-import { getEntity, randomInt } from "../utils.js";
+import { entities } from "../globals.js";
+import { getEntityFromArray, randomInt } from "../utils.js";
 import { tryMovement } from "./engine.js";
 
 let player;
 function guardBehavior(entity) {
-  if (!player) player = getEntity(0, "Player");
+  if (!player) player = getEntityFromArray(0, "Player", entities);
 
   let dx;
   let dy;
