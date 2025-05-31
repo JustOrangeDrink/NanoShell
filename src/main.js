@@ -32,9 +32,12 @@ updateInventoryUi();
 tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
 
 tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
+tiles.Bit.init(spawnRoom.getCenter().x + 2, spawnRoom.getCenter().y);
+
+tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 
 wakeUpSleepingEnemies();
-addBelow(getEntitiesUnder(player, []));
+addBelow(getEntitiesUnder(player, ["Floor"]));
 
 document.addEventListener("keydown", (event) => {
   handleInput(event, player);
@@ -45,7 +48,7 @@ document.addEventListener("gameTurn", () => {
 });
 
 function handleTurn() {
-  addBelow(getEntitiesUnder(player, []));
+  addBelow(getEntitiesUnder(player, ["Floor"]));
   wakeUpSleepingEnemies();
   viewPort.scrollTo(player.x, player.y);
   renderWorld();
