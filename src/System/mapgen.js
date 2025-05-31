@@ -10,6 +10,7 @@ import { tiles } from "../tiles.js";
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[y].length; x++) {
+      tiles.Floor.init(x, y);
       tiles.Wall.init(x, y);
     }
   }
@@ -23,7 +24,6 @@ function carveTile(x, y) {
     const element = tile[i];
     if (element.name == "Wall") {
       tilemap[y][x].splice(i, 1);
-      tiles.Floor.init(x, y);
     }
   }
 }
