@@ -3,7 +3,7 @@ import {
   closeInventory,
   isInventoryOpen,
   openInventory,
-} from "../ui/inventory.js";
+} from "../UI/inventory.js";
 import {
   longSkipAction,
   pickUpAction,
@@ -16,7 +16,7 @@ function handleInput(event, player) {
   let dx = 0;
   let dy = 0;
 
-  // inventory ui
+  // inventory UI
   switch (event.key) {
     case "Escape":
       closeInventory();
@@ -25,7 +25,7 @@ function handleInput(event, player) {
       break;
   }
 
-  // main ui
+  // main UI
   if (isInventoryOpen) return;
   switch (event.key) {
     case "4":

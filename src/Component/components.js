@@ -1,4 +1,4 @@
-import { addLog } from "../ui/sidebar.js";
+import { addLog } from "../UI/sidebar.js";
 
 class Collision {
   constructor(smallCollision = false) {
