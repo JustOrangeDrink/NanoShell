@@ -21,17 +21,12 @@ function openInventory() {
   isInventoryOpen = true;
 
   inventoryUiCanvas.style.display = "block";
-  canvas.style.filter = "blur(2px)";
-  mainUiCanvas.style.filter = "blur(2px)";
 }
 
 function closeInventory() {
   isInventoryOpen = false;
 
   inventoryUiCanvas.style.display = "none";
-
-  canvas.style.filter = "none";
-  mainUiCanvas.style.filter = "none";
 }
 
 let player;
