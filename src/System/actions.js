@@ -140,7 +140,7 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
   } else inventoryComponent.inventory.push(trg);
 
   updateInventoryUi();
-  addLog(`You have picked up ${trg.title}!`, "white");
+
   if (inventoryItem)
     addLog(
       `You now have ${inventoryItem.getComponent("Stack").amount} ${
@@ -148,6 +148,8 @@ const pickUpAction = new Action("Pick Up", 1, (src, trg) => {
       }s.`,
       "white"
     );
+  else addLog(`You have picked up ${trg.title}!`, "white");
+
   tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
 });
 
