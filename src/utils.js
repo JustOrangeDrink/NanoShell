@@ -20,9 +20,6 @@ function colorize(charX, charY, [r, g, b]) {
   const offscreen = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
   const ctx = offscreen.getContext("2d");
 
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, TILE_SIZE, TILE_SIZE);
-
   ctx.drawImage(
     spritesheet,
     charX * TILE_SIZE,
@@ -38,9 +35,9 @@ function colorize(charX, charY, [r, g, b]) {
   const imageData = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE);
 
   for (let i = 0; i < imageData.data.length; i += 4) {
-    imageData.data[i + 0] *= r;
-    imageData.data[i + 1] *= g;
-    imageData.data[i + 2] *= b;
+    imageData.data[i + 0] = r;
+    imageData.data[i + 1] = g;
+    imageData.data[i + 2] = b;
   }
 
   ctx.putImageData(imageData, 0, 0);
