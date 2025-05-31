@@ -33,13 +33,16 @@ const MAP_TILED_HEIGHT = 100;
 
 const tilemap = [];
 const knownMap = [];
+const animationMap = [];
 
 for (let y = 0; y < MAP_TILED_HEIGHT; y++) {
   tilemap.push([]);
   knownMap.push([]);
+  animationMap.push([]);
   for (let x = 0; x < MAP_TILED_WIDTH; x++) {
     tilemap[y].push([]);
     knownMap[y].push([]);
+    animationMap[y].push([]);
   }
 }
 
@@ -84,6 +87,7 @@ export {
   viewPort,
   tilemap,
   knownMap,
+  animationMap,
   entities,
   rooms,
   time,

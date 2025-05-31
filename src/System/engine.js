@@ -8,7 +8,9 @@ import {
   knownMap,
   uniqueAssets,
   uniqueAssetsDark,
+  animationMap,
 } from "../globals.js";
+import { tiles } from "../tiles.js";
 import { getRelativeCoords } from "../utils.js";
 import { attackAction, moveAction } from "./actions.js";
 
@@ -33,6 +35,34 @@ function renderWorld() {
       const [relativeX, relativeY] = getRelativeCoords([entity.x, entity.y]);
       ctx.drawImage(
         asset,
+        0,
+        0,
+        TILE_SIZE,
+        TILE_SIZE,
+        relativeX,
+        relativeY,
+        TILE_SIZE,
+        TILE_SIZE
+      );
+    }
+  }
+
+  renderAnimations();
+}
+
+function renderAnimations() {
+  for (let y = 0; y < animationMap.length; y++) {
+    for (let x = 0; x < animationMap[y].length; x++) {
+      const animationEntity = animationMap[y][x][0];
+      if (!animationEntity) continue;
+
+      const [relativeX, relativeY] = getRelativeCoords([
+        animationEntity.x,
+        animationEntity.y,
+      ]);
+
+      ctx.drawImage(
+        uniqueAssets[animationEntity.name],
         0,
         0,
         TILE_SIZE,
