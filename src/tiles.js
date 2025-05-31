@@ -124,7 +124,7 @@ new Tile(
   ]
 );
 
-new Tile("Floor", "Floor", 0, 9, 15, [0, 40, 40]);
+new Tile("Floor", "Floor", 0, 9, 15, [40, 40, 40]);
 
 new Tile(
   "Wall",
