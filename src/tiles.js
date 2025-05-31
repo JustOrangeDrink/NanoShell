@@ -136,4 +136,17 @@ new Tile(
   ]
 );
 
+new Tile(
+  "Sword",
+  "Sword",
+  1,
+  8,
+  1,
+  [0.8, 0.8, 0.8],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, []],
+  ]
+);
+
 export { tiles };

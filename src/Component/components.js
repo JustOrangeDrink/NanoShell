@@ -121,6 +121,51 @@ class Stack {
   }
 }
 
+class WeaponSlots {
+  constructor(maxSlots) {
+    this.type = "WeaponSlots";
+    this.slots = [];
+    this.maxSlots = maxSlots;
+  }
+}
+
+class ShieldSlots {
+  constructor(maxSlots) {
+    this.type = "ShieldSlots";
+    this.slots = [];
+    this.maxSlots = maxSlots;
+  }
+}
+
+class ArmorSlots {
+  constructor(maxSlots) {
+    this.type = "ArmorSlots";
+    this.slots = [];
+    this.maxSlots = maxSlots;
+  }
+}
+
+class Weapon {
+  constructor(dmg) {
+    this.type = "Weapon";
+    this.dmg = dmg;
+  }
+}
+
+class Shiled {
+  constructor(arm) {
+    this.type = "Shield";
+    this.arm = arm;
+  }
+}
+
+class Armor {
+  constructor(arm) {
+    this.type = "Armor";
+    this.arm = arm;
+  }
+}
+
 export {
   Collision,
   Size,
@@ -136,4 +181,10 @@ export {
   Inventory,
   Pickable,
   Stack,
+  WeaponSlots,
+  ShieldSlots,
+  ArmorSlots,
+  Weapon,
+  Shiled,
+  Armor,
 };
