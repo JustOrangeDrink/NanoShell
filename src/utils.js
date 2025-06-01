@@ -65,13 +65,22 @@ function colorize(
   return offscreen;
 }
 
-function recolorize(entity, colorArray, bgColorArray) {
+function recolorize(
+  entity,
+  colorArray = [0, 0, 0, 255],
+  bgColorArray = [0, 0, 0, 0],
+  defaultRecolor = false
+) {
   const [r, g, b, a] = colorArray;
   const [bgR, bgG, bgB, bgA] = bgColorArray;
   entity.color = [r, g, b, a];
   entity.bg = [bgR, bgG, bgB, bgA];
   entity.renderName = getRenderName(entity.name, colorArray, bgColorArray);
   addEntityAsset(entity);
+  if (defaultRecolor) {
+    entity.defaultColor = [r, g, b, a];
+    entity.defaultBg = [bgR, bgG, bgB, bgA];
+  }
   renderWorld();
 }
 

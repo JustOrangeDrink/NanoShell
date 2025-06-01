@@ -27,6 +27,9 @@ class Entity {
 
     this.charX = charX;
     this.charY = charY;
+    this.defaultColor = [r, g, b, a];
+    this.defaultBg = [bgR, bgG, bgB, bgA];
+
     this.color = [r, g, b, a];
     this.bg = [bgR, bgG, bgB, bgA];
 

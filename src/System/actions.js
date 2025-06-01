@@ -1,3 +1,4 @@
+import { hitAnimation } from "../Animations/animations.js";
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { updateInventoryUi } from "../UI/inventory.js";
@@ -119,6 +120,7 @@ const attackAction = new Action(
         addLog(`${trg.title} blocks your attack!`, "gray");
         return;
       }
+      hitAnimation(trg);
       addLog(`You hit ${trg.title} for ${damage} damage!`, "yellow");
       trgHealth.takeDamage(trg, damage);
       return;
@@ -133,6 +135,7 @@ const attackAction = new Action(
         addLog(`You block ${src.title}'s attack!`, "gray");
         return;
       }
+      hitAnimation(trg);
       addLog(`${src.title} hit you for ${damage} damage!`, "yellow");
       trgHealth.takeDamage(trg, damage);
       return;
@@ -146,6 +149,7 @@ const attackAction = new Action(
       return;
     }
 
+    hitAnimation(trg);
     addLog(`${src.title} hit ${trg.title} for ${damage} damage!`, "yellow");
     trgHealth.takeDamage(trg, damage);
   },
@@ -232,7 +236,6 @@ const wieldAction = new Action(
     weaponSlots.slots.push(trg);
   },
   (trg) => {
-    console.log(trg);
     if (trg.getComponent("Weapon")) return true;
     else return false;
   }
