@@ -121,6 +121,13 @@ class Stack {
   }
 }
 
+class Hidden {
+  constructor() {
+    this.type = "Hidden";
+    this.hidden = true;
+  }
+}
+
 class WeaponSlots {
   constructor(maxSlots) {
     this.type = "WeaponSlots";
@@ -181,6 +188,7 @@ export {
   Inventory,
   Pickable,
   Stack,
+  Hidden,
   WeaponSlots,
   ShieldSlots,
   ArmorSlots,

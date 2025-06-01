@@ -174,15 +174,20 @@ function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
   if (!targetEntity) return;
   if (targetEntity.y > tilemap.length - 1 || targetEntity.y < 0) return;
   if (targetEntity.x > tilemap[0].length - 1 || targetEntity.x < 0) return;
-  const entities = tilemap[targetEntity.y][targetEntity.x];
+  const entitiesTile = tilemap[targetEntity.y][targetEntity.x];
 
-  if (!ignoredEntitiesNames) {
-    return entities.filter((el) => el.name !== targetEntity.name);
+  const result = [];
+  for (let i = 0; i < entitiesTile.length; i++) {
+    const entity = entitiesTile[i];
+    if (
+      entity.name == targetEntity.name ||
+      ignoredEntitiesNames.includes(entity.name) ||
+      entity.getComponent("Hidden")
+    )
+      continue;
+    result.push(entity);
   }
-  return entities.filter(
-    (el) =>
-      el.name !== targetEntity.name && !ignoredEntitiesNames.includes(el.name)
-  );
+  return result;
 }
 
 function getBlockingEntity(entitiesOnTile) {
