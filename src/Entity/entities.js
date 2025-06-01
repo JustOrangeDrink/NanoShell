@@ -2,7 +2,20 @@ import { entities, tilemap } from "../globals.js";
 
 let entityId = 0;
 class Entity {
-  constructor(name, title, x, y, z, charX, charY, color, bg = [0, 0, 0, 0]) {
+  constructor(
+    name,
+    title,
+    x,
+    y,
+    z,
+    charX,
+    charY,
+    colors = [0, 0, 0, 0],
+    bgColors = [0, 0, 0, 0]
+  ) {
+    const [r, g, b, a] = colors;
+    const [bgR, bgG, bgB, bgA] = bgColors;
+
     this.id = entityId++;
     this.name = name;
     this.title = title;
@@ -13,8 +26,10 @@ class Entity {
 
     this.charX = charX;
     this.charY = charY;
-    this.color = color;
-    this.bg = bg;
+    this.color = [r, g, b, a];
+    this.bg = [bgR, bgG, bgB, bgA];
+
+    this.renderName = `Name${name}_Color${r}_${g}_${b}_${a}_Bg${bgR}_${bgG}_${bgB}_${bgA}}`;
 
     this.components = {};
 

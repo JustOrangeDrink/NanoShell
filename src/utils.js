@@ -18,13 +18,16 @@ function randomFloat(min, max) {
   return Math.random() * (max - min + 1) + min;
 }
 
-// By Michał Piasecki on https://medium.com/@mpias/html-canvas-how-to-colorize-a-sprite-3150195021bf
 function colorize(
   charX,
   charY,
-  [r = 0, g = 0, b = 0, a = 255],
-  [bgR = 0, bgG = 0, bgB = 0, bgA = 255]
+  colorArray = [0, 0, 0, 255],
+  bgColorArray = [0, 0, 0, 255]
 ) {
+  const [r, g, b, a] = colorArray;
+  const [bgR, bgG, bgB, bgA] = bgColorArray;
+  colorArray;
+
   const offscreen = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
   const ctx = offscreen.getContext("2d");
 
@@ -115,17 +118,24 @@ function countDigits(num) {
 }
 
 function addEntityAsset(entity) {
-  if (!(entity.name in uniqueAssets)) {
-    uniqueAssets[entity.name] = colorize(
+  entity;
+  if (!(entity.renderName in uniqueAssets)) {
+    uniqueAssets[entity.renderName] = colorize(
       entity.charX,
       entity.charY,
       entity.color,
       entity.bg
     );
-    uniqueAssetsDark[entity.name] = colorize(
+    entity;
+    uniqueAssetsDark[entity.renderName] = colorize(
       entity.charX,
       entity.charY,
-      [entity.color[0] / 4, entity.color[1] / 4, entity.color[2] / 4],
+      [
+        entity.color[0] / 4,
+        entity.color[1] / 4,
+        entity.color[2] / 4,
+        entity.color[3],
+      ],
       [entity.bg[0] / 4, entity.bg[1] / 4, entity.bg[2] / 4, entity.bg[3]]
     );
   }

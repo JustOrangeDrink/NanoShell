@@ -29,17 +29,23 @@ class Tile {
     z,
     charX,
     charY,
-    color,
+    colors = [0, 0, 0, 0],
     components,
-    bg = [0, 0, 0, 0]
+    bgColors = [0, 0, 0, 0]
   ) {
+    const [r, g, b, a] = colors;
+    const [bgR, bgG, bgB, bgA] = bgColors;
+
     this.name = name;
     this.title = title;
     this.z = z;
+
     this.charX = charX;
     this.charY = charY;
-    this.color = color;
-    this.bg = bg;
+    this.color = [r, g, b, a];
+    this.bg = [bgR, bgG, bgB, bgA];
+    this.renderName = `Name${name}_Color${r}_${g}_${b}_${a}_Bg${bgR}_${bgG}_${bgB}_${bgA}}`;
+
     this.components = components;
 
     tiles[name] = this;
@@ -75,7 +81,7 @@ new Tile(
   4,
   0,
   4,
-  [255, 255, 255],
+  [255, 255, 255, 255],
   [
     [Collision, [0, 0]],
     [Health, [30, 30]],
@@ -96,7 +102,7 @@ new Tile(
   3,
   7,
   4,
-  [255, 0, 255],
+  [255, 0, 255, 255],
   [
     [Collision, []],
     [Health, [15, 15]],
@@ -115,7 +121,7 @@ new Tile(
   1,
   13,
   14,
-  [255, 255, 0],
+  [255, 255, 0, 255],
   [
     [Size, ["Tiny"]],
     [Pickable, []],
@@ -129,14 +135,14 @@ new Tile(
   1,
   5,
   15,
-  [255, 160, 160],
+  [255, 160, 160, 255],
   [
     [Size, ["Tiny"]],
     [Pickable, []],
   ]
 );
 
-new Tile("Floor", "Floor", 0, 9, 15, [40, 40, 40]);
+new Tile("Floor", "Floor", 0, 9, 15, [40, 40, 40, 255]);
 
 new Tile(
   "Wall",
@@ -144,12 +150,11 @@ new Tile(
   2,
   3,
   2,
-  [0, 255, 0],
+  [0, 255, 0, 255],
   [
     [Collision, [true]],
     [Occlusion, [true]],
-  ],
-  [255, 0, 255]
+  ]
 );
 
 new Tile(
@@ -158,7 +163,7 @@ new Tile(
   1,
   8,
   1,
-  [220, 220, 220],
+  [220, 220, 220, 255],
   [
     [Size, ["Tiny"]],
     [Pickable, []],
@@ -166,6 +171,6 @@ new Tile(
   ]
 );
 
-new Tile("Filler", "Filler", 5, 11, 13, [255, 0, 0], [[Hidden, []]]);
+new Tile("Filler", "Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);
 
 export { tiles };

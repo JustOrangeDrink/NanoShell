@@ -51,7 +51,7 @@ function updateInventoryUi() {
     const blue = item.color[2] * 255;
     inventoryUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
     inventoryUiCtx.drawImage(
-      uniqueAssets[item.name],
+      uniqueAssets[item.renderName],
       MENU_X + 10,
       MENU_Y + 14 + i * 36
     );

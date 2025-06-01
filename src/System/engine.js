@@ -27,9 +27,9 @@ function renderWorld() {
       let asset;
 
       if (entity.isViewed) {
-        asset = uniqueAssets[entity.name];
+        asset = uniqueAssets[entity.renderName];
       } else {
-        asset = uniqueAssetsDark[entity.name];
+        asset = uniqueAssetsDark[entity.renderName];
       }
 
       const [relativeX, relativeY] = getRelativeCoords([entity.x, entity.y]);
@@ -212,13 +212,13 @@ function handleCollision(entity, dx, dy) {
   const smallCollision =
     blockingEntity.getComponent("Collision").smallCollision;
   if (size?.size == "tiny" && smallCollision) {
-    console.log(`Collision with ${blockingEntity.name}!`);
+    `Collision with ${blockingEntity.name}!`;
     return blockingEntity;
   }
 
   if (!collision.collision) return;
 
-  console.log(`Collision with ${blockingEntity.name}!`);
+  `Collision with ${blockingEntity.name}!`;
   return blockingEntity;
 }
 
