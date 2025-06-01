@@ -2,7 +2,7 @@ import { entities, tilemap } from "../globals.js";
 
 let entityId = 0;
 class Entity {
-  constructor(name, title, x, y, z, charX, charY, color) {
+  constructor(name, title, x, y, z, charX, charY, color, bg = [0, 0, 0, 0]) {
     this.id = entityId++;
     this.name = name;
     this.title = title;
@@ -14,6 +14,8 @@ class Entity {
     this.charX = charX;
     this.charY = charY;
     this.color = color;
+    this.bg = bg;
+
     this.components = {};
 
     this.isViewed = false;

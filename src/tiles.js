@@ -15,6 +15,7 @@ import {
   Stack,
   WeaponSlots,
   Weapon,
+  Hidden,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -22,13 +23,23 @@ import { guardBehavior } from "./System/ai.js";
 const tiles = {};
 
 class Tile {
-  constructor(name, title, z, charX, charY, color, components) {
+  constructor(
+    name,
+    title,
+    z,
+    charX,
+    charY,
+    color,
+    components,
+    bg = [0, 0, 0, 0]
+  ) {
     this.name = name;
     this.title = title;
     this.z = z;
     this.charX = charX;
     this.charY = charY;
     this.color = color;
+    this.bg = bg;
     this.components = components;
 
     tiles[name] = this;
@@ -43,7 +54,8 @@ class Tile {
       this.z,
       this.charX,
       this.charY,
-      this.color
+      this.color,
+      this.bg
     );
 
     if (this.components) {
@@ -136,7 +148,8 @@ new Tile(
   [
     [Collision, [true]],
     [Occlusion, [true]],
-  ]
+  ],
+  [255, 0, 255]
 );
 
 new Tile(
@@ -152,5 +165,7 @@ new Tile(
     [Weapon, [6]],
   ]
 );
+
+new Tile("Filler", "Filler", 5, 11, 13, [255, 0, 0], [[Hidden, []]]);
 
 export { tiles };

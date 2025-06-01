@@ -19,7 +19,12 @@ function randomFloat(min, max) {
 }
 
 // By Michał Piasecki on https://medium.com/@mpias/html-canvas-how-to-colorize-a-sprite-3150195021bf
-function colorize(charX, charY, [r, g, b]) {
+function colorize(
+  charX,
+  charY,
+  [r = 0, g = 0, b = 0, a = 255],
+  [bgR = 0, bgG = 0, bgB = 0, bgA = 255]
+) {
   const offscreen = new OffscreenCanvas(TILE_SIZE, TILE_SIZE);
   const ctx = offscreen.getContext("2d");
 
@@ -38,9 +43,17 @@ function colorize(charX, charY, [r, g, b]) {
   const imageData = ctx.getImageData(0, 0, TILE_SIZE, TILE_SIZE);
 
   for (let i = 0; i < imageData.data.length; i += 4) {
-    imageData.data[i + 0] = r;
-    imageData.data[i + 1] = g;
-    imageData.data[i + 2] = b;
+    if (imageData.data[i + 3] === 0) {
+      imageData.data[i + 0] = bgR;
+      imageData.data[i + 1] = bgG;
+      imageData.data[i + 2] = bgB;
+      imageData.data[i + 3] = bgA;
+    } else {
+      imageData.data[i + 0] = r;
+      imageData.data[i + 1] = g;
+      imageData.data[i + 2] = b;
+      imageData.data[i + 3] = a;
+    }
   }
 
   ctx.putImageData(imageData, 0, 0);
@@ -106,13 +119,15 @@ function addEntityAsset(entity) {
     uniqueAssets[entity.name] = colorize(
       entity.charX,
       entity.charY,
-      entity.color
+      entity.color,
+      entity.bg
     );
-    uniqueAssetsDark[entity.name] = colorize(entity.charX, entity.charY, [
-      entity.color[0] / 4,
-      entity.color[1] / 4,
-      entity.color[2] / 4,
-    ]);
+    uniqueAssetsDark[entity.name] = colorize(
+      entity.charX,
+      entity.charY,
+      [entity.color[0] / 4, entity.color[1] / 4, entity.color[2] / 4],
+      [entity.bg[0] / 4, entity.bg[1] / 4, entity.bg[2] / 4, entity.bg[3]]
+    );
   }
 }
 
