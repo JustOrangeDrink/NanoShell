@@ -1,4 +1,5 @@
 import { entities, tilemap } from "../globals.js";
+import { getRenderName } from "../utils.js";
 
 let entityId = 0;
 class Entity {
@@ -10,11 +11,11 @@ class Entity {
     z,
     charX,
     charY,
-    colors = [0, 0, 0, 0],
-    bgColors = [0, 0, 0, 0]
+    colorArray = [0, 0, 0, 255],
+    bgColorArray = [0, 0, 0, 0]
   ) {
-    const [r, g, b, a] = colors;
-    const [bgR, bgG, bgB, bgA] = bgColors;
+    const [r, g, b, a] = colorArray;
+    const [bgR, bgG, bgB, bgA] = bgColorArray;
 
     this.id = entityId++;
     this.name = name;
@@ -29,7 +30,7 @@ class Entity {
     this.color = [r, g, b, a];
     this.bg = [bgR, bgG, bgB, bgA];
 
-    this.renderName = `Name${name}_Color${r}_${g}_${b}_${a}_Bg${bgR}_${bgG}_${bgB}_${bgA}}`;
+    this.renderName = getRenderName(name, colorArray, bgColorArray);
 
     this.components = {};
 

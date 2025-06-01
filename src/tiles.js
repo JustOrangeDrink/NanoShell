@@ -19,6 +19,7 @@ import {
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
+import { getRenderName } from "./utils.js";
 
 const tiles = {};
 
@@ -29,12 +30,12 @@ class Tile {
     z,
     charX,
     charY,
-    colors = [0, 0, 0, 0],
+    colorArray = [0, 0, 0, 0],
     components,
-    bgColors = [0, 0, 0, 0]
+    bgColorArray = [0, 0, 0, 0]
   ) {
-    const [r, g, b, a] = colors;
-    const [bgR, bgG, bgB, bgA] = bgColors;
+    const [r, g, b, a] = colorArray;
+    const [bgR, bgG, bgB, bgA] = bgColorArray;
 
     this.name = name;
     this.title = title;
@@ -44,7 +45,7 @@ class Tile {
     this.charY = charY;
     this.color = [r, g, b, a];
     this.bg = [bgR, bgG, bgB, bgA];
-    this.renderName = `Name${name}_Color${r}_${g}_${b}_${a}_Bg${bgR}_${bgG}_${bgB}_${bgA}}`;
+    this.renderName = getRenderName(name, colorArray, bgColorArray);
 
     this.components = components;
 

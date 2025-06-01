@@ -9,6 +9,7 @@ import {
   uniqueAssetsDark,
   viewPort,
 } from "./globals.js";
+import { renderWorld } from "./System/engine.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -22,7 +23,7 @@ function colorize(
   charX,
   charY,
   colorArray = [0, 0, 0, 255],
-  bgColorArray = [0, 0, 0, 255]
+  bgColorArray = [0, 0, 0, 0]
 ) {
   const [r, g, b, a] = colorArray;
   const [bgR, bgG, bgB, bgA] = bgColorArray;
@@ -62,6 +63,48 @@ function colorize(
   ctx.putImageData(imageData, 0, 0);
 
   return offscreen;
+}
+
+function recolorize(entity, colorArray, bgColorArray) {
+  const [r, g, b, a] = colorArray;
+  const [bgR, bgG, bgB, bgA] = bgColorArray;
+  entity.color = [r, g, b, a];
+  entity.bg = [bgR, bgG, bgB, bgA];
+  entity.renderName = getRenderName(entity.name, colorArray, bgColorArray);
+  addEntityAsset(entity);
+  renderWorld();
+}
+
+function addEntityAsset(entity) {
+  if (!(entity.renderName in uniqueAssets)) {
+    uniqueAssets[entity.renderName] = colorize(
+      entity.charX,
+      entity.charY,
+      entity.color,
+      entity.bg
+    );
+    uniqueAssetsDark[entity.renderName] = colorize(
+      entity.charX,
+      entity.charY,
+      [
+        entity.color[0] / 4,
+        entity.color[1] / 4,
+        entity.color[2] / 4,
+        entity.color[3],
+      ],
+      [entity.bg[0] / 4, entity.bg[1] / 4, entity.bg[2] / 4, entity.bg[3]]
+    );
+  }
+}
+
+function getRenderName(
+  name,
+  colorArray = [0, 0, 0, 255],
+  bgColorArray = [0, 0, 0, 0]
+) {
+  const [r, g, b, a] = colorArray;
+  const [bgR, bgG, bgB, bgA] = bgColorArray;
+  return `Name(${name})_Color(${r}_${g}_${b}_${a})_Bg(${bgR}_${bgG}_${bgB}_${bgA}})`;
 }
 
 function getEntityFromArray(id, name, array) {
@@ -117,30 +160,6 @@ function countDigits(num) {
   return num.toString().replace(",", "").length;
 }
 
-function addEntityAsset(entity) {
-  entity;
-  if (!(entity.renderName in uniqueAssets)) {
-    uniqueAssets[entity.renderName] = colorize(
-      entity.charX,
-      entity.charY,
-      entity.color,
-      entity.bg
-    );
-    entity;
-    uniqueAssetsDark[entity.renderName] = colorize(
-      entity.charX,
-      entity.charY,
-      [
-        entity.color[0] / 4,
-        entity.color[1] / 4,
-        entity.color[2] / 4,
-        entity.color[3],
-      ],
-      [entity.bg[0] / 4, entity.bg[1] / 4, entity.bg[2] / 4, entity.bg[3]]
-    );
-  }
-}
-
 function getRelativeCoords([x, y]) {
   const relativeX =
     (x -
@@ -170,4 +189,6 @@ export {
   countDigits,
   addEntityAsset,
   getRelativeCoords,
+  recolorize,
+  getRenderName,
 };
