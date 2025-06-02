@@ -43,6 +43,11 @@ class Entity {
     this.lastX = x;
     this.lastY = y;
 
+    if (!this.x && !this.y) {
+      entities.push(this);
+      return;
+    }
+
     for (let i = 0; i < tilemap[y][x].length; i++) {
       const entity = tilemap[y][x][i];
       if (entity.getComponent("Stack") && entity.name == this.name) {
@@ -53,9 +58,7 @@ class Entity {
     }
 
     tilemap[y][x].push(this);
-    if (this.name !== "Wall" && this.name !== "Floor") {
-      tilemap[y][x].sort((a, b) => a.z - b.z);
-    }
+    tilemap[y][x].sort((a, b) => a.z - b.z);
     entities.push(this);
   }
 

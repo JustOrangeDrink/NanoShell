@@ -68,8 +68,8 @@ function handleInput(event, player) {
     case "w":
       wieldAction.makeAction(
         player,
-        [player, tiles.Sword.init(0, 0)],
-        [tiles.Sword.init(0, 0)]
+        [player, tiles.Sword.init()],
+        [player, tiles.Sword.init()]
       );
       break;
 
