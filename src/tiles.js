@@ -91,7 +91,7 @@ new Tile(
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],
-    [Stats, [65, 10, 1]],
+    [Stats, [50, 2, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
     [WieldSlots, [2]],

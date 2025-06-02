@@ -123,8 +123,8 @@ const attackAction = new Action(
 
     let totalDamage =
       randomInt(dmg / 1.5, dmg) +
-      randomInt(0, srcAttributes.str) -
-      randomInt(0, trgStats.arm);
+      randomInt(srcAttributes.str / 1.5, srcAttributes.str) -
+      randomInt(trgStats.arm / 2, trgStats.arm);
 
     if (src.name === "Player") {
       if (!isHit) {
