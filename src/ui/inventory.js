@@ -109,13 +109,13 @@ function updateInventoryUi() {
     inventoryUiCtx.drawImage(
       uniqueAssets[item.renderName],
       MENU_X + 10,
-      MENU_Y + 26 + i * 30 + wieldShift
+      MENU_Y + i * 30 + wieldShift + 20
     );
 
     inventoryUiCtx.fillText(
       `- ${item.title}`,
       MENU_X + 36,
-      MENU_Y + 42 + i * 30 + wieldShift
+      MENU_Y + i * 30 + wieldShift + 40
     );
   }
 }
