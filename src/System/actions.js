@@ -1,4 +1,4 @@
-import { hitAnimation } from "../Animations/animations.js";
+import { blockAnimation, hitAnimation } from "../Animations/animations.js";
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { updateInventoryUi } from "../UI/inventory.js";
@@ -117,6 +117,7 @@ const attackAction = new Action(
         return;
       }
       if (damage <= 0) {
+        blockAnimation(trg);
         addLog(`${trg.title} blocks your attack!`, "gray");
         return;
       }
@@ -132,6 +133,7 @@ const attackAction = new Action(
         return;
       }
       if (damage <= 0) {
+        blockAnimation(trg);
         addLog(`You block ${src.title}'s attack!`, "gray");
         return;
       }
@@ -145,6 +147,7 @@ const attackAction = new Action(
       addLog(`${src.title} miss ${trg.title}!`, "yellow");
     }
     if (damage <= 0) {
+      blockAnimation(trg);
       addLog(`${trg.title} blocks ${src.title}'s attack!`, "gray");
       return;
     }
