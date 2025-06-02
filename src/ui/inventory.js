@@ -61,14 +61,14 @@ function updateInventoryUi() {
     const weapon = wieldSlots.weaponSlots[i];
     inventoryUiCtx.drawImage(
       uniqueAssets[weapon.renderName],
-      MENU_X + 5,
+      MENU_X + 10,
       MENU_Y + wieldShift - 20
     );
 
     setContextFillStyle(inventoryUiCtx, weapon.color);
     inventoryUiCtx.fillText(
       `- ${weapon.title}`,
-      MENU_X + 35,
+      MENU_X + 36,
       MENU_Y + wieldShift
     );
 
@@ -79,14 +79,14 @@ function updateInventoryUi() {
     const shield = wieldSlots.shieldSlots[i];
     inventoryUiCtx.drawImage(
       uniqueAssets[shield.renderName],
-      MENU_X + 5,
+      MENU_X + 10,
       MENU_Y + wieldShift - 20
     );
 
     setContextFillStyle(inventoryUiCtx, shield.color);
     inventoryUiCtx.fillText(
       `- ${shield.title}`,
-      MENU_X + 35,
+      MENU_X + 36,
       MENU_Y + wieldShift
     );
 
