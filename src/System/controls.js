@@ -4,6 +4,7 @@ import {
   isInventoryOpen,
   openInventory,
 } from "../UI/inventory.js";
+import { addLog } from "../UI/sidebar.js";
 import {
   longSkipAction,
   pickUpAction,
@@ -87,6 +88,7 @@ function handleInput(event, player) {
     case " ":
       player.getComponent("Collision").collision =
         !player.getComponent("Collision").collision;
+      addLog(`NoClip: ${!player.getComponent("Collision").collision}`, "lime");
       break;
     case "5":
       skipAction.makeAction(player);
