@@ -72,7 +72,7 @@ function updateInventoryUi() {
       MENU_Y + wieldShift
     );
 
-    wieldShift += 26;
+    wieldShift += 30;
   }
 
   for (let i = 0; i < wieldSlots.shieldSlots.length; i++) {
@@ -99,19 +99,23 @@ function updateInventoryUi() {
     MENU_X + 5,
     MENU_Y + wieldShift + 15
   );
+
   const inventory = player.getComponent("Inventory").inventory;
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
+
     setContextFillStyle(inventoryUiCtx, item.color);
+
     inventoryUiCtx.drawImage(
       uniqueAssets[item.renderName],
       MENU_X + 10,
-      MENU_Y + 26 + i * 26 + wieldShift
+      MENU_Y + 26 + i * 30 + wieldShift
     );
+
     inventoryUiCtx.fillText(
       `- ${item.title}`,
       MENU_X + 36,
-      MENU_Y + 42 + i * 26 + wieldShift
+      MENU_Y + 42 + i * 30 + wieldShift
     );
   }
 }
