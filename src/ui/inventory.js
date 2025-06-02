@@ -47,11 +47,11 @@ function updateInventoryUi() {
   const freeWieldSlots = wieldSlots.maxWeight - wieldSlots.currentWeight;
   const wieldLog =
     freeWieldSlots == 1
-      ? `You have ${freeWieldSlots} unoccupied manipulator.`
-      : `You have ${freeWieldSlots} unoccupied manipulators.`;
+      ? `You have ${freeWieldSlots} free manipulator.`
+      : `You have ${freeWieldSlots} free manipulators.`;
 
   inventoryUiCtx.fillStyle = "white";
-  inventoryUiCtx.fillText(wieldLog, MENU_X + 70, MENU_Y + 30);
+  inventoryUiCtx.fillText(wieldLog, MENU_X + 85, MENU_Y + 30);
 
   inventoryUiCtx.fillStyle = "coral";
   inventoryUiCtx.fillText(`Wielding:`, MENU_X + 5, MENU_Y + 60);

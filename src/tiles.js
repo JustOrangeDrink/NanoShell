@@ -27,7 +27,6 @@ const tiles = {};
 class Tile {
   constructor(
     name,
-    title,
     z,
     charX,
     charY,
@@ -39,7 +38,7 @@ class Tile {
     const [bgR, bgG, bgB, bgA] = bgColorArray;
 
     this.name = name;
-    this.title = title;
+    this.title = this.name;
     this.z = z;
 
     this.charX = charX;
@@ -56,7 +55,6 @@ class Tile {
   init(x, y) {
     const entity = new Entity(
       this.name,
-      this.title,
       x,
       y,
       this.z,
@@ -79,7 +77,6 @@ class Tile {
 
 new Tile(
   "Player",
-  "Player",
   4,
   0,
   4,
@@ -100,7 +97,6 @@ new Tile(
 
 new Tile(
   "Guard",
-  "Guard",
   3,
   7,
   4,
@@ -120,7 +116,6 @@ new Tile(
 
 new Tile(
   "Bit",
-  "Bit",
   1,
   13,
   14,
@@ -134,7 +129,6 @@ new Tile(
 
 new Tile(
   "Letter",
-  "Letter",
   1,
   5,
   15,
@@ -145,10 +139,9 @@ new Tile(
   ]
 );
 
-new Tile("Floor", "Floor", 0, 9, 15, [40, 40, 40, 255]);
+new Tile("Floor", 0, 9, 15, [40, 40, 40, 255]);
 
 new Tile(
-  "Wall",
   "Wall",
   2,
   3,
@@ -160,10 +153,9 @@ new Tile(
   ]
 );
 
-new Tile("Fist", "Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [2, 0]]]);
+new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [2, 0]]]);
 
 new Tile(
-  "Sword",
   "Sword",
   1,
   8,
@@ -172,12 +164,11 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, []],
-    [Weapon, [10, 1]],
+    [Weapon, [5, 10, 1]],
   ]
 );
 
 new Tile(
-  "Shield",
   "Shield",
   1,
   8,
@@ -190,6 +181,6 @@ new Tile(
   ]
 );
 
-new Tile("Filler", "Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);
+new Tile("Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);
 
 export { tiles };

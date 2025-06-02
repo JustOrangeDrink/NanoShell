@@ -5,7 +5,6 @@ let entityId = 0;
 class Entity {
   constructor(
     name,
-    title,
     x,
     y,
     z,
@@ -19,7 +18,7 @@ class Entity {
 
     this.id = entityId++;
     this.name = name;
-    this.title = title;
+    this.title = this.name;
 
     this.x = x;
     this.y = y;
@@ -65,6 +64,10 @@ class Entity {
   addComponent(component) {
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
+    if (component.type == "Weapon")
+      this.title = `a +${component.acc},+${component.dmg} ${this.name}`;
+    if (component.type == "Shield")
+      this.title = `a +${component.arm} ${this.name}`;
     this.components[component.type] = component;
   }
 

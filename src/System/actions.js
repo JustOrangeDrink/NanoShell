@@ -119,7 +119,11 @@ const attackAction = new Action(
     const dmg = weapon.getComponent("Weapon").dmg;
 
     const ddg = trgStats.ddg + trgAttributes.agi;
-    const isHit = randomInt(0, 100) + srcAttributes.agi > ddg;
+    const isHit =
+      randomInt(0, 100) +
+        weapon.getComponent("Weapon").acc +
+        srcAttributes.agi >
+      ddg;
 
     let totalDamage =
       randomInt(dmg / 1.5, dmg) +
