@@ -26,7 +26,7 @@ function thronglerShine(trgEntity, interval) {
   const yellow = [255, 255, 0, 255];
   const cyan = [0, 255, 255, 255];
 
-  const colors = [red, green, blue, purple, yellow, cyan];
+  const colors = [red, green, blue, yellow, purple, cyan];
 
   let current = 0;
   setInterval(() => {
