@@ -7,7 +7,7 @@ import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { tiles } from "../tiles.js";
 import { updateInventoryUi } from "../UI/inventory.js";
-import { addLog } from "../UI/sidebar.js";
+import { addLog, updateUi } from "../UI/sidebar.js";
 import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
 import { getEntitiesUnder } from "./engine.js";
 
@@ -272,6 +272,7 @@ const wieldAction = new Action(
       src.getComponent("Stats").arm += shieldComponent.arm;
     }
     updateInventoryUi();
+    updateUi();
   },
   (src, trg) => {
     const wieldSlots = src.getComponent("WieldSlots");
