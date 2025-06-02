@@ -72,6 +72,13 @@ function handleInput(event, player) {
         [player, tiles.Sword.init()]
       );
       break;
+    case "W":
+      wieldAction.makeAction(
+        player,
+        [player, tiles.Shield.init()],
+        [player, tiles.Shield.init()]
+      );
+      break;
 
     case "i":
       openInventory();

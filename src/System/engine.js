@@ -1,4 +1,3 @@
-import { WeaponSlots } from "../Component/components.js";
 import {
   TILE_SIZE,
   ctx,
@@ -162,7 +161,7 @@ function tryMovement(entity, dx, dy) {
   const trgEnemy = handleCollision(entity, dx, dy);
 
   if (trgEnemy) {
-    const weapon = entity.getComponent("WeaponSlots")?.slots?.[0];
+    const weapon = entity.getComponent("WieldSlots")?.weaponSlots?.[0];
     attackAction.makeAction(
       entity,
       [entity, trgEnemy, weapon],

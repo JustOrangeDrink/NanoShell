@@ -13,10 +13,9 @@ import {
   Inventory,
   Pickable,
   Stack,
-  WeaponSlots,
+  WieldSlots,
   Weapon,
   Hidden,
-  ShieldSlots,
   Shield,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
@@ -95,8 +94,7 @@ new Tile(
     [Stats, [65, 10, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
-    [WeaponSlots, [2]],
-    [ShieldSlots, [2]],
+    [WieldSlots, [2]],
   ]
 );
 
@@ -116,8 +114,7 @@ new Tile(
     [Behavior, [guardBehavior]],
     [Stats, [40, 1, 1]],
     [Attributes, [1, 1, 1]],
-    [WeaponSlots, [2]],
-    [ShieldSlots, [2]],
+    [WieldSlots, [2]],
   ]
 );
 
@@ -184,7 +181,7 @@ new Tile(
   "Shield",
   1,
   8,
-  1,
+  14,
   [220, 220, 220, 255],
   [
     [Size, ["Tiny"]],

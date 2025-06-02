@@ -128,22 +128,14 @@ class Hidden {
   }
 }
 
-class WeaponSlots {
+class WieldSlots {
   constructor(maxWeight) {
-    this.type = "WeaponSlots";
-    this.slots = [];
+    this.type = "WieldSlots";
+    this.weaponSlots = [];
+    this.shieldSlots = [];
+    this.maxWeight = maxWeight;
+    this.currentWeight = 0;
     this.unarmedSlot;
-    this.maxWeight = maxWeight;
-    this.currentWeight = 0;
-  }
-}
-
-class ShieldSlots {
-  constructor(maxWeight) {
-    this.type = "ShieldSlots";
-    this.slots = [];
-    this.maxWeight = maxWeight;
-    this.currentWeight = 0;
   }
 }
 
@@ -196,8 +188,7 @@ export {
   Pickable,
   Stack,
   Hidden,
-  WeaponSlots,
-  ShieldSlots,
+  WieldSlots,
   ArmorSlots,
   Weapon,
   Shield,

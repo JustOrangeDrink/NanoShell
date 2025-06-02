@@ -104,10 +104,10 @@ const attackAction = new Action(
   (src, trg, srcWeapon) => {
     let weapon = srcWeapon;
     if (!weapon) {
-      if (!src.getComponent("WeaponSlots").unarmedSlot) {
-        src.getComponent("WeaponSlots").unarmedSlot = tiles.Fist.init();
+      if (!src.getComponent("WieldSlots").unarmedSlot) {
+        src.getComponent("WieldSlots").unarmedSlot = tiles.Fist.init();
       }
-      weapon = src.getComponent("WeaponSlots").unarmedSlot;
+      weapon = src.getComponent("WieldSlots").unarmedSlot;
     }
 
     const srcAttributes = src.getComponent("Attributes");
@@ -256,34 +256,32 @@ const wieldAction = new Action(
   "Equip",
   1,
   (src, trg) => {
-    const weaponSlots = src.getComponent("WeaponSlots");
-    const shieldSlots = src.getComponent("ShieldSlots");
+    const wieldSlots = src.getComponent("WieldSlots");
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
 
     if (weaponComponent) {
       addLog(`Equipped ${trg.title}!`, "orangered");
-      weaponSlots.slots.push(trg);
-      weaponSlots.currentWeight += weaponComponent.slotWeight;
-      shieldSlots.maxWeight -= weaponComponent.slotWeight;
+      wieldSlots.weaponSlots.push(trg);
+      wieldSlots.currentWeight += weaponComponent.slotWeight;
     }
     if (shieldComponent) {
       addLog(`Equipped ${trg.title}!`, "orangered");
-      shieldSlots.slots.push(trg);
-      shieldSlots.currentWeight += shieldComponent.slotWeight;
-      weaponSlots.maxWeight -= shieldComponent.slotWeight;
+      wieldSlots.shieldSlots.push(trg);
+      wieldSlots.currentWeight += shieldComponent.slotWeight;
+      src.getComponent("Stats").arm += shieldComponent.arm;
     }
+    updateInventoryUi();
   },
   (src, trg) => {
-    const weaponSlots = src.getComponent("WeaponSlots");
-    const shieldSlots = src.getComponent("ShieldSlots");
+    const wieldSlots = src.getComponent("WieldSlots");
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
 
     if (weaponComponent) {
       if (
-        weaponSlots.currentWeight + weaponComponent.slotWeight <=
-        weaponSlots.maxWeight
+        wieldSlots.currentWeight + weaponComponent.slotWeight <=
+        wieldSlots.maxWeight
       )
         return true;
       else {
@@ -294,8 +292,8 @@ const wieldAction = new Action(
 
     if (shieldComponent) {
       if (
-        shieldSlots.currentWeight + shieldComponent.slotWeight <=
-        shieldSlots.maxWeight
+        wieldSlots.currentWeight + shieldComponent.slotWeight <=
+        wieldSlots.maxWeight
       )
         return true;
       else {
