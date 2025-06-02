@@ -39,6 +39,7 @@ tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y - 1);
 tiles.Throngler.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y - 1);
 
 wakeUpSleepingEnemies();
+
 addBelow(getEntitiesUnder(player, ["Floor"]));
 
 document.addEventListener("keydown", (event) => {

@@ -198,7 +198,7 @@ new Tile(
     [Pickable, []],
     [Weapon, [100, 1000, 1]],
   ],
-  undefined,
+  [],
   [thronglerShine, 95]
 );
 
