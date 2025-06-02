@@ -202,7 +202,8 @@ function getBlockingEntity(entitiesOnTile) {
 function handleCollision(entity, dx, dy) {
   const collision = entity.getComponent("Collision");
 
-  const targetEntities = tilemap[entity.y + dy][entity.x + dx];
+  const targetEntities = tilemap?.[entity.y + dy]?.[entity.x + dx];
+  if (!targetEntities) return;
 
   const blockingEntity = getBlockingEntity(targetEntities);
   if (!blockingEntity) return;
