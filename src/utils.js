@@ -10,6 +10,8 @@ import {
   viewPort,
 } from "./globals.js";
 import { renderWorld } from "./System/engine.js";
+import { updateInventoryUi } from "./UI/inventory.js";
+import { updateUi } from "./UI/sidebar.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -82,6 +84,8 @@ function recolorize(
     entity.defaultBg = [bgR, bgG, bgB, bgA];
   }
   renderWorld();
+  updateUi();
+  updateInventoryUi();
 }
 
 function addEntityAsset(entity) {

@@ -1,3 +1,4 @@
+import { thronglerShine } from "../Animations/animations.js";
 import { tiles } from "../tiles.js";
 import {
   closeInventory,
@@ -69,8 +70,8 @@ function handleInput(event, player) {
     case "w":
       wieldAction.makeAction(
         player,
-        [player, tiles.Sword.init()],
-        [player, tiles.Sword.init()]
+        [player, tiles.Throngler.init(), 95],
+        [player, tiles.Throngler.init()]
       );
       break;
     case "W":

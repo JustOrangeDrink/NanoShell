@@ -5,7 +5,8 @@ import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./UI/sidebar.js";
 import { handleInput } from "./System/controls.js";
-import { isInventoryOpen, updateInventoryUi } from "./UI/inventory.js";
+import { updateInventoryUi } from "./UI/inventory.js";
+import { thronglerShine } from "./Animations/animations.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
@@ -35,6 +36,7 @@ tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
 tiles.Bit.init(spawnRoom.getCenter().x + 2, spawnRoom.getCenter().y);
 
 tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y - 1);
+tiles.Throngler.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y - 1);
 
 wakeUpSleepingEnemies();
 addBelow(getEntitiesUnder(player, ["Floor"]));

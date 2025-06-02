@@ -1,3 +1,4 @@
+import { thronglerShine } from "./Animations/animations.js";
 import {
   Collision,
   Size,
@@ -32,7 +33,8 @@ class Tile {
     charY,
     colorArray = [0, 0, 0, 0],
     components,
-    bgColorArray = [0, 0, 0, 0]
+    bgColorArray = [0, 0, 0, 0],
+    animation = false
   ) {
     const [r, g, b, a] = colorArray;
     const [bgR, bgG, bgB, bgA] = bgColorArray;
@@ -49,6 +51,8 @@ class Tile {
 
     this.components = components;
 
+    this.animation = animation;
+
     tiles[name] = this;
   }
 
@@ -61,7 +65,8 @@ class Tile {
       this.charX,
       this.charY,
       this.color,
-      this.bg
+      this.bg,
+      this.animation
     );
 
     if (this.components) {
@@ -70,6 +75,7 @@ class Tile {
         entity.addComponent(new component[0](...component[1]));
       }
     }
+    if (this.animation) this.animation[0](entity, this.animation[1]);
 
     return entity;
   }
@@ -179,6 +185,21 @@ new Tile(
     [Pickable, []],
     [Shield, [2, 1]],
   ]
+);
+
+new Tile(
+  "Throngler",
+  1,
+  8,
+  1,
+  [255, 100, 255, 255],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, []],
+    [Weapon, [100, 1000, 1]],
+  ],
+  undefined,
+  [thronglerShine, 95]
 );
 
 new Tile("Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);

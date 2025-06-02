@@ -18,4 +18,21 @@ function blockAnimation(trgEntity, duration = 150) {
 
 function missAnimation(trgEntity, duration = 150) {}
 
-export { hitAnimation, blockAnimation, missAnimation };
+function thronglerShine(trgEntity, interval) {
+  const red = [255, 0, 0, 255];
+  const green = [0, 255, 0, 255];
+  const blue = [0, 0, 255, 255];
+  const purple = [255, 0, 255, 255];
+  const yellow = [255, 255, 0, 255];
+  const cyan = [0, 255, 255, 255];
+
+  const colors = [red, green, blue, purple, yellow, cyan];
+
+  let current = 0;
+  setInterval(() => {
+    current = current < colors.length - 1 ? current + 1 : 0;
+    recolorize(trgEntity, colors[current], trgEntity.defaultBg);
+  }, interval);
+}
+
+export { hitAnimation, blockAnimation, missAnimation, thronglerShine };
