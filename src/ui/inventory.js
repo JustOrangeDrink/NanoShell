@@ -8,7 +8,7 @@ import {
   SCREEN_WIDTH,
   uniqueAssets,
 } from "../globals.js";
-import { getEntityFromArray } from "../utils.js";
+import { getEntityFromArray, setContextFillStyle } from "../utils.js";
 
 const MENU_WIDTH = 500;
 const MENU_HEIGHT = SCREEN_HEIGHT - 120;
@@ -65,15 +65,13 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - 20
     );
 
-    const red = weapon.color[0] * 255;
-    const green = weapon.color[1] * 255;
-    const blue = weapon.color[2] * 255;
-    inventoryUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    setContextFillStyle(inventoryUiCtx, shield.color);
     inventoryUiCtx.fillText(
       `- ${weapon.title}`,
       MENU_X + 35,
       MENU_Y + wieldShift
     );
+
     wieldShift += 26;
   }
 
@@ -85,15 +83,13 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - 20
     );
 
-    const red = shield.color[0] * 255;
-    const green = shield.color[1] * 255;
-    const blue = shield.color[2] * 255;
-    inventoryUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    setContextFillStyle(inventoryUiCtx, shield.color);
     inventoryUiCtx.fillText(
       `- ${shield.title}`,
       MENU_X + 35,
       MENU_Y + wieldShift
     );
+
     wieldShift += 26;
   }
 
@@ -106,10 +102,7 @@ function updateInventoryUi() {
   const inventory = player.getComponent("Inventory").inventory;
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
-    const red = item.color[0] * 255;
-    const green = item.color[1] * 255;
-    const blue = item.color[2] * 255;
-    inventoryUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    setContextFillStyle(inventoryUiCtx, item.color);
     inventoryUiCtx.drawImage(
       uniqueAssets[item.renderName],
       MENU_X + 10,

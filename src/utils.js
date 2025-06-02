@@ -186,6 +186,13 @@ function getRelativeCoords([x, y]) {
   return [relativeX, relativeY];
 }
 
+function setContextFillStyle(ctx, colors) {
+  const red = colors[0] * 255;
+  const green = colors[1] * 255;
+  const blue = colors[2] * 255;
+  ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+}
+
 export {
   randomInt,
   randomFloat,
@@ -200,4 +207,5 @@ export {
   getRelativeCoords,
   recolorize,
   getRenderName,
+  setContextFillStyle,
 };

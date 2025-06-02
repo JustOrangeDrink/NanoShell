@@ -1,6 +1,10 @@
 import { entities, mainUiCanvas, mainUiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import { countDigits, getEntityFromArray } from "../utils.js";
+import {
+  countDigits,
+  getEntityFromArray,
+  setContextFillStyle,
+} from "../utils.js";
 
 const logs = [];
 const below = [];
@@ -73,10 +77,7 @@ function writeBelow() {
   mainUiCtx.fillText("Below:", 10, 350);
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
-    const red = entityBelow.color[0] * 255;
-    const green = entityBelow.color[1] * 255;
-    const blue = entityBelow.color[2] * 255;
-    mainUiCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    setContextFillStyle(mainUiCtx, entityBelow.color);
     mainUiCtx.fillText(entityBelow.title, 10, 375 + i * 20);
     mainUiCtx.fillStyle = "lime";
   }
