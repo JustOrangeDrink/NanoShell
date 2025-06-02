@@ -236,6 +236,8 @@ const pickUpAction = new Action(
 
     updateInventoryUi();
     tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
+    trg.x = undefined;
+    trg.y = undefined;
   },
   (src, trg) => {
     const itemsBelow = getEntitiesUnder(src, ["Floor"]);

@@ -83,7 +83,7 @@ function recolorize(
     entity.defaultColor = [r, g, b, a];
     entity.defaultBg = [bgR, bgG, bgB, bgA];
   }
-  renderWorld();
+  if (entity.x && entity.y) renderWorld();
   updateUi();
   updateInventoryUi();
 }
