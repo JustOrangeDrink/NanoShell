@@ -6,7 +6,6 @@ import { tiles } from "./tiles.js";
 import { addBelow, updateUi } from "./UI/sidebar.js";
 import { handleInput } from "./System/controls.js";
 import { updateInventoryUi } from "./UI/inventory.js";
-import { thronglerShine } from "./Animations/animations.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {

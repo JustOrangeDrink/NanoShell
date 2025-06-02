@@ -129,13 +129,13 @@ class Hidden {
 }
 
 class WieldSlots {
-  constructor(maxWeight) {
+  constructor(maxWeight, unarmedWeapon) {
     this.type = "WieldSlots";
     this.weaponSlots = [];
     this.shieldSlots = [];
     this.maxWeight = maxWeight;
     this.currentWeight = 0;
-    this.unarmedSlot;
+    this.unarmedWeapon = unarmedWeapon;
   }
 }
 

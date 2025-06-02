@@ -101,14 +101,9 @@ const moveAction = new Action(
 const attackAction = new Action(
   "Attack",
   1,
-  (src, trg, srcWeapon) => {
-    let weapon = srcWeapon;
-    if (!weapon) {
-      if (!src.getComponent("WieldSlots").unarmedSlot) {
-        src.getComponent("WieldSlots").unarmedSlot = tiles.Fist.init();
-      }
-      weapon = src.getComponent("WieldSlots").unarmedSlot;
-    }
+  (src, trg) => {
+    let weapon = src.getComponent("WieldSlots").weaponSlots[0];
+    if (!weapon) weapon = src.getComponent("WieldSlots").unarmedWeapon;
 
     const srcAttributes = src.getComponent("Attributes");
 

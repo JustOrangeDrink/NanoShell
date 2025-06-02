@@ -161,12 +161,7 @@ function tryMovement(entity, dx, dy) {
   const trgEnemy = handleCollision(entity, dx, dy);
 
   if (trgEnemy) {
-    const weapon = entity.getComponent("WieldSlots")?.weaponSlots?.[0];
-    attackAction.makeAction(
-      entity,
-      [entity, trgEnemy, weapon],
-      [entity, trgEnemy]
-    );
+    attackAction.makeAction(entity, [entity, trgEnemy], [entity, trgEnemy]);
   } else moveAction.makeAction(entity, [entity, dx, dy], [entity, dx, dy]);
 }
 

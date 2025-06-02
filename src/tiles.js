@@ -81,6 +81,8 @@ class Tile {
   }
 }
 
+new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [0, 0, 0]]]);
+
 new Tile(
   "Player",
   4,
@@ -97,7 +99,7 @@ new Tile(
     [Stats, [50, 2, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
-    [WieldSlots, [2]],
+    [WieldSlots, [2, tiles.Fist.init()]],
   ]
 );
 
@@ -116,7 +118,7 @@ new Tile(
     [Behavior, [guardBehavior]],
     [Stats, [40, 1, 1]],
     [Attributes, [1, 1, 1]],
-    [WieldSlots, [2]],
+    [WieldSlots, [2, tiles.Fist.init()]],
   ]
 );
 
@@ -158,8 +160,6 @@ new Tile(
     [Occlusion, [true]],
   ]
 );
-
-new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [2, 0]]]);
 
 new Tile(
   "Sword",
