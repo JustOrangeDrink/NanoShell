@@ -43,7 +43,7 @@ class Entity {
     this.lastX = x;
     this.lastY = y;
 
-    if (!this.x && !this.y) {
+    if (this.x == undefined && this.y == undefined) {
       entities.push(this);
       return;
     }
