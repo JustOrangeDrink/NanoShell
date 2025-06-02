@@ -65,7 +65,7 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - 20
     );
 
-    setContextFillStyle(inventoryUiCtx, shield.color);
+    setContextFillStyle(inventoryUiCtx, weapon.color);
     inventoryUiCtx.fillText(
       `- ${weapon.title}`,
       MENU_X + 35,
