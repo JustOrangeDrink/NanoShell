@@ -1,6 +1,11 @@
-import { blockAnimation, hitAnimation } from "../Animations/animations.js";
+import {
+  blockAnimation,
+  hitAnimation,
+  missAnimation,
+} from "../Animations/animations.js";
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
+import { tiles } from "../tiles.js";
 import { updateInventoryUi } from "../UI/inventory.js";
 import { addLog } from "../UI/sidebar.js";
 import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
@@ -96,65 +101,81 @@ const moveAction = new Action(
 const attackAction = new Action(
   "Attack",
   1,
-  (src, trg, dmg) => {
-    const trgHealth = trg.getComponent("Health");
+  (src, trg, srcWeapon) => {
+    let weapon = srcWeapon;
+    if (!weapon) {
+      if (!src.getComponent("WeaponSlots").unarmedSlot) {
+        src.getComponent("WeaponSlots").unarmedSlot = tiles.Fist.init();
+      }
+      weapon = src.getComponent("WeaponSlots").unarmedSlot;
+    }
 
     const srcAttributes = src.getComponent("Attributes");
+
+    const trgHealth = trg.getComponent("Health");
     const trgStats = trg.getComponent("Stats");
     const trgAttributes = trg.getComponent("Attributes");
+
+    const dmg = weapon.getComponent("Weapon").dmg;
 
     const ddg = trgStats.ddg + trgAttributes.agi;
     const isHit = randomInt(0, 100) + srcAttributes.agi > ddg;
 
-    let damage =
-      randomInt(0, dmg) +
+    let totalDamage =
+      randomInt(dmg / 1.5, dmg) +
       randomInt(0, srcAttributes.str) -
       randomInt(0, trgStats.arm);
 
     if (src.name === "Player") {
       if (!isHit) {
+        missAnimation(trg);
         addLog(`You miss ${trg.title}!`, "gray");
         return;
       }
-      if (damage <= 0) {
+      if (totalDamage <= 0) {
         blockAnimation(trg);
         addLog(`${trg.title} blocks your attack!`, "gray");
         return;
       }
       hitAnimation(trg);
-      addLog(`You hit ${trg.title} for ${damage} damage!`, "yellow");
-      trgHealth.takeDamage(trg, damage);
+      addLog(`You hit ${trg.title} for ${totalDamage} damage!`, "yellow");
+      trgHealth.takeDamage(trg, totalDamage);
       return;
     }
 
     if (trg.name == "Player") {
       if (!isHit) {
+        missAnimation(trg);
         addLog(`${src.title} miss you!`, "gray");
         return;
       }
-      if (damage <= 0) {
+      if (totalDamage <= 0) {
         blockAnimation(trg);
         addLog(`You block ${src.title}'s attack!`, "gray");
         return;
       }
       hitAnimation(trg);
-      addLog(`${src.title} hit you for ${damage} damage!`, "yellow");
-      trgHealth.takeDamage(trg, damage);
+      addLog(`${src.title} hit you for ${totalDamage} damage!`, "yellow");
+      trgHealth.takeDamage(trg, totalDamage);
       return;
     }
 
     if (!isHit) {
+      missAnimation(trg);
       addLog(`${src.title} miss ${trg.title}!`, "yellow");
     }
-    if (damage <= 0) {
+    if (totalDamage <= 0) {
       blockAnimation(trg);
       addLog(`${trg.title} blocks ${src.title}'s attack!`, "gray");
       return;
     }
 
     hitAnimation(trg);
-    addLog(`${src.title} hit ${trg.title} for ${damage} damage!`, "yellow");
-    trgHealth.takeDamage(trg, damage);
+    addLog(
+      `${src.title} hit ${trg.title} for ${totalDamage} damage!`,
+      "yellow"
+    );
+    trgHealth.takeDamage(trg, totalDamage);
   },
   (src, trg) => {
     const trgHealth = trg.getComponent("Health");
@@ -236,11 +257,54 @@ const wieldAction = new Action(
   1,
   (src, trg) => {
     const weaponSlots = src.getComponent("WeaponSlots");
-    weaponSlots.slots.push(trg);
+    const shieldSlots = src.getComponent("ShieldSlots");
+    const weaponComponent = trg.getComponent("Weapon");
+    const shieldComponent = trg.getComponent("Shield");
+
+    if (weaponComponent) {
+      addLog(`Equipped ${trg.title}!`, "orangered");
+      weaponSlots.slots.push(trg);
+      weaponSlots.currentWeight += weaponComponent.slotWeight;
+      shieldSlots.maxWeight -= weaponComponent.slotWeight;
+    }
+    if (shieldComponent) {
+      addLog(`Equipped ${trg.title}!`, "orangered");
+      shieldSlots.slots.push(trg);
+      shieldSlots.currentWeight += shieldComponent.slotWeight;
+      weaponSlots.maxWeight -= shieldComponent.slotWeight;
+    }
   },
-  (trg) => {
-    if (trg.getComponent("Weapon")) return true;
-    else return false;
+  (src, trg) => {
+    const weaponSlots = src.getComponent("WeaponSlots");
+    const shieldSlots = src.getComponent("ShieldSlots");
+    const weaponComponent = trg.getComponent("Weapon");
+    const shieldComponent = trg.getComponent("Shield");
+
+    if (weaponComponent) {
+      if (
+        weaponSlots.currentWeight + weaponComponent.slotWeight <=
+        weaponSlots.maxWeight
+      )
+        return true;
+      else {
+        addLog(`Not enough space for ${trg.title}`, "red");
+        return false;
+      }
+    }
+
+    if (shieldComponent) {
+      if (
+        shieldSlots.currentWeight + shieldComponent.slotWeight <=
+        shieldSlots.maxWeight
+      )
+        return true;
+      else {
+        addLog(`Not enough space for ${trg.title}`, "red");
+        return false;
+      }
+    }
+
+    return false;
   }
 );
 

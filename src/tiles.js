@@ -16,6 +16,8 @@ import {
   WeaponSlots,
   Weapon,
   Hidden,
+  ShieldSlots,
+  Shield,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -93,7 +95,8 @@ new Tile(
     [Stats, [65, 10, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
-    [WeaponSlots, [1]],
+    [WeaponSlots, [2]],
+    [ShieldSlots, [2]],
   ]
 );
 
@@ -113,6 +116,8 @@ new Tile(
     [Behavior, [guardBehavior]],
     [Stats, [40, 1, 1]],
     [Attributes, [1, 1, 1]],
+    [WeaponSlots, [2]],
+    [ShieldSlots, [2]],
   ]
 );
 
@@ -158,6 +163,8 @@ new Tile(
   ]
 );
 
+new Tile("Fist", "Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [2, 0]]]);
+
 new Tile(
   "Sword",
   "Sword",
@@ -168,7 +175,21 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, []],
-    [Weapon, [6]],
+    [Weapon, [10, 1]],
+  ]
+);
+
+new Tile(
+  "Shield",
+  "Shield",
+  1,
+  8,
+  1,
+  [220, 220, 220, 255],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, []],
+    [Shield, [2, 1]],
   ]
 );
 

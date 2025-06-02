@@ -16,4 +16,6 @@ function blockAnimation(trgEntity, duration = 150) {
   }, duration);
 }
 
-export { hitAnimation, blockAnimation };
+function missAnimation(trgEntity, duration = 150) {}
+
+export { hitAnimation, blockAnimation, missAnimation };

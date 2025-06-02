@@ -129,47 +129,54 @@ class Hidden {
 }
 
 class WeaponSlots {
-  constructor(maxSlots) {
+  constructor(maxWeight) {
     this.type = "WeaponSlots";
     this.slots = [];
-    this.maxSlots = maxSlots;
+    this.unarmedSlot;
+    this.maxWeight = maxWeight;
+    this.currentWeight = 0;
   }
 }
 
 class ShieldSlots {
-  constructor(maxSlots) {
+  constructor(maxWeight) {
     this.type = "ShieldSlots";
     this.slots = [];
-    this.maxSlots = maxSlots;
+    this.maxWeight = maxWeight;
+    this.currentWeight = 0;
   }
 }
 
 class ArmorSlots {
-  constructor(maxSlots) {
+  constructor(maxWeight) {
     this.type = "ArmorSlots";
     this.slots = [];
-    this.maxSlots = maxSlots;
+    this.maxWeight = maxWeight;
+    this.currentWeight = 0;
   }
 }
 
 class Weapon {
-  constructor(dmg) {
+  constructor(dmg, slotWeight) {
     this.type = "Weapon";
     this.dmg = dmg;
+    this.slotWeight = slotWeight;
   }
 }
 
-class Shiled {
-  constructor(arm) {
+class Shield {
+  constructor(arm, slotWeight) {
     this.type = "Shield";
     this.arm = arm;
+    this.slotWeight = slotWeight;
   }
 }
 
 class Armor {
-  constructor(arm) {
+  constructor(arm, slotWeight) {
     this.type = "Armor";
     this.arm = arm;
+    this.slotWeight = slotWeight;
   }
 }
 
@@ -193,6 +200,6 @@ export {
   ShieldSlots,
   ArmorSlots,
   Weapon,
-  Shiled,
+  Shield,
   Armor,
 };
