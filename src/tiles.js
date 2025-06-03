@@ -136,14 +136,14 @@ new Tile(
 );
 
 new Tile(
-  "Letter",
+  "Script",
   1,
   5,
   15,
   [255, 160, 160, 255],
   [
     [Size, ["Tiny"]],
-    [Pickable, []],
+    [Pickable, ["Read"]],
   ]
 );
 
@@ -169,7 +169,7 @@ new Tile(
   [220, 220, 220, 255],
   [
     [Size, ["Tiny"]],
-    [Pickable, []],
+    [Pickable, ["Wield"]],
     [Weapon, [5, 10, 1]],
   ]
 );
@@ -182,7 +182,7 @@ new Tile(
   [220, 220, 220, 255],
   [
     [Size, ["Tiny"]],
-    [Pickable, []],
+    [Pickable, ["Wield"]],
     [Shield, [2, 1]],
   ]
 );
@@ -195,7 +195,7 @@ new Tile(
   [255, 100, 255, 255],
   [
     [Size, ["Tiny"]],
-    [Pickable, []],
+    [Pickable, ["Wield"]],
     [Weapon, [100, 1000, 1]],
   ],
   [],

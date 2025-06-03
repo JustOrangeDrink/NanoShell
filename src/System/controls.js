@@ -5,6 +5,7 @@ import {
   isInventoryOpen,
   openInventory,
 } from "../UI/inventory.js";
+import { closePopup, isPopupOpen, openPopup } from "../UI/popup.js";
 import { addLog } from "../UI/sidebar.js";
 import {
   longSkipAction,
@@ -18,17 +19,30 @@ function handleInput(event, player) {
   let dx = 0;
   let dy = 0;
 
+  // popup UI
+  if (!isInventoryOpen) {
+    switch (event.key) {
+      case "Escape":
+        closePopup();
+        break;
+      default:
+        break;
+    }
+  }
+
   // inventory UI
-  switch (event.key) {
-    case "Escape":
-      closeInventory();
-      break;
-    default:
-      break;
+  if (!isPopupOpen) {
+    switch (event.key) {
+      case "Escape":
+        closeInventory();
+        break;
+      default:
+        break;
+    }
   }
 
   // main UI
-  if (isInventoryOpen) return;
+  if (isInventoryOpen || isPopupOpen) return;
   switch (event.key) {
     case "4":
       dx += -1;
@@ -73,6 +87,7 @@ function handleInput(event, player) {
         [player, tiles.Throngler.init(), 95],
         [player, tiles.Throngler.init()]
       );
+      openPopup("Wield");
       break;
     case "W":
       wieldAction.makeAction(
@@ -80,6 +95,10 @@ function handleInput(event, player) {
         [player, tiles.Shield.init()],
         [player, tiles.Shield.init()]
       );
+      break;
+
+    case "r":
+      openPopup("Read");
       break;
 
     case "i":

@@ -11,6 +11,7 @@ import {
 } from "./globals.js";
 import { renderWorld } from "./System/engine.js";
 import { updateInventoryUi } from "./UI/inventory.js";
+import { isPopupOpen, currentPopupType, updatePopupUi } from "./UI/popup.js";
 import { updateUi } from "./UI/sidebar.js";
 
 function randomInt(min, max) {
@@ -86,6 +87,12 @@ function recolorize(
   if (entity.x && entity.y) renderWorld();
   updateUi();
   updateInventoryUi();
+
+  if (
+    isPopupOpen &&
+    currentPopupType === entity.getComponent("Pickable")?.popupType
+  )
+    updatePopupUi(entity.getComponent("Pickable").popupType);
 }
 
 function addEntityAsset(entity) {

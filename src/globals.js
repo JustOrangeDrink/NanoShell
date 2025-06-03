@@ -19,6 +19,9 @@ const mainUiCtx = mainUiCanvas.getContext("2d");
 const inventoryUiCanvas = document.getElementsByClassName("inventory_ui")[0];
 const inventoryUiCtx = inventoryUiCanvas.getContext("2d");
 
+const popupUiCanvas = document.getElementsByClassName("popup_ui")[0];
+const popupUiCtx = popupUiCanvas.getContext("2d");
+
 canvas.width = CANVAS_TILED_WIDTH * TILE_SIZE;
 canvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
@@ -27,6 +30,9 @@ mainUiCanvas.height = CANVAS_TILED_HEIGHT * TILE_SIZE;
 
 inventoryUiCanvas.width = SCREEN_WIDTH;
 inventoryUiCanvas.height = SCREEN_HEIGHT;
+
+popupUiCanvas.width = SCREEN_WIDTH;
+popupUiCanvas.height = SCREEN_HEIGHT;
 
 const MAP_TILED_WIDTH = 100;
 const MAP_TILED_HEIGHT = 100;
@@ -76,6 +82,8 @@ export {
   mainUiCtx,
   inventoryUiCanvas,
   inventoryUiCtx,
+  popupUiCanvas,
+  popupUiCtx,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   TILE_SIZE,

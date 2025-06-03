@@ -19,3 +19,9 @@ canvas {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
 }
+
+.popup_ui {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+}

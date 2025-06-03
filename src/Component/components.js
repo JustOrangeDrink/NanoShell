@@ -107,9 +107,10 @@ class Inventory {
 }
 
 class Pickable {
-  constructor() {
+  constructor(popupType) {
     this.type = "Pickable";
     this.pickable = true;
+    this.popupType = popupType;
   }
 }
 
