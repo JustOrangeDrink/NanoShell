@@ -3,9 +3,9 @@ import { spritesheet, viewPort, rooms } from "./globals.js";
 import { populateMap, generateMap } from "./System/mapgen.js";
 import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
-import { addBelow, updateUi } from "./Ui/sidebar.js";
+import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
-import { updateInventoryUi } from "./Ui/inventory.js";
+import { updateInventoryUi } from "./ui/inventory.js";
 
 spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {

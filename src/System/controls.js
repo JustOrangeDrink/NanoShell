@@ -4,9 +4,9 @@ import {
   closeInventory,
   isInventoryOpen,
   openInventory,
-} from "../Ui/inventory.js";
-import { closePopup, isPopupOpen, openPopup } from "../Ui/popup.js";
-import { addLog } from "../Ui/sidebar.js";
+} from "../ui/inventory.js";
+import { closePopup, isPopupOpen, openPopup } from "../ui/popup.js";
+import { addLog } from "../ui/sidebar.js";
 import {
   longSkipAction,
   pickUpAction,
