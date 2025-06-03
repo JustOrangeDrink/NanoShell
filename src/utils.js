@@ -10,9 +10,9 @@ import {
   viewPort,
 } from "./globals.js";
 import { renderWorld } from "./System/engine.js";
-import { updateInventoryUi } from "./UI/inventory.js";
-import { isPopupOpen, currentPopupType, updatePopupUi } from "./UI/popup.js";
-import { updateUi } from "./UI/sidebar.js";
+import { updateInventoryUi } from "./Ui/inventory.js";
+import { isPopupOpen, currentPopupType, updatePopupUi } from "./Ui/popup.js";
+import { updateUi } from "./Ui/sidebar.js";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);

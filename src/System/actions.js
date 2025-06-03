@@ -6,8 +6,8 @@ import {
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { tiles } from "../tiles.js";
-import { updateInventoryUi } from "../UI/inventory.js";
-import { addLog, updateUi } from "../UI/sidebar.js";
+import { updateInventoryUi } from "../Ui/inventory.js";
+import { addLog, updateUi } from "../Ui/sidebar.js";
 import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
 import { getEntitiesUnder } from "./engine.js";
 
