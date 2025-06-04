@@ -105,6 +105,8 @@ const attackAction = new Action(
     let weapon = src.getComponent("WieldSlots").weaponSlots[0];
     if (!weapon) weapon = src.getComponent("WieldSlots").unarmedWeapon;
 
+    const weaponHitTitle = weapon.getComponent("Weapon").hitTitle;
+
     const srcAttributes = src.getComponent("Attributes");
 
     const trgHealth = trg.getComponent("Health");
@@ -137,7 +139,10 @@ const attackAction = new Action(
         return;
       }
       hitAnimation(trg);
-      addLog(`You hit ${trg.title} for ${totalDamage} damage!`, "yellow");
+      addLog(
+        `You ${weaponHitTitle} ${trg.title} for ${totalDamage} damage!`,
+        "yellow"
+      );
       trgHealth.takeDamage(trg, totalDamage);
       return;
     }
@@ -154,7 +159,10 @@ const attackAction = new Action(
         return;
       }
       hitAnimation(trg);
-      addLog(`${src.title} hit you for ${totalDamage} damage!`, "yellow");
+      addLog(
+        `${src.title} ${weaponHitTitle} you for ${totalDamage} damage!`,
+        "yellow"
+      );
       trgHealth.takeDamage(trg, totalDamage);
       return;
     }
@@ -171,7 +179,7 @@ const attackAction = new Action(
 
     hitAnimation(trg);
     addLog(
-      `${src.title} hit ${trg.title} for ${totalDamage} damage!`,
+      `${src.title} ${weaponHitTitle} ${trg.title} for ${totalDamage} damage!`,
       "yellow"
     );
     trgHealth.takeDamage(trg, totalDamage);

@@ -150,11 +150,12 @@ class ArmorSlots {
 }
 
 class Weapon {
-  constructor(acc, dmg, slotWeight) {
+  constructor(acc, dmg, slotWeight, hitTitle = "hit") {
     this.type = "Weapon";
     this.acc = acc;
     this.dmg = dmg;
     this.slotWeight = slotWeight;
+    this.hitTitle = hitTitle;
   }
 }
 

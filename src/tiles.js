@@ -81,7 +81,7 @@ class Tile {
   }
 }
 
-new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [0, 0, 0]]]);
+new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [0, 0, 0, "punch"]]]);
 
 new Tile(
   "Player",
@@ -170,7 +170,7 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, ["Wield"]],
-    [Weapon, [5, 10, 1]],
+    [Weapon, [5, 10, 1, "slash"]],
   ]
 );
 
@@ -196,7 +196,7 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Pickable, ["Wield"]],
-    [Weapon, [100, 1000, 1]],
+    [Weapon, [100, 1000, 1, "bonk"]],
   ],
   [],
   [thronglerShine, 95]
