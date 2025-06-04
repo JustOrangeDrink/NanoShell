@@ -3,6 +3,7 @@ const html = document.querySelector("html");
 const TILE_SIZE = 24;
 
 const spritesheet = document.createElement("img");
+spritesheet.src = "../assets/spritesheet.png";
 
 const SCREEN_WIDTH = html.clientWidth;
 const SCREEN_HEIGHT = html.clientHeight;

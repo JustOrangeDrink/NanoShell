@@ -7,7 +7,6 @@ import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
 import { updateInventoryUi } from "./ui/inventory.js";
 
-spritesheet.src = "../assets/spritesheet.png";
 spritesheet.onload = () => {
   for (const key in tiles) {
     addEntityAsset(tiles[key]);
