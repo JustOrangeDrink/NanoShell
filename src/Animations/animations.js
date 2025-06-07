@@ -18,7 +18,7 @@ function blockAnimation(trgEntity, duration = 150) {
 
 function missAnimation(trgEntity, duration = 150) {}
 
-function thronglerShine(trgEntity, interval) {
+function thronglerShine(trgEntity, interval = 100) {
   const red = [255, 0, 0, 255];
   const green = [0, 255, 0, 255];
   const blue = [0, 0, 255, 255];

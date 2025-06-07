@@ -199,7 +199,7 @@ new Tile(
     [Weapon, [100, 1000, 1, "bonk"]],
   ],
   [],
-  [thronglerShine, 95]
+  [thronglerShine]
 );
 
 new Tile("Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);
