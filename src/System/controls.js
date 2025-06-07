@@ -5,7 +5,13 @@ import {
   isInventoryOpen,
   openInventory,
 } from "../ui/inventory.js";
-import { closePopup, isPopupOpen, openPopup } from "../ui/popup.js";
+import {
+  chooseItem,
+  closePopup,
+  isPopupOpen,
+  moveCursor,
+  openPopup,
+} from "../ui/popup.js";
 import { addLog } from "../ui/sidebar.js";
 import {
   longSkipAction,
@@ -20,18 +26,35 @@ function handleInput(event, player) {
   let dy = 0;
 
   // popup UI
-  if (!isInventoryOpen) {
+  if (isPopupOpen) {
     switch (event.key) {
       case "Escape":
         closePopup();
         break;
+      case "Enter":
+        chooseItem();
+        break;
+
+      case "ArrowDown":
+      case "j":
+      case "2":
+        moveCursor(1);
+        break;
+
+      case "ArrowUp":
+      case "k":
+      case "8":
+        moveCursor(-1);
+        break;
+
       default:
         break;
     }
+    return;
   }
 
   // inventory UI
-  if (!isPopupOpen) {
+  if (isInventoryOpen) {
     switch (event.key) {
       case "Escape":
         closeInventory();
@@ -39,35 +62,55 @@ function handleInput(event, player) {
       default:
         break;
     }
+    return;
   }
 
   // main UI
   if (isInventoryOpen || isPopupOpen) return;
   switch (event.key) {
+    case "ArrowLeft":
+    case "h":
     case "4":
       dx += -1;
       break;
+
+    case "ArrowRight":
+    case "l":
     case "6":
       dx += 1;
       break;
+
+    case "ArrowUp":
+    case "k":
     case "8":
       dy += -1;
       break;
+
+    case "ArrowDown":
+    case "j":
     case "2":
       dy += 1;
       break;
+
+    case "y":
     case "7":
       dx -= 1;
       dy -= 1;
       break;
+
+    case "u":
     case "9":
       dx += 1;
       dy -= 1;
       break;
+
+    case "b":
     case "1":
       dx -= 1;
       dy += 1;
       break;
+
+    case "n":
     case "3":
       dx += 1;
       dy += 1;
@@ -82,19 +125,7 @@ function handleInput(event, player) {
       break;
 
     case "w":
-      wieldAction.makeAction(
-        player,
-        [player, tiles.Throngler.init(), 95],
-        [player, tiles.Throngler.init()]
-      );
       openPopup("Wield");
-      break;
-    case "W":
-      wieldAction.makeAction(
-        player,
-        [player, tiles.Shield.init()],
-        [player, tiles.Shield.init()]
-      );
       break;
 
     case "r":
