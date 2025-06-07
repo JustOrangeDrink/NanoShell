@@ -262,9 +262,11 @@ const pickUpAction = new Action(
 );
 
 const wieldAction = new Action(
-  "Equip",
+  "Wield",
   1,
   (src, trg) => {
+    const srcInventory = src.getComponent("Inventory").inventory;
+
     const wieldSlots = src.getComponent("WieldSlots");
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
@@ -280,6 +282,7 @@ const wieldAction = new Action(
       wieldSlots.currentWeight += shieldComponent.slotWeight;
       src.getComponent("Stats").arm += shieldComponent.arm;
     }
+    srcInventory.splice(srcInventory.indexOf(trg), 1);
     updateInventoryUi();
     updateUi();
   },
