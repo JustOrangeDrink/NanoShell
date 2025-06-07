@@ -75,7 +75,6 @@ class Tile {
         entity.addComponent(new component[0](...component[1]));
       }
     }
-    if (this.animation) this.animation[0](entity, this.animation[1]);
 
     return entity;
   }

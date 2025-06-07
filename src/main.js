@@ -1,5 +1,5 @@
 import { renderWorld, getEntitiesUnder } from "./System/engine.js";
-import { spritesheet, viewPort, rooms } from "./globals.js";
+import { spritesheet, viewPort, rooms, entities } from "./globals.js";
 import { populateMap, generateMap } from "./System/mapgen.js";
 import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { tiles } from "./tiles.js";
@@ -10,6 +10,10 @@ import { updateInventoryUi } from "./ui/inventory.js";
 spritesheet.onload = () => {
   for (const key in tiles) {
     addEntityAsset(tiles[key]);
+  }
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i];
+    if (entity.animation) entity.animation[0](entity, entity.animation[1]);
   }
   renderWorld();
 };

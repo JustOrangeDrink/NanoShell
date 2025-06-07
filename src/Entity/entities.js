@@ -11,7 +11,8 @@ class Entity {
     charX,
     charY,
     colorArray = [0, 0, 0, 255],
-    bgColorArray = [0, 0, 0, 0]
+    bgColorArray = [0, 0, 0, 0],
+    animation
   ) {
     const [r, g, b, a] = colorArray;
     const [bgR, bgG, bgB, bgA] = bgColorArray;
@@ -31,6 +32,8 @@ class Entity {
 
     this.color = [r, g, b, a];
     this.bg = [bgR, bgG, bgB, bgA];
+
+    this.animation = animation;
 
     this.renderName = getRenderName(name, colorArray, bgColorArray);
 
