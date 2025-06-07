@@ -75,7 +75,7 @@ function updatePopupUi(popupType) {
     );
 
     setContextFillStyle(popupUiCtx, item.color);
-    popupUiCtx.fillText(`${item.title}`, MENU_X + 40, textShift);
+    popupUiCtx.fillText(`- ${item.title}`, MENU_X + 40, textShift);
     textShift += 30;
   }
 
