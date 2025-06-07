@@ -6,6 +6,7 @@ import {
   mainUiCanvas,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  TILE_SIZE,
   uniqueAssets,
 } from "../globals.js";
 import { getEntityFromArray, setContextFillStyle } from "../utils.js";
@@ -62,7 +63,7 @@ function updateInventoryUi() {
     inventoryUiCtx.drawImage(
       uniqueAssets[weapon.renderName],
       MENU_X + 10,
-      MENU_Y + wieldShift - 20
+      MENU_Y + wieldShift - TILE_SIZE
     );
 
     setContextFillStyle(inventoryUiCtx, weapon.color);

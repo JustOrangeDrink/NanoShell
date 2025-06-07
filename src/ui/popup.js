@@ -4,6 +4,8 @@ import {
   popupUiCtx,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  TILE_SIZE,
+  uniqueAssets,
 } from "../globals.js";
 import { wieldAction } from "../System/actions.js";
 import { getEntityFromArray, setContextFillStyle } from "../utils.js";
@@ -64,20 +66,26 @@ function updatePopupUi(popupType) {
   );
   if (itemList.length === 0) return;
 
-  popupUiCtx.fillStyle = "rgb(100, 100, 100)";
-  popupUiCtx.fillRect(
-    MENU_X + 5,
-    MENU_Y + 47 + cursor * 30,
-    MENU_WIDTH - 10,
-    25
-  );
-
   for (let i = 0; i < itemList.length; i++) {
     const item = itemList[i];
+    popupUiCtx.drawImage(
+      uniqueAssets[item.renderName],
+      MENU_X + 10,
+      textShift - TILE_SIZE + 5
+    );
+
     setContextFillStyle(popupUiCtx, item.color);
-    popupUiCtx.fillText(`${item.title}`, MENU_X + 10, textShift);
+    popupUiCtx.fillText(`${item.title}`, MENU_X + 40, textShift);
     textShift += 30;
   }
+
+  popupUiCtx.fillStyle = "rgba(255, 255, 255, 0.2)";
+  popupUiCtx.fillRect(
+    MENU_X + 5,
+    MENU_Y + 45 + cursor * 30,
+    MENU_WIDTH - 10,
+    30
+  );
 }
 
 function chooseItem() {
