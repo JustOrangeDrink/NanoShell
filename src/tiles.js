@@ -95,7 +95,7 @@ new Tile(
     [Damage, [10]],
     [Turns, [1, 1, 0]],
     [Alignment, ["Good"]],
-    [Stats, [50, 2, 1]],
+    [Stats, [50, 0, 1]],
     [Attributes, [3, 5, 3]],
     [Inventory, []],
     [WieldSlots, [2, tiles.Fist.init()]],
@@ -115,7 +115,7 @@ new Tile(
     [Turns, [1, 1, 0]],
     [Alignment, ["Bad"]],
     [Behavior, [guardBehavior]],
-    [Stats, [40, 1, 1]],
+    [Stats, [40, 0, 1]],
     [Attributes, [1, 1, 1]],
     [WieldSlots, [2, tiles.Fist.init()]],
   ]
