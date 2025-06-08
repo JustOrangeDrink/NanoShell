@@ -7,8 +7,12 @@ import {
   TILE_SIZE,
   uniqueAssets,
 } from "../globals.js";
-import { wieldAction } from "../System/actions.js";
-import { getEntityFromArray, setContextFillStyle } from "../utils.js";
+import { dropAction, wieldAction } from "../System/actions.js";
+import {
+  getEntityFromArray,
+  getPopupItems,
+  setContextFillStyle,
+} from "../utils.js";
 
 const MENU_WIDTH = 500;
 const MENU_HEIGHT = SCREEN_HEIGHT - 120;
@@ -24,11 +28,12 @@ let cursor = 0;
 function openPopup(popupType) {
   cursor = 0;
 
-  updatePopupUi(popupType);
   isPopupOpen = true;
   currentPopupType = popupType;
 
   popupUiCanvas.style.display = "block";
+
+  updatePopupUi();
 }
 
 function closePopup() {
@@ -38,7 +43,7 @@ function closePopup() {
   popupUiCanvas.style.display = "none";
 }
 
-function updatePopupUi(popupType) {
+function updatePopupUi() {
   popupUiCtx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   popupUiCtx.fillStyle = "black";
@@ -56,14 +61,13 @@ function updatePopupUi(popupType) {
   let textShift = MENU_Y + 65;
   popupUiCtx.fillStyle = "white";
   popupUiCtx.fillText(
-    `Choose an item to ${popupType}:`,
+    `Choose an item to ${currentPopupType}:`,
     MENU_X + 10,
     MENU_Y + 30
   );
 
-  const itemList = inventory.filter(
-    (item) => item.getComponent("Pickable").popupType == popupType
-  );
+  const itemList = getPopupItems(player, currentPopupType);
+
   if (itemList.length === 0) return;
 
   for (let i = 0; i < itemList.length; i++) {
@@ -92,18 +96,24 @@ function chooseItem() {
   if (!player) player = getEntityFromArray(false, "Player", entities);
   const inventory = player.getComponent("Inventory").inventory;
 
-  const itemsList = inventory.filter(
-    (item) => item.getComponent("Pickable").popupType == currentPopupType
-  );
+  const itemList = getPopupItems(player, currentPopupType);
 
-  if (itemsList.length === 0) return;
+  if (itemList.length === 0) return;
 
   if (currentPopupType == "Wield")
     wieldAction.makeAction(
       player,
-      [player, itemsList[cursor]],
-      [player, itemsList[cursor]]
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
     );
+
+  if (currentPopupType == "Drop") {
+    dropAction.makeAction(
+      player,
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
+    );
+  }
 
   closePopup();
 }
@@ -114,14 +124,12 @@ function moveCursor(vector) {
   if (!player) player = getEntityFromArray(false, "Player", entities);
   const inventory = player.getComponent("Inventory").inventory;
 
-  const itemsList = inventory.filter(
-    (item) => item.getComponent("Pickable").popupType == currentPopupType
-  );
+  const itemList = getPopupItems(player, currentPopupType);
 
-  if (itemsList.length === 0) return;
+  if (itemList.length === 0) return;
 
-  if (cursor + vector > itemsList.length - 1) cursor = 0;
-  else if (cursor + vector < 0) cursor = itemsList.length - 1;
+  if (cursor + vector > itemList.length - 1) cursor = 0;
+  else if (cursor + vector < 0) cursor = itemList.length - 1;
   else cursor += vector;
 
   updatePopupUi(currentPopupType);

@@ -32,13 +32,16 @@ viewPort.scrollTo(player.x, player.y);
 updateUi();
 updateInventoryUi();
 
-tiles.Guard.init(spawnRoom.getCenter().x - 1, spawnRoom.getCenter().y);
+tiles.Guard.init(player.x - 1, player.y);
 
-tiles.Bit.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y);
-tiles.Bit.init(spawnRoom.getCenter().x + 2, spawnRoom.getCenter().y);
+tiles.Bit.init(player.x + 1, player.y);
+tiles.Bit.init(player.x + 1, player.y);
+tiles.Bit.init(player.x + 2, player.y);
 
-tiles.Sword.init(spawnRoom.getCenter().x + 1, spawnRoom.getCenter().y - 1);
-tiles.Throngler.init(spawnRoom.getCenter().x, spawnRoom.getCenter().y - 1);
+tiles.Sword.init(player.x + 1, player.y - 1);
+tiles.Throngler.init(player.x, player.y - 1);
+
+tiles.Shield.init(player.x - 1, player.y + 1);
 
 wakeUpSleepingEnemies();
 
@@ -56,6 +59,8 @@ function handleTurn() {
   addBelow(getEntitiesUnder(player, ["Floor"]));
   wakeUpSleepingEnemies();
   viewPort.scrollTo(player.x, player.y);
+  updateUi();
+  updateInventoryUi();
   renderWorld();
 }
 

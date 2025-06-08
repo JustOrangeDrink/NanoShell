@@ -132,6 +132,10 @@ function handleInput(event, player) {
       openPopup("Read");
       break;
 
+    case "d":
+      openPopup("Drop");
+      break;
+
     case "i":
       openInventory();
       break;

@@ -89,10 +89,11 @@ function recolorize(
   updateInventoryUi();
 
   if (
-    isPopupOpen &&
-    currentPopupType === entity.getComponent("Pickable")?.popupType
+    (isPopupOpen &&
+      currentPopupType === entity.getComponent("Pickable")?.popupType) ||
+    currentPopupType == "Drop"
   )
-    updatePopupUi(entity.getComponent("Pickable").popupType);
+    updatePopupUi();
 }
 
 function addEntityAsset(entity) {
@@ -204,6 +205,32 @@ function setContextFillStyle(ctx, colors) {
   ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 }
 
+function getPopupItems(src, currentPopupType) {
+  const itemList = [];
+  const inventory = src.getComponent("Inventory").inventory;
+
+  const wieldSlots = src.getComponent("WieldSlots");
+  const weaponSlots = wieldSlots.weaponSlots;
+  const shieldSlots = wieldSlots.shieldSlots;
+
+  const trgStorage =
+    currentPopupType == "Drop"
+      ? [...inventory, ...weaponSlots, ...shieldSlots]
+      : [...inventory];
+
+  for (let i = 0; i < trgStorage.length; i++) {
+    const item = trgStorage[i];
+    if (
+      item.getComponent("Pickable").popupType == currentPopupType ||
+      currentPopupType == "Drop"
+    ) {
+      itemList.push(item);
+    }
+  }
+
+  return itemList;
+}
+
 export {
   randomInt,
   randomFloat,
@@ -219,4 +246,5 @@ export {
   recolorize,
   getRenderName,
   setContextFillStyle,
+  getPopupItems,
 };

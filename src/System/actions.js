@@ -9,7 +9,7 @@ import { tiles } from "../tiles.js";
 import { updateInventoryUi } from "../ui/inventory.js";
 import { addLog, updateUi } from "../ui/sidebar.js";
 import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
-import { getEntitiesUnder } from "./engine.js";
+import { getEntitiesUnder, renderWorld } from "./engine.js";
 
 class Action {
   constructor(name, timeCost, action, condition = () => true) {
@@ -237,7 +237,6 @@ const pickUpAction = new Action(
       addLog(`You have picked up ${trg.title}!`, "white");
     }
 
-    updateInventoryUi();
     tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
     trg.x = undefined;
     trg.y = undefined;
@@ -283,8 +282,6 @@ const wieldAction = new Action(
       src.getComponent("Stats").arm += shieldComponent.arm;
     }
     srcInventory.splice(srcInventory.indexOf(trg), 1);
-    updateInventoryUi();
-    updateUi();
   },
   (src, trg) => {
     const wieldSlots = src.getComponent("WieldSlots");
@@ -319,6 +316,45 @@ const wieldAction = new Action(
   }
 );
 
+const dropAction = new Action(
+  "Drop",
+  1,
+  (src, trg) => {
+    const inventory = src.getComponent("Inventory").inventory;
+
+    const wieldSlots = src.getComponent("WieldSlots");
+    const weaponSlots = wieldSlots.weaponSlots;
+    const shieldSlots = wieldSlots.shieldSlots;
+
+    const isWieldedWeapon = weaponSlots.indexOf(trg) == -1 ? false : true;
+    const isWieldedShield = shieldSlots.indexOf(trg) == -1 ? false : true;
+
+    const commonStorage = [...inventory, ...weaponSlots, ...shieldSlots];
+
+    for (let i = 0; i < commonStorage.length; i++) {
+      const item = commonStorage[i];
+      if (item == trg) {
+        if (isWieldedWeapon) {
+          weaponSlots.splice(weaponSlots.indexOf(trg), 1);
+          wieldSlots.currentWeight -= trg.getComponent("Weapon").slotWeight;
+        } else if (isWieldedShield) {
+          shieldSlots.splice(shieldSlots.indexOf(trg), 1);
+          wieldSlots.currentWeight -= trg.getComponent("Shield").slotWeight;
+          src.getComponent("Stats").arm -= trg.getComponent("Shield").arm;
+        } else inventory.splice(inventory.indexOf(trg), 1);
+      }
+    }
+
+    trg.x = src.x;
+    trg.y = src.y;
+    tilemap[src.y][src.x].push(trg);
+  },
+  (src, trg) => {
+    // conditions to NOT remove item (cursed etc...)
+    return true;
+  }
+);
+
 export {
   moveAction,
   attackAction,
@@ -326,4 +362,5 @@ export {
   pickUpAction,
   longSkipAction,
   wieldAction,
+  dropAction,
 };
