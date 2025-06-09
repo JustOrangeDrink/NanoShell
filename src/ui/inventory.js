@@ -37,7 +37,7 @@ function updateInventoryUi() {
   inventoryUiCtx.fillStyle = "black";
   inventoryUiCtx.strokeStyle = "lime";
   inventoryUiCtx.lineWidth = 4;
-  inventoryUiCtx.font = "18px courier";
+  inventoryUiCtx.font = "bold 18px courier";
 
   inventoryUiCtx.fillRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
   inventoryUiCtx.strokeRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
