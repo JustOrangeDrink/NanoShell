@@ -274,11 +274,13 @@ const wieldAction = new Action(
       addLog(`Equipped ${trg.title}!`, "orangered");
       wieldSlots.weaponSlots.push(trg);
       wieldSlots.currentWeight += weaponComponent.slotWeight;
+      weaponComponent.equipped = true;
     }
     if (shieldComponent) {
       addLog(`Equipped ${trg.title}!`, "orangered");
       wieldSlots.shieldSlots.push(trg);
       wieldSlots.currentWeight += shieldComponent.slotWeight;
+      shieldComponent.equipped = true;
       src.getComponent("Stats").arm += shieldComponent.arm;
     }
     srcInventory.splice(srcInventory.indexOf(trg), 1);
@@ -323,25 +325,42 @@ const dropAction = new Action(
     const inventory = src.getComponent("Inventory").inventory;
 
     const wieldSlots = src.getComponent("WieldSlots");
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+
     const weaponSlots = wieldSlots.weaponSlots;
     const shieldSlots = wieldSlots.shieldSlots;
+    const armorSlots = armorSlotsComponent.armorSlots;
 
-    const isWieldedWeapon = weaponSlots.indexOf(trg) == -1 ? false : true;
-    const isWieldedShield = shieldSlots.indexOf(trg) == -1 ? false : true;
+    const weaponComponent = trg.getComponent("Weapon");
+    const shieldComponent = trg.getComponent("Shield");
+    const armorComponent = trg.getComponent("Armor");
 
     const commonStorage = [...inventory, ...weaponSlots, ...shieldSlots];
 
     for (let i = 0; i < commonStorage.length; i++) {
       const item = commonStorage[i];
       if (item == trg) {
-        if (isWieldedWeapon) {
+        if (weaponComponent.equipped) {
           weaponSlots.splice(weaponSlots.indexOf(trg), 1);
-          wieldSlots.currentWeight -= trg.getComponent("Weapon").slotWeight;
-        } else if (isWieldedShield) {
+          wieldSlots.currentWeight -= weaponComponent.slotWeight;
+        }
+        if (shieldComponent.equipped) {
           shieldSlots.splice(shieldSlots.indexOf(trg), 1);
-          wieldSlots.currentWeight -= trg.getComponent("Shield").slotWeight;
-          src.getComponent("Stats").arm -= trg.getComponent("Shield").arm;
-        } else inventory.splice(inventory.indexOf(trg), 1);
+          wieldSlots.currentWeight -= shieldComponent.slotWeight;
+          src.getComponent("Stats").arm -= shieldComponent.arm;
+        }
+        if (armorComponent.equipped) {
+          armorSlots.splice(shieldSlots.indexOf(trg), 1);
+          armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
+          src.getComponent("Stats").arm -= armorComponent.arm;
+        }
+        if (
+          !weaponComponent.equipped &&
+          !shieldComponent.equipped &&
+          !armorComponent.equipped
+        ) {
+          inventory.splice(inventory.indexOf(trg), 1);
+        }
       }
     }
 

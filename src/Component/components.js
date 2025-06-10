@@ -143,7 +143,7 @@ class WieldSlots {
 class ArmorSlots {
   constructor(maxWeight) {
     this.type = "ArmorSlots";
-    this.slots = [];
+    this.armorSlots = [];
     this.maxWeight = maxWeight;
     this.currentWeight = 0;
   }
@@ -156,6 +156,7 @@ class Weapon {
     this.dmg = dmg;
     this.slotWeight = slotWeight;
     this.hitTitle = hitTitle;
+    this.equipped = false;
   }
 }
 
@@ -164,6 +165,7 @@ class Shield {
     this.type = "Shield";
     this.arm = arm;
     this.slotWeight = slotWeight;
+    this.equipped = false;
   }
 }
 
@@ -172,6 +174,7 @@ class Armor {
     this.type = "Armor";
     this.arm = arm;
     this.slotWeight = slotWeight;
+    this.equipped = false;
   }
 }
 
