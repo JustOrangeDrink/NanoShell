@@ -212,10 +212,11 @@ function getPopupItems(src, currentPopupType) {
   const wieldSlots = src.getComponent("WieldSlots");
   const weaponSlots = wieldSlots.weaponSlots;
   const shieldSlots = wieldSlots.shieldSlots;
+  const armorSlots = src.getComponent("ArmorSlots").armorSlots;
 
   const trgStorage =
     currentPopupType == "Drop"
-      ? [...inventory, ...weaponSlots, ...shieldSlots]
+      ? [...inventory, ...weaponSlots, ...shieldSlots, ...armorSlots]
       : [...inventory];
 
   for (let i = 0; i < trgStorage.length; i++) {

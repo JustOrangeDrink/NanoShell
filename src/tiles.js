@@ -18,6 +18,8 @@ import {
   Weapon,
   Hidden,
   Shield,
+  Armor,
+  ArmorSlots,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -99,6 +101,7 @@ new Tile(
     [Attributes, [3, 5, 3]],
     [Inventory, []],
     [WieldSlots, [2, tiles.Fist.init()]],
+    [ArmorSlots, [1]],
   ]
 );
 
@@ -199,6 +202,19 @@ new Tile(
   ],
   [],
   [thronglerShine]
+);
+
+new Tile(
+  "Armor",
+  1,
+  14,
+  1,
+  [220, 220, 220, 255],
+  [
+    [Size, ["Tiny"]],
+    [Pickable, ["Equip"]],
+    [Armor, [4, 1]],
+  ]
 );
 
 new Tile("Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);

@@ -318,6 +318,45 @@ const wieldAction = new Action(
   }
 );
 
+const equipAction = new Action(
+  "Equip",
+  1,
+  (src, trg) => {
+    const srcInventory = src.getComponent("Inventory").inventory;
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+    const armorSlots = armorSlotsComponent.armorSlots;
+
+    const armorComponent = trg.getComponent("Armor");
+
+    if (armorComponent) {
+      addLog(`Wearing ${trg.title}!`, "orangered");
+      armorSlots.push(trg);
+      armorSlotsComponent.currentWeight += armorComponent.slotWeight;
+      armorComponent.equipped = true;
+      src.getComponent("Stats").arm += armorComponent.arm;
+    }
+    srcInventory.splice(srcInventory.indexOf(trg), 1);
+  },
+  (src, trg) => {
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+    const armorComponent = trg.getComponent("Armor");
+
+    if (armorComponent) {
+      if (
+        armorSlotsComponent.currentWeight + armorComponent.slotWeight <=
+        armorSlotsComponent.maxWeight
+      )
+        return true;
+      else {
+        addLog(`Not enough space for ${trg.title}`, "red");
+        return false;
+      }
+    }
+
+    return false;
+  }
+);
+
 const dropAction = new Action(
   "Drop",
   1,
@@ -335,29 +374,34 @@ const dropAction = new Action(
     const shieldComponent = trg.getComponent("Shield");
     const armorComponent = trg.getComponent("Armor");
 
-    const commonStorage = [...inventory, ...weaponSlots, ...shieldSlots];
+    const commonStorage = [
+      ...inventory,
+      ...weaponSlots,
+      ...shieldSlots,
+      ...armorSlots,
+    ];
 
     for (let i = 0; i < commonStorage.length; i++) {
       const item = commonStorage[i];
       if (item == trg) {
-        if (weaponComponent.equipped) {
+        if (weaponComponent?.equipped) {
           weaponSlots.splice(weaponSlots.indexOf(trg), 1);
           wieldSlots.currentWeight -= weaponComponent.slotWeight;
         }
-        if (shieldComponent.equipped) {
+        if (shieldComponent?.equipped) {
           shieldSlots.splice(shieldSlots.indexOf(trg), 1);
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
         }
-        if (armorComponent.equipped) {
+        if (armorComponent?.equipped) {
           armorSlots.splice(shieldSlots.indexOf(trg), 1);
           armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
         }
         if (
-          !weaponComponent.equipped &&
-          !shieldComponent.equipped &&
-          !armorComponent.equipped
+          !weaponComponent?.equipped &&
+          !shieldComponent?.equipped &&
+          !armorComponent?.equipped
         ) {
           inventory.splice(inventory.indexOf(trg), 1);
         }
@@ -381,5 +425,6 @@ export {
   pickUpAction,
   longSkipAction,
   wieldAction,
+  equipAction,
   dropAction,
 };

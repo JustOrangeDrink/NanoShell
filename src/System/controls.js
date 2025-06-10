@@ -14,6 +14,7 @@ import {
 } from "../ui/popup.js";
 import { addLog } from "../ui/sidebar.js";
 import {
+  equipAction,
   longSkipAction,
   pickUpAction,
   skipAction,
@@ -126,6 +127,10 @@ function handleInput(event, player) {
 
     case "w":
       openPopup("Wield");
+      break;
+
+    case "e":
+      openPopup("Equip");
       break;
 
     case "r":
