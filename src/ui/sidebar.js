@@ -36,12 +36,12 @@ function updateUi() {
 
   mainUiCtx.clearRect(0, 0, 1000, 1000);
 
-  mainUiCtx.font = "bold 25px courier";
+  mainUiCtx.font = "bold 25px monospace";
   mainUiCtx.fillStyle = "lime";
 
   mainUiCtx.fillText(`Performance Indicators`, 60, 40);
 
-  mainUiCtx.font = "20px courier";
+  mainUiCtx.font = "20px monospace";
   mainUiCtx.fillText(`System Integrity: ${currentHp}/${maxHp}`, 10, 100);
   mainUiCtx.fillText(
     `CPU Temperature: ${currentTemperature}/${maxTemperature}`,
