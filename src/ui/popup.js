@@ -114,7 +114,7 @@ function updatePopupUi() {
   popupUiCtx.fillStyle = "rgba(255, 255, 255, 0.2)";
   popupUiCtx.fillRect(
     MENU_X + 5,
-    MENU_Y + cursor * 30 + 70,
+    MENU_Y + cursor * 30 + textShift - TILE_SIZE - 30 * itemList.length - 58,
     MENU_WIDTH - 10,
     30
   );
