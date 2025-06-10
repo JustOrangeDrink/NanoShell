@@ -282,11 +282,8 @@ function handleTitle(trg) {
 }
 
 function revealScripts(cryptedName) {
-  console.log(scriptEntities);
   for (let i = 0; i < scriptEntities.length; i++) {
     const script = scriptEntities[i];
-    console.log(script.getComponent("Script").cryptedName);
-    console.log(cryptedName);
     if (script.getComponent("Script").cryptedName == cryptedName) {
       script.getComponent("Script").revealed = true;
     }

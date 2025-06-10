@@ -24,6 +24,7 @@ import {
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
+import { randomTp } from "./System/effects.js";
 import { getRenderName } from "./utils.js";
 
 const tiles = {};
@@ -148,7 +149,7 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Activate"]],
-    [Script, ["fe45g@gkh"]],
+    [Script, ["fe45g@gkh", randomTp]],
   ]
 );
 

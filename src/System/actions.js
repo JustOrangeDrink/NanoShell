@@ -13,6 +13,7 @@ import {
   revealScripts,
   roundToOne,
 } from "../utils.js";
+import { randomTp } from "./effects.js";
 import { getEntitiesUnder } from "./engine.js";
 
 class Action {
@@ -470,9 +471,9 @@ const activateAction = new Action(
     if (!scriptComponent.revealed) {
       addLog(
         `You activate a Script of |${scriptComponent.cryptedName}|`,
-        "bisque"
+        "lime"
       );
-      addLog(`It was a Script of ${trg.name}!`, "bisque");
+      addLog(`It was a Script of ${trg.name}!`, "lime");
     } else {
       addLog(`You activate a Script of ${trg.name}`, "lime");
     }
@@ -482,6 +483,8 @@ const activateAction = new Action(
     else inventory.splice(inventory.indexOf(trg), 1);
 
     revealScripts(scriptComponent.cryptedName);
+
+    scriptComponent.effect(src);
   },
   (src, trg) => {
     return true;
