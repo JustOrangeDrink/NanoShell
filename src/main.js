@@ -37,6 +37,7 @@ tiles.Guard.init(player.x - 1, player.y);
 tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 2, player.y);
+tiles.Script.init(player.x + 1, player.y + 1);
 
 tiles.Sword.init(player.x + 1, player.y - 1);
 tiles.Throngler.init(player.x, player.y - 1);
