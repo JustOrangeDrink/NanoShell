@@ -55,7 +55,7 @@ function updatePopupUi() {
   popupUiCtx.fillStyle = "black";
   popupUiCtx.strokeStyle = "lime";
   popupUiCtx.lineWidth = 4;
-  popupUiCtx.font = "18px monospace";
+  popupUiCtx.font = "20px monospace";
 
   popupUiCtx.fillRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
   popupUiCtx.strokeRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
