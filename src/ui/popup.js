@@ -7,7 +7,12 @@ import {
   TILE_SIZE,
   uniqueAssets,
 } from "../globals.js";
-import { dropAction, equipAction, wieldAction } from "../System/actions.js";
+import {
+  dropAction,
+  equipAction,
+  removeAction,
+  wieldAction,
+} from "../System/actions.js";
 import {
   getEntityFromArray,
   getPopupItems,
@@ -135,6 +140,14 @@ function chooseItem() {
       [player, itemList[cursor]]
     );
 
+  if (currentPopupType == "Equip") {
+    equipAction.makeAction(
+      player,
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
+    );
+  }
+
   if (currentPopupType == "Drop") {
     dropAction.makeAction(
       player,
@@ -143,8 +156,8 @@ function chooseItem() {
     );
   }
 
-  if (currentPopupType == "Equip") {
-    equipAction.makeAction(
+  if (currentPopupType == "Remove") {
+    removeAction.makeAction(
       player,
       [player, itemList[cursor]],
       [player, itemList[cursor]]

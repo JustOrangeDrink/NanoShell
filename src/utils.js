@@ -91,7 +91,8 @@ function recolorize(
   if (
     (isPopupOpen &&
       currentPopupType === entity.getComponent("Pickable")?.popupType) ||
-    currentPopupType == "Drop"
+    currentPopupType == "Drop" ||
+    currentPopupType == "Remove"
   )
     updatePopupUi();
 }
@@ -214,16 +215,21 @@ function getPopupItems(src, currentPopupType) {
   const shieldSlots = wieldSlots.shieldSlots;
   const armorSlots = src.getComponent("ArmorSlots").armorSlots;
 
-  const trgStorage =
-    currentPopupType == "Drop"
-      ? [...inventory, ...weaponSlots, ...shieldSlots, ...armorSlots]
-      : [...inventory];
+  let trgStorage;
+  if (currentPopupType == "Drop") {
+    trgStorage = [...inventory, ...weaponSlots, ...shieldSlots, ...armorSlots];
+  } else if (currentPopupType == "Remove") {
+    trgStorage = [...weaponSlots, ...shieldSlots, ...armorSlots];
+  } else {
+    trgStorage = [...inventory];
+  }
 
   for (let i = 0; i < trgStorage.length; i++) {
     const item = trgStorage[i];
     if (
       item.getComponent("Pickable").popupType == currentPopupType ||
-      currentPopupType == "Drop"
+      currentPopupType == "Drop" ||
+      currentPopupType == "Remove"
     ) {
       itemList.push(item);
     }

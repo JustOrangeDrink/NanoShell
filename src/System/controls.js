@@ -133,8 +133,12 @@ function handleInput(event, player) {
       openPopup("Equip");
       break;
 
+    case "a":
+      openPopup("Activate");
+      break;
+
     case "r":
-      openPopup("Read");
+      openPopup("Remove");
       break;
 
     case "d":

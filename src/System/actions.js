@@ -413,7 +413,53 @@ const dropAction = new Action(
     tilemap[src.y][src.x].push(trg);
   },
   (src, trg) => {
-    // conditions to NOT remove item (cursed etc...)
+    // conditions to remove item (cursed etc...)
+    return true;
+  }
+);
+
+const removeAction = new Action(
+  "Remove",
+  1,
+  (src, trg) => {
+    const inventory = src.getComponent("Inventory").inventory;
+
+    const wieldSlots = src.getComponent("WieldSlots");
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+
+    const weaponSlots = wieldSlots.weaponSlots;
+    const shieldSlots = wieldSlots.shieldSlots;
+    const armorSlots = armorSlotsComponent.armorSlots;
+
+    const weaponComponent = trg.getComponent("Weapon");
+    const shieldComponent = trg.getComponent("Shield");
+    const armorComponent = trg.getComponent("Armor");
+
+    const commonStorage = [...weaponSlots, ...shieldSlots, ...armorSlots];
+
+    for (let i = 0; i < commonStorage.length; i++) {
+      const item = commonStorage[i];
+      if (item == trg) {
+        if (weaponComponent?.equipped) {
+          weaponSlots.splice(weaponSlots.indexOf(trg), 1);
+          wieldSlots.currentWeight -= weaponComponent.slotWeight;
+        }
+        if (shieldComponent?.equipped) {
+          shieldSlots.splice(shieldSlots.indexOf(trg), 1);
+          wieldSlots.currentWeight -= shieldComponent.slotWeight;
+          src.getComponent("Stats").arm -= shieldComponent.arm;
+        }
+        if (armorComponent?.equipped) {
+          armorSlots.splice(shieldSlots.indexOf(trg), 1);
+          armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
+          src.getComponent("Stats").arm -= armorComponent.arm;
+        }
+        inventory.push(trg);
+      }
+    }
+  },
+  (src, trg) => {
+    // conditions to uneqip item (cursed etc...)
     return true;
   }
 );
@@ -427,4 +473,5 @@ export {
   wieldAction,
   equipAction,
   dropAction,
+  removeAction,
 };
