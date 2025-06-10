@@ -199,9 +199,9 @@ function getRelativeCoords([x, y]) {
 }
 
 function setContextFillStyle(ctx, colors) {
-  const red = colors[0] * 255;
-  const green = colors[1] * 255;
-  const blue = colors[2] * 255;
+  const red = colors[0];
+  const green = colors[1];
+  const blue = colors[2];
   ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 }
 
