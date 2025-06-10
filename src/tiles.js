@@ -145,6 +145,7 @@ new Tile(
   [225, 175, 100, 255],
   [
     [Size, ["Tiny"]],
+    [Stack, []],
     [Pickable, ["Activate"]],
   ]
 );
