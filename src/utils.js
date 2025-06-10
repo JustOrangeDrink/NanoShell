@@ -52,15 +52,15 @@ function colorize(
 
   for (let i = 0; i < imageData.data.length; i += 4) {
     if (imageData.data[i + 3] === 0) {
-      imageData.data[i + 0] = bgR;
-      imageData.data[i + 1] = bgG;
-      imageData.data[i + 2] = bgB;
-      imageData.data[i + 3] = bgA;
+      imageData.data[i + 0] *= bgR / 255;
+      imageData.data[i + 1] *= bgG / 255;
+      imageData.data[i + 2] *= bgB / 255;
+      imageData.data[i + 3] *= bgA / 255;
     } else {
-      imageData.data[i + 0] = r;
-      imageData.data[i + 1] = g;
-      imageData.data[i + 2] = b;
-      imageData.data[i + 3] = a;
+      imageData.data[i + 0] *= r / 255;
+      imageData.data[i + 1] *= g / 255;
+      imageData.data[i + 2] *= b / 255;
+      imageData.data[i + 3] *= a / 255;
     }
   }
 

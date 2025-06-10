@@ -167,7 +167,7 @@ new Tile(
   ]
 );
 
-new Tile("Floor", 0, 9, 15, [40, 40, 40, 255]);
+new Tile("Floor", 0, 9, 15, [85, 85, 85, 255]);
 
 new Tile(
   "Wall",
