@@ -58,13 +58,41 @@ function updatePopupUi() {
 
   const inventory = player.getComponent("Inventory").inventory;
 
-  let textShift = MENU_Y + 65;
+  const wieldSlots = player.getComponent("WieldSlots");
+  const armorSlots = player.getComponent("ArmorSlots");
+
+  const freeWieldSlots = wieldSlots.maxWeight - wieldSlots.currentWeight;
+  const freeArmorSlots = armorSlots.maxWeight - armorSlots.currentWeight;
+
+  let textShift = 0;
+
+  let log;
+  if (currentPopupType == "Wield") {
+    log =
+      freeWieldSlots == 1
+        ? `You have ${freeWieldSlots} free manipulator.`
+        : `You have ${freeWieldSlots} free manipulators.`;
+  }
+  if (currentPopupType == "Equip") {
+    log =
+      freeArmorSlots == 1
+        ? `You have ${freeArmorSlots} free armor slot.`
+        : `You have ${freeArmorSlots} free armor slots.`;
+  }
+  if (log) {
+    textShift += 30;
+    popupUiCtx.fillStyle = "white";
+    popupUiCtx.fillText(log, MENU_X + 85, MENU_Y + textShift);
+    textShift += 30;
+  } else textShift += 30;
+
   popupUiCtx.fillStyle = "white";
   popupUiCtx.fillText(
     `Choose an item to ${currentPopupType}:`,
     MENU_X + 10,
-    MENU_Y + 30
+    MENU_Y + textShift
   );
+  textShift += 90;
 
   const itemList = getPopupItems(player, currentPopupType);
 
@@ -86,7 +114,7 @@ function updatePopupUi() {
   popupUiCtx.fillStyle = "rgba(255, 255, 255, 0.2)";
   popupUiCtx.fillRect(
     MENU_X + 5,
-    MENU_Y + 45 + cursor * 30,
+    MENU_Y + cursor * 30 + 70,
     MENU_WIDTH - 10,
     30
   );

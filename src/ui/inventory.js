@@ -45,19 +45,11 @@ function updateInventoryUi() {
   if (!player) player = getEntityFromArray(false, "Player", entities);
 
   const wieldSlots = player.getComponent("WieldSlots");
-  const freeWieldSlots = wieldSlots.maxWeight - wieldSlots.currentWeight;
-  const wieldLog =
-    freeWieldSlots == 1
-      ? `You have ${freeWieldSlots} free manipulator.`
-      : `You have ${freeWieldSlots} free manipulators.`;
-
-  inventoryUiCtx.fillStyle = "white";
-  inventoryUiCtx.fillText(wieldLog, MENU_X + 85, MENU_Y + 30);
 
   inventoryUiCtx.fillStyle = "coral";
-  inventoryUiCtx.fillText(`Wielding:`, MENU_X + 5, MENU_Y + 60);
+  inventoryUiCtx.fillText(`Wielding:`, MENU_X + 5, MENU_Y + 30);
 
-  let wieldShift = 85;
+  let wieldShift = 55;
   for (let i = 0; i < wieldSlots.weaponSlots.length; i++) {
     const weapon = wieldSlots.weaponSlots[i];
     inventoryUiCtx.drawImage(
@@ -91,15 +83,34 @@ function updateInventoryUi() {
       MENU_Y + wieldShift
     );
 
-    wieldShift += 26;
+    wieldShift += 30;
+  }
+
+  inventoryUiCtx.fillStyle = "burlywood";
+  inventoryUiCtx.fillText(`Equipped:`, MENU_X + 5, MENU_Y + wieldShift);
+  wieldShift += 25;
+  const armorSlots = player.getComponent("ArmorSlots").armorSlots;
+
+  for (let i = 0; i < armorSlots.length; i++) {
+    const armor = armorSlots[i];
+    inventoryUiCtx.drawImage(
+      uniqueAssets[armor.renderName],
+      MENU_X + 10,
+      MENU_Y + wieldShift - 20
+    );
+
+    setContextFillStyle(inventoryUiCtx, armor.color);
+    inventoryUiCtx.fillText(
+      `- ${armor.title}`,
+      MENU_X + 36,
+      MENU_Y + wieldShift
+    );
+
+    wieldShift += 30;
   }
 
   inventoryUiCtx.fillStyle = "bisque";
-  inventoryUiCtx.fillText(
-    `Storage vault:`,
-    MENU_X + 5,
-    MENU_Y + wieldShift + 15
-  );
+  inventoryUiCtx.fillText(`Storage vault:`, MENU_X + 5, MENU_Y + wieldShift);
 
   const inventory = player.getComponent("Inventory").inventory;
   for (let i = 0; i < inventory.length; i++) {
@@ -110,13 +121,13 @@ function updateInventoryUi() {
     inventoryUiCtx.drawImage(
       uniqueAssets[item.renderName],
       MENU_X + 10,
-      MENU_Y + i * 30 + wieldShift + 20
+      MENU_Y + i * 30 + wieldShift + 5
     );
 
     inventoryUiCtx.fillText(
       `- ${item.title}`,
       MENU_X + 36,
-      MENU_Y + i * 30 + wieldShift + 40
+      MENU_Y + i * 30 + wieldShift + 25
     );
   }
 }
