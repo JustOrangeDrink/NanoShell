@@ -1,5 +1,5 @@
 import { entities, tilemap } from "../globals.js";
-import { getRenderName } from "../utils.js";
+import { getRenderName, handleTitle } from "../utils.js";
 
 let entityId = 0;
 class Entity {
@@ -20,6 +20,7 @@ class Entity {
     this.id = entityId++;
     this.name = name;
     this.title = this.name;
+    this.titleName = this.name;
 
     this.x = x;
     this.y = y;
@@ -54,7 +55,7 @@ class Entity {
       const entity = tilemap[y][x][i];
       if (entity.getComponent("Stack") && entity.name == this.name) {
         entity.getComponent("Stack").amount++;
-        entity.title = `${entity.getComponent("Stack").amount} ${entity.name}s`;
+        handleTitle(entity);
         return;
       }
     }
@@ -67,9 +68,15 @@ class Entity {
   addComponent(component) {
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
+    if (component.type == "Script") {
+      this.title = `Script of |${component.cryptedName}|`;
+      scriptEntities.push(this);
+    }
     if (component.type == "Weapon")
       this.title = `a +${component.acc},+${component.dmg} ${this.name}`;
     if (component.type == "Shield")
+      this.title = `a +${component.arm} ${this.name}`;
+    if (component.type == "Armor")
       this.title = `a +${component.arm} ${this.name}`;
     this.components[component.type] = component;
   }
@@ -91,5 +98,6 @@ class Entity {
 
 const vectorEntities = [];
 const turnsEntities = [];
+const scriptEntities = [];
 
-export { Entity, vectorEntities, turnsEntities };
+export { Entity, vectorEntities, turnsEntities, scriptEntities };

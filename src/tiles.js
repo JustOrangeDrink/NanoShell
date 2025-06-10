@@ -20,6 +20,7 @@ import {
   Shield,
   Armor,
   ArmorSlots,
+  Script,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -138,7 +139,7 @@ new Tile(
 );
 
 new Tile(
-  "Script",
+  "Teleportation",
   1,
   5,
   15,
@@ -147,6 +148,21 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Activate"]],
+    [Script, ["fe45g@gkh"]],
+  ]
+);
+
+new Tile(
+  "Enemy Summon",
+  1,
+  5,
+  15,
+  [225, 175, 100, 255],
+  [
+    [Size, ["Tiny"]],
+    [Stack, []],
+    [Pickable, ["Activate"]],
+    [Script, ["0fe3ol#l"]],
   ]
 );
 

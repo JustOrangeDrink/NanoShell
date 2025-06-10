@@ -8,6 +8,7 @@ import {
   uniqueAssets,
 } from "../globals.js";
 import {
+  activateAction,
   dropAction,
   equipAction,
   removeAction,
@@ -158,6 +159,14 @@ function chooseItem() {
 
   if (currentPopupType == "Remove") {
     removeAction.makeAction(
+      player,
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
+    );
+  }
+
+  if (currentPopupType == "Activate") {
+    activateAction.makeAction(
       player,
       [player, itemList[cursor]],
       [player, itemList[cursor]]

@@ -1,3 +1,4 @@
+import { scriptEntities } from "./Entity/entities.js";
 import {
   CANVAS_TILED_HEIGHT,
   CANVAS_TILED_WIDTH,
@@ -238,6 +239,61 @@ function getPopupItems(src, currentPopupType) {
   return itemList;
 }
 
+// BRAIN MELTING AHEAD, PLEASE DO NOT TOUCH
+function handleTitle(trg) {
+  if (!trg.getComponent("Script") && trg.getComponent("Stack")) {
+    if (trg.getComponent("Stack").amount > 1)
+      trg.title = `${trg.getComponent("Stack").amount} ${trg.titleName}s`;
+    else trg.title = trg.titleName;
+    return;
+  }
+
+  if (
+    !trg.getComponent("Script").revealed &&
+    trg.getComponent("Stack").amount > 1
+  ) {
+    trg.title = `${trg.getComponent("Stack").amount} Scripts of |${
+      trg.getComponent("Script").cryptedName
+    }|`;
+    return;
+  }
+
+  if (
+    !trg.getComponent("Script").revealed &&
+    trg.getComponent("Stack").amount == 1
+  ) {
+    trg.title = `Script of |${trg.getComponent("Script").cryptedName}|`;
+    return;
+  }
+
+  if (
+    trg.getComponent("Script").revealed &&
+    trg.getComponent("Stack").amount > 1
+  ) {
+    trg.title = `${trg.getComponent("Stack").amount} Scripts of ${trg.name}`;
+    return;
+  }
+  if (
+    trg.getComponent("Script").revealed &&
+    trg.getComponent("Stack").amount == 1
+  ) {
+    trg.title = `Script of ${trg.name}`;
+  }
+}
+
+function revealScripts(cryptedName) {
+  console.log(scriptEntities);
+  for (let i = 0; i < scriptEntities.length; i++) {
+    const script = scriptEntities[i];
+    console.log(script.getComponent("Script").cryptedName);
+    console.log(cryptedName);
+    if (script.getComponent("Script").cryptedName == cryptedName) {
+      script.getComponent("Script").revealed = true;
+    }
+    handleTitle(script);
+  }
+}
+
 export {
   randomInt,
   randomFloat,
@@ -254,4 +310,6 @@ export {
   getRenderName,
   setContextFillStyle,
   getPopupItems,
+  handleTitle,
+  revealScripts,
 };

@@ -178,6 +178,15 @@ class Armor {
   }
 }
 
+class Script {
+  constructor(cryptedName, effect = () => true) {
+    this.type = "Script";
+    this.cryptedName = cryptedName;
+    this.effect = effect;
+    this.revealed = false;
+  }
+}
+
 export {
   Collision,
   Size,
@@ -199,4 +208,5 @@ export {
   Weapon,
   Shield,
   Armor,
+  Script,
 };

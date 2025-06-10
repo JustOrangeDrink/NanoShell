@@ -5,11 +5,15 @@ import {
 } from "../Animations/animations.js";
 import { turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
-import { tiles } from "../tiles.js";
-import { updateInventoryUi } from "../ui/inventory.js";
-import { addLog, updateUi } from "../ui/sidebar.js";
-import { getEntityFromArray, randomInt, roundToOne } from "../utils.js";
-import { getEntitiesUnder, renderWorld } from "./engine.js";
+import { addLog } from "../ui/sidebar.js";
+import {
+  getEntityFromArray,
+  handleTitle,
+  randomInt,
+  revealScripts,
+  roundToOne,
+} from "../utils.js";
+import { getEntitiesUnder } from "./engine.js";
 
 class Action {
   constructor(name, timeCost, action, condition = () => true) {
@@ -220,18 +224,10 @@ const pickUpAction = new Action(
     );
 
     if (trg.getComponent("Stack") && inventoryItem) {
-      inventoryItem.getComponent("Stack").amount++;
-
-      inventoryItem.title = `${inventoryItem.getComponent("Stack").amount} ${
-        inventoryItem.name
-      }s`;
-
-      addLog(
-        `You now have ${inventoryItem.getComponent("Stack").amount} ${
-          inventoryItem.name
-        }s.`,
-        "white"
-      );
+      inventoryItem.getComponent("Stack").amount +=
+        trg.getComponent("Stack").amount;
+      handleTitle(inventoryItem);
+      addLog(`You now have ${inventoryItem.title}.`, "white");
     } else {
       inventoryComponent.inventory.push(trg);
       addLog(`You have picked up ${trg.title}!`, "white");
@@ -464,6 +460,34 @@ const removeAction = new Action(
   }
 );
 
+const activateAction = new Action(
+  "Activate",
+  1,
+  (src, trg) => {
+    const inventory = src.getComponent("Inventory").inventory;
+    const scriptComponent = trg.getComponent("Script");
+
+    if (!scriptComponent.revealed) {
+      addLog(
+        `You activate a Script of |${scriptComponent.cryptedName}|`,
+        "bisque"
+      );
+      addLog(`It was a Script of ${trg.name}!`, "bisque");
+    } else {
+      addLog(`You activate a Script of ${trg.name}`, "lime");
+    }
+
+    if (trg.getComponent("Stack").amount > 1)
+      trg.getComponent("Stack").amount--;
+    else inventory.splice(inventory.indexOf(trg), 1);
+
+    revealScripts(scriptComponent.cryptedName);
+  },
+  (src, trg) => {
+    return true;
+  }
+);
+
 export {
   moveAction,
   attackAction,
@@ -474,4 +498,5 @@ export {
   equipAction,
   dropAction,
   removeAction,
+  activateAction,
 };
