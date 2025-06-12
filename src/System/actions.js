@@ -480,8 +480,12 @@ const activateAction = new Action(
         addLog(["You execute a ", "lime", singleCryptedTitle + ".", trg.color]);
       }
       if (crystalComponent) {
-        addLog(["You drain ", "lime", singleCryptedTitle + ".", trg.color]);
-        console.log(trg.color);
+        addLog([
+          "You drain energy from ",
+          "lime",
+          singleCryptedTitle + ".",
+          trg.color,
+        ]);
       }
       addLog(["It was a ", "lime", trg.singleTitle + ".", trg.color]);
     } else {
@@ -489,7 +493,12 @@ const activateAction = new Action(
         addLog(["You execute a ", "lime", trg.singleTitle + ".", trg.color]);
       }
       if (crystalComponent) {
-        addLog(["You drain", "lime", trg.singleTitle + ".", trg.color]);
+        addLog([
+          "You drain energy from ",
+          "lime",
+          trg.singleTitle + ".",
+          trg.color,
+        ]);
       }
     }
 
