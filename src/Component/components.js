@@ -25,10 +25,10 @@ class Health {
     this.currentHp -= amount;
     if (this.currentHp <= 0) {
       if (entity.name == "Player") {
-        addLog("You are dead!", "red");
+        addLog(["You are dead!", "red"]);
         entity.destroy();
       } else {
-        addLog(`${entity.currentTitle} is dead!`, "lime");
+        addLog([`${entity.currentTitle} is dead!`, "lime"]);
         entity.destroy();
       }
     }
