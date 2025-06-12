@@ -200,13 +200,6 @@ function getRelativeCoords([x, y]) {
   return [relativeX, relativeY];
 }
 
-function setContextFillStyle(ctx, colors) {
-  const red = colors[0];
-  const green = colors[1];
-  const blue = colors[2];
-  ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-}
-
 function getPopupItems(src, currentPopupType) {
   const itemList = [];
   const inventory = src.getComponent("Inventory").inventory;
@@ -287,6 +280,21 @@ function numToRgba(num) {
   return `rgba(${num[0]}, ${num[1]}, ${num[2]}, ${num[3]})`;
 }
 
+function write(ctx, text, x, y) {
+  let textShift = x;
+  for (let k = 0; k < text.length; k += 2) {
+    const textFragment = text[k];
+    const color = Array.isArray(text[k + 1])
+      ? numToRgba(text[k + 1])
+      : text[k + 1];
+
+    ctx.fillStyle = color;
+    ctx.fillText(textFragment, textShift, y);
+
+    textShift += ctx.measureText(textFragment).width;
+  }
+}
+
 export {
   randomInt,
   randomFloat,
@@ -301,9 +309,9 @@ export {
   getRelativeCoords,
   recolorize,
   getRenderName,
-  setContextFillStyle,
   getPopupItems,
   handleTitle,
   revealEncryptions,
   numToRgba,
+  write,
 };

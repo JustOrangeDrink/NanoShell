@@ -1,11 +1,6 @@
 import { entities, mainUiCanvas, mainUiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import {
-  countDigits,
-  getEntityFromArray,
-  numToRgba,
-  setContextFillStyle,
-} from "../utils.js";
+import { countDigits, getEntityFromArray, write } from "../utils.js";
 
 const logs = [];
 const below = [];
@@ -38,31 +33,34 @@ function updateUi() {
   mainUiCtx.clearRect(0, 0, 1000, 1000);
 
   mainUiCtx.font = "bold 25px monospace";
-  mainUiCtx.fillStyle = "lime";
 
-  mainUiCtx.fillText(`Performance Indicators`, 60, 40);
+  write(mainUiCtx, ["Performance Indicators", "lime"], 60, 40);
 
   mainUiCtx.font = "20px monospace";
-  mainUiCtx.fillText(`System Integrity: ${currentHp}/${maxHp}`, 10, 100);
-  mainUiCtx.fillText(
-    `CPU Temperature: ${currentTemperature}/${maxTemperature}`,
+  write(
+    mainUiCtx,
+    [`System Integrity: ${currentHp}/${maxHp}`, "lime"],
+    10,
+    100
+  );
+  write(
+    mainUiCtx,
+    [`CPU Temperature: ${currentTemperature}/${maxTemperature}`, "lime"],
     10,
     130
   );
 
-  mainUiCtx.fillText(`Str: ${str}`, 10, 175);
-  mainUiCtx.fillText(`Agi: ${agi}`, 10, 200);
-  mainUiCtx.fillText(`Dur: ${dur}`, 10, 225);
+  write(mainUiCtx, [`Str: ${str}`, "lime"], 10, 175);
+  write(mainUiCtx, [`Agi: ${agi}`, "lime"], 10, 200);
+  write(mainUiCtx, [`Dur: ${dur}`, "lime"], 10, 225);
 
-  mainUiCtx.fillText(`DDG: ${ddg}`, 125, 175);
-  mainUiCtx.fillText(`ARM: ${arm}`, 125, 200);
-  mainUiCtx.fillText(`QKN: ${qkn}`, 125, 225);
+  write(mainUiCtx, [`DDG: ${ddg}`, "lime"], 125, 175);
+  write(mainUiCtx, [`ARM: ${arm}`, "lime"], 125, 200);
+  write(mainUiCtx, [`QKN: ${qkn}`, "lime"], 125, 225);
 
   timeShift = countDigits(time.currentTime) * 10 + 100;
-  mainUiCtx.fillStyle = "yellow";
-  mainUiCtx.fillText(`Time: ${time.currentTime}`, 10, 325);
-  mainUiCtx.fillText(`(${time.timeJump})`, timeShift, 325);
-  mainUiCtx.fillStyle = "lime";
+  write(mainUiCtx, [`Time: ${time.currentTime}`, "yellow"], 10, 325);
+  write(mainUiCtx, [`(${time.timeJump})`, "yellow"], timeShift, 325);
 
   writeLogs();
   writeBelow();
@@ -75,12 +73,15 @@ function addBelow(entities) {
 }
 
 function writeBelow() {
-  mainUiCtx.fillText("Below:", 10, 350);
+  write(mainUiCtx, ["Below:", "lime"], 10, 350);
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
-    setContextFillStyle(mainUiCtx, entityBelow.color);
-    mainUiCtx.fillText(entityBelow.currentTitle, 10, 375 + i * 20);
-    mainUiCtx.fillStyle = "lime";
+    write(
+      mainUiCtx,
+      [entityBelow.currentTitle, entityBelow.color],
+      10,
+      375 + i * 20
+    );
   }
 }
 
@@ -93,19 +94,7 @@ function addLog(arrayTextColor = ["Default", "lime"]) {
 function writeLogs() {
   for (let i = 0; i < logs.length; i++) {
     const log = logs[i];
-    let textShift = 10;
-    for (let k = 0; k < log.length; k += 2) {
-      const text = log[k];
-      const color = Array.isArray(log[k + 1])
-        ? numToRgba(log[k + 1])
-        : log[k + 1];
-
-      mainUiCtx.fillStyle = color;
-      mainUiCtx.fillText(text, textShift, mainUiCanvas.height - 12 - i * 30);
-      mainUiCtx.fillStyle = "lime";
-
-      textShift += mainUiCtx.measureText(text).width;
-    }
+    write(mainUiCtx, log, 10, mainUiCanvas.height - 12 - i * 30);
   }
 }
 

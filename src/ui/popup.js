@@ -14,11 +14,7 @@ import {
   removeAction,
   wieldAction,
 } from "../System/actions.js";
-import {
-  getEntityFromArray,
-  getPopupItems,
-  setContextFillStyle,
-} from "../utils.js";
+import { getEntityFromArray, getPopupItems, write } from "../utils.js";
 
 const MENU_WIDTH = 500;
 const MENU_HEIGHT = SCREEN_HEIGHT - 120;
@@ -87,14 +83,13 @@ function updatePopupUi() {
   }
   if (log) {
     textShift += 30;
-    popupUiCtx.fillStyle = "white";
-    popupUiCtx.fillText(log, MENU_X + 85, MENU_Y + textShift);
+    write(popupUiCtx, [log, "white"], MENU_X + 85, MENU_Y + textShift);
     textShift += 30;
   } else textShift += 30;
 
-  popupUiCtx.fillStyle = "white";
-  popupUiCtx.fillText(
-    `Choose an item to ${currentPopupType}:`,
+  write(
+    popupUiCtx,
+    [`Choose an item to ${currentPopupType}:`, "white"],
     MENU_X + 10,
     MENU_Y + textShift
   );
@@ -112,8 +107,12 @@ function updatePopupUi() {
       textShift - TILE_SIZE + 5
     );
 
-    setContextFillStyle(popupUiCtx, item.color);
-    popupUiCtx.fillText(`- ${item.currentTitle}`, MENU_X + 40, textShift);
+    write(
+      popupUiCtx,
+      [`- ${item.currentTitle}`, item.color],
+      MENU_X + 40,
+      textShift
+    );
     textShift += 30;
   }
 

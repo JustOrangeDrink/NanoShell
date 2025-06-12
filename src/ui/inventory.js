@@ -9,7 +9,7 @@ import {
   TILE_SIZE,
   uniqueAssets,
 } from "../globals.js";
-import { getEntityFromArray, setContextFillStyle } from "../utils.js";
+import { getEntityFromArray, write } from "../utils.js";
 
 const MENU_WIDTH = 500;
 const MENU_HEIGHT = SCREEN_HEIGHT - 120;
@@ -46,8 +46,7 @@ function updateInventoryUi() {
 
   const wieldSlots = player.getComponent("WieldSlots");
 
-  inventoryUiCtx.fillStyle = "coral";
-  inventoryUiCtx.fillText(`Wielding:`, MENU_X + 5, MENU_Y + 30);
+  write(inventoryUiCtx, [`Wielding:`, "coral"], MENU_X + 5, MENU_Y + 30);
 
   let wieldShift = 55;
   for (let i = 0; i < wieldSlots.weaponSlots.length; i++) {
@@ -58,9 +57,9 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - TILE_SIZE
     );
 
-    setContextFillStyle(inventoryUiCtx, weapon.color);
-    inventoryUiCtx.fillText(
-      `- ${weapon.currentTitle}`,
+    write(
+      inventoryUiCtx,
+      [`- ${weapon.currentTitle}`, weapon.color],
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -76,9 +75,9 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - 20
     );
 
-    setContextFillStyle(inventoryUiCtx, shield.color);
-    inventoryUiCtx.fillText(
-      `- ${shield.currentTitle}`,
+    write(
+      inventoryUiCtx,
+      [`- ${shield.currentTitle}`, shield.color],
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -86,8 +85,12 @@ function updateInventoryUi() {
     wieldShift += 30;
   }
 
-  inventoryUiCtx.fillStyle = "burlywood";
-  inventoryUiCtx.fillText(`Equipped:`, MENU_X + 5, MENU_Y + wieldShift);
+  write(
+    inventoryUiCtx,
+    ["Equipped:", "burlywood"],
+    MENU_X + 5,
+    MENU_Y + wieldShift
+  );
   wieldShift += 25;
   const armorSlots = player.getComponent("ArmorSlots").armorSlots;
 
@@ -99,9 +102,9 @@ function updateInventoryUi() {
       MENU_Y + wieldShift - 20
     );
 
-    setContextFillStyle(inventoryUiCtx, armor.color);
-    inventoryUiCtx.fillText(
-      `- ${armor.currentTitle}`,
+    write(
+      inventoryUiCtx,
+      [`- ${armor.currentTitle}`, armor.color],
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -109,14 +112,16 @@ function updateInventoryUi() {
     wieldShift += 30;
   }
 
-  inventoryUiCtx.fillStyle = "bisque";
-  inventoryUiCtx.fillText(`Storage vault:`, MENU_X + 5, MENU_Y + wieldShift);
+  write(
+    inventoryUiCtx,
+    ["Storage vault:", "bisque"],
+    MENU_X + 5,
+    MENU_Y + wieldShift
+  );
 
   const inventory = player.getComponent("Inventory").inventory;
   for (let i = 0; i < inventory.length; i++) {
     const item = inventory[i];
-
-    setContextFillStyle(inventoryUiCtx, item.color);
 
     inventoryUiCtx.drawImage(
       uniqueAssets[item.renderName],
@@ -124,8 +129,9 @@ function updateInventoryUi() {
       MENU_Y + i * 30 + wieldShift + 5
     );
 
-    inventoryUiCtx.fillText(
-      `- ${item.currentTitle}`,
+    write(
+      inventoryUiCtx,
+      [`- ${item.currentTitle}`, item.color],
       MENU_X + 36,
       MENU_Y + i * 30 + wieldShift + 25
     );
