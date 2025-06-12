@@ -292,7 +292,7 @@ const wieldAction = new Action(
       shieldComponent.equipped = true;
       src.getComponent("Stats").arm += shieldComponent.arm;
     }
-    addLog(["Equipped ", "orangered", trg, false, "!", "orangered"]);
+    addLog(["Wielding ", "orangered", trg, false, " now.", "orangered"]);
     srcInventory.splice(srcInventory.indexOf(trg), 1);
   },
   (src, trg) => {
@@ -421,9 +421,10 @@ const dropAction = new Action(
     trg.x = src.x;
     trg.y = src.y;
     tilemap[src.y][src.x].push(trg);
+    addLog(["You drop ", "white", trg, false, ".", "white"]);
   },
   (src, trg) => {
-    // conditions to remove item (cursed etc...)
+    // conditions to remove item (might be cursed etc...)
     return true;
   }
 );
@@ -453,23 +454,26 @@ const removeAction = new Action(
         if (weaponComponent?.equipped) {
           weaponSlots.splice(weaponSlots.indexOf(trg), 1);
           wieldSlots.currentWeight -= weaponComponent.slotWeight;
+          addLog(["You put your ", "white", trg, false, " away.", "white"]);
         }
         if (shieldComponent?.equipped) {
           shieldSlots.splice(shieldSlots.indexOf(trg), 1);
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
+          addLog(["You put your ", "white", trg, false, " away.", "white"]);
         }
         if (armorComponent?.equipped) {
           armorSlots.splice(shieldSlots.indexOf(trg), 1);
           armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
+          addLog(["You take your ", "white", trg, false, " off.", "white"]);
         }
         inventory.push(trg);
       }
     }
   },
   (src, trg) => {
-    // conditions to uneqip item (cursed etc...)
+    // conditions to uneqip item (might be cursed etc...)
     return true;
   }
 );

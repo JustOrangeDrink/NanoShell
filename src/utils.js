@@ -257,13 +257,13 @@ function handleTitle(trg) {
   }
 
   if (trgWeapon) {
-    trg.currentTitle = `a +${trgWeapon.acc},+${trgWeapon.dmg} ${trg.currentTitle}`;
+    trg.currentTitle = `+${trgWeapon.acc},+${trgWeapon.dmg} ${trg.currentTitle}`;
   }
   if (trgShield) {
-    trg.currentTitle = `a +${trgShield.arm} ${trg.currentTitle}`;
+    trg.currentTitle = `+${trgShield.arm} ${trg.currentTitle}`;
   }
   if (trgArmor) {
-    trg.currentTitle = `a +${trgArmor.arm} ${trg.currentTitle}`;
+    trg.currentTitle = `+${trgArmor.arm} ${trg.currentTitle}`;
   }
 }
 
