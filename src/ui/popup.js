@@ -173,6 +173,14 @@ function chooseItem() {
     );
   }
 
+  if (currentPopupType == "Drain") {
+    activateAction.makeAction(
+      player,
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
+    );
+  }
+
   closePopup();
 }
 

@@ -38,10 +38,14 @@ tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 2, player.y);
 
-tiles["ScriptTeleportation"].init(player.x + 1, player.y + 1);
-tiles["ScriptTeleportation"].init(player.x + 1, player.y + 1);
-tiles["ScriptTeleportation"].init(player.x + 2, player.y + 1);
-tiles["ScriptEnemySummon"].init(player.x + 1, player.y + 1);
+tiles.ScriptTeleportation.init(player.x + 1, player.y + 1);
+tiles.ScriptTeleportation.init(player.x + 1, player.y + 1);
+tiles.ScriptTeleportation.init(player.x + 2, player.y + 1);
+tiles.ScriptEnemySummon.init(player.x + 1, player.y + 1);
+
+tiles.CrystalStrength.init(player.x - 1, player.y - 1);
+
+tiles;
 
 tiles.Sword.init(player.x + 1, player.y - 1);
 tiles.Throngler.init(player.x, player.y - 1);

@@ -469,17 +469,27 @@ const activateAction = new Action(
   (src, trg) => {
     const inventory = src.getComponent("Inventory").inventory;
     const scriptComponent = trg.getComponent("Script");
+    const crystalComponent = trg.getComponent("Crystal");
     const encriptionComponent = trg.getComponent("Encription");
-    console.log(encriptionComponent);
 
     if (encriptionComponent.isCrypted) {
-      addLog(
-        `You activate a ${encriptionComponent.singleCryptedTitle}`,
-        "lime"
-      );
+      if (scriptComponent) {
+        addLog(
+          `You execute a ${encriptionComponent.singleCryptedTitle}`,
+          "lime"
+        );
+      }
+      if (crystalComponent) {
+        addLog(`You drain ${trg.singleTitle}`, "lime");
+      }
       addLog(`It was a ${trg.singleTitle}!`, "lime");
     } else {
-      addLog(`You activate a ${trg.singleTitle}`, "lime");
+      if (scriptComponent) {
+        addLog(`You execute a ${trg.singleTitle}`, "lime");
+      }
+      if (crystalComponent) {
+        addLog(`You drain ${trg.singleTitle}`, "lime");
+      }
     }
 
     if (trg.getComponent("Stack").amount > 1) {
@@ -489,7 +499,8 @@ const activateAction = new Action(
 
     revealEncryptions(trg);
 
-    scriptComponent.effect(src);
+    if (scriptComponent) scriptComponent.effect(src);
+    if (crystalComponent) crystalComponent.effect(src);
   },
   (src, trg) => {
     return true;

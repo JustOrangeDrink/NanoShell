@@ -178,6 +178,15 @@ class Armor {
   }
 }
 
+class Encription {
+  constructor(singleCryptedTitle, multipleCryptedTitle) {
+    this.type = "Encription";
+    this.isCrypted = true;
+    this.singleCryptedTitle = singleCryptedTitle;
+    this.multipleCryptedTitle = multipleCryptedTitle;
+  }
+}
+
 class Script {
   constructor(effect = () => true) {
     this.type = "Script";
@@ -185,12 +194,10 @@ class Script {
   }
 }
 
-class Encription {
-  constructor(singleCryptedTitle, multipleCryptedTitle) {
-    this.type = "Encription";
-    this.isCrypted = true;
-    this.singleCryptedTitle = singleCryptedTitle;
-    this.multipleCryptedTitle = multipleCryptedTitle;
+class Crystal {
+  constructor(effect = () => true) {
+    this.type = "Crystal";
+    this.effect = effect;
   }
 }
 
@@ -217,4 +224,5 @@ export {
   Armor,
   Script,
   Encription,
+  Crystal,
 };

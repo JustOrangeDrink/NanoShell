@@ -197,13 +197,13 @@ new Tile(
 );
 
 new Tile(
-  "CrystalStrengthBoost",
-  "Crystal of Strength Boost",
-  "Crystals of Strength Boost",
+  "CrystalStrength",
+  "Crystal of Strength",
+  "Crystals of Strength",
   1,
-  5,
-  15,
-  [225, 175, 100, 255],
+  4,
+  0,
+  [225, 100, 255, 255],
   [
     [Size, ["Tiny"]],
     [Stack, []],
