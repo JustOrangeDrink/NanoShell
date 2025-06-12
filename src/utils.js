@@ -179,10 +179,6 @@ function roundToOne(num) {
   return Math.round(num * 10) / 10;
 }
 
-function countDigits(num) {
-  return num.toString().replace(",", "").length;
-}
-
 function getRelativeCoords([x, y]) {
   const relativeX =
     (x -
@@ -304,7 +300,6 @@ export {
   getEnemyEntitiesAround,
   getNeighbors,
   roundToOne,
-  countDigits,
   addEntityAsset,
   getRelativeCoords,
   recolorize,

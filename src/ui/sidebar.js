@@ -1,13 +1,11 @@
 import { entities, mainUiCanvas, mainUiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import { countDigits, getEntityFromArray, write } from "../utils.js";
+import { getEntityFromArray, write } from "../utils.js";
 
 const logs = [];
 const below = [];
 
 let player;
-
-let timeShift = 100;
 
 function updateUi() {
   if (!player) player = getEntityFromArray(false, "Player", entities);
@@ -58,9 +56,12 @@ function updateUi() {
   write(mainUiCtx, [`ARM: ${arm}`, "lime"], 125, 200);
   write(mainUiCtx, [`QKN: ${qkn}`, "lime"], 125, 225);
 
-  timeShift = countDigits(time.currentTime) * 10 + 100;
-  write(mainUiCtx, [`Time: ${time.currentTime}`, "yellow"], 10, 325);
-  write(mainUiCtx, [`(${time.timeJump})`, "yellow"], timeShift, 325);
+  write(
+    mainUiCtx,
+    [`Time: ${time.currentTime} (+${time.timeJump})`, "yellow"],
+    10,
+    325
+  );
 
   writeLogs();
   writeBelow();
