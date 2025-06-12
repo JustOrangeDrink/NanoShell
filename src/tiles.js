@@ -22,6 +22,7 @@ import {
   ArmorSlots,
   Script,
   Encription,
+  Crystal,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -208,7 +209,7 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Drain"]],
-    [Script, []],
+    [Crystal, []],
     [Encription, ["|Amethyst| Crystal", "|Amethyst| Crystals"]],
   ]
 );

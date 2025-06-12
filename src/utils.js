@@ -283,6 +283,10 @@ function revealEncryptions(src) {
   }
 }
 
+function numToRgba(num) {
+  return `rgba(${num[0]}, ${num[1]}, ${num[2]}, ${num[3]})`;
+}
+
 export {
   randomInt,
   randomFloat,
@@ -301,4 +305,5 @@ export {
   getPopupItems,
   handleTitle,
   revealEncryptions,
+  numToRgba,
 };

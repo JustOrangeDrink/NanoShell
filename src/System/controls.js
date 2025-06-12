@@ -156,7 +156,10 @@ function handleInput(event, player) {
     case " ":
       player.getComponent("Collision").collision =
         !player.getComponent("Collision").collision;
-      addLog(`NoClip: ${!player.getComponent("Collision").collision}`, "lime");
+      addLog([
+        `NoClip: ${!player.getComponent("Collision").collision}`,
+        "lime",
+      ]);
       break;
     case "`":
       player.getComponent("Stats").ddg += 10000;
@@ -164,7 +167,7 @@ function handleInput(event, player) {
       player.getComponent("Attributes").str += 10000;
       player.getComponent("Attributes").agi += 10000;
       player.getComponent("Attributes").dur += 10000;
-      addLog(`Developer mode activated!`, "lime");
+      addLog([`Developer mode activated!`, "lime"]);
       break;
 
     case "5":

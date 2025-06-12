@@ -14,7 +14,7 @@ class Entity {
     charY,
     colorArray = [0, 0, 0, 255],
     bgColorArray = [0, 0, 0, 0],
-    animation
+    animation = false
   ) {
     const [r, g, b, a] = colorArray;
     const [bgR, bgG, bgB, bgA] = bgColorArray;

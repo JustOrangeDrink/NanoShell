@@ -16,7 +16,7 @@ function randomTp(trg) {
 
   trg.x = randomRoom.getCenter().x;
   trg.y = randomRoom.getCenter().y;
-  addLog(`${trg.currentTitle} vanishes!`, "purple");
+  addLog([`${trg.currentTitle} vanishes!`, "purple"]);
 }
 
 export { randomTp };

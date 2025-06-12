@@ -3,6 +3,7 @@ import { time } from "../globals.js";
 import {
   countDigits,
   getEntityFromArray,
+  numToRgba,
   setContextFillStyle,
 } from "../utils.js";
 
@@ -83,18 +84,28 @@ function writeBelow() {
   }
 }
 
-function addLog(text, color = "lime") {
-  logs.unshift([text, color]);
+function addLog(arrayTextColor = ["Default", "lime"]) {
+  logs.unshift(arrayTextColor);
   if (logs.length > 5) logs.pop();
   updateUi();
 }
 
 function writeLogs() {
   for (let i = 0; i < logs.length; i++) {
-    mainUiCtx.fillStyle = logs[i][1];
-    const log = logs[i][0];
-    mainUiCtx.fillText(log, 10, mainUiCanvas.height - 12 - i * 30);
-    mainUiCtx.fillStyle = "lime";
+    const log = logs[i];
+    let textShift = 10;
+    for (let k = 0; k < log.length; k += 2) {
+      const text = log[k];
+      const color = Array.isArray(log[k + 1])
+        ? numToRgba(log[k + 1])
+        : log[k + 1];
+
+      mainUiCtx.fillStyle = color;
+      mainUiCtx.fillText(text, textShift, mainUiCanvas.height - 12 - i * 30);
+      mainUiCtx.fillStyle = "lime";
+
+      textShift += mainUiCtx.measureText(text).width;
+    }
   }
 }
 

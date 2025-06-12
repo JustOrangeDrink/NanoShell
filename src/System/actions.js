@@ -134,19 +134,19 @@ const attackAction = new Action(
     if (src.name === "Player") {
       if (!isHit) {
         missAnimation(trg);
-        addLog(`You miss ${trg.currentTitle}!`, "gray");
+        addLog([`You miss ${trg.currentTitle}!`, "gray"]);
         return;
       }
       if (totalDamage <= 0) {
         blockAnimation(trg);
-        addLog(`${trg.currentTitle} blocks your attack!`, "gray");
+        addLog([`${trg.currentTitle} blocks your attack!`, "gray"]);
         return;
       }
       hitAnimation(trg);
-      addLog(
+      addLog([
         `You ${weaponHitTitle} ${trg.currentTitle} for ${totalDamage} damage!`,
-        "yellow"
-      );
+        "yellow",
+      ]);
       trgHealth.takeDamage(trg, totalDamage);
       return;
     }
@@ -154,41 +154,41 @@ const attackAction = new Action(
     if (trg.name == "Player") {
       if (!isHit) {
         missAnimation(trg);
-        addLog(`${src.currentTitle} miss you!`, "gray");
+        addLog([`${src.currentTitle} miss you!`, "gray"]);
         return;
       }
       if (totalDamage <= 0) {
         blockAnimation(trg);
-        addLog(`You block ${src.currentTitle}'s attack!`, "gray");
+        addLog([`You block ${src.currentTitle}'s attack!`, "gray"]);
         return;
       }
       hitAnimation(trg);
-      addLog(
+      addLog([
         `${src.currentTitle} ${weaponHitTitle} you for ${totalDamage} damage!`,
-        "yellow"
-      );
+        "yellow",
+      ]);
       trgHealth.takeDamage(trg, totalDamage);
       return;
     }
 
     if (!isHit) {
       missAnimation(trg);
-      addLog(`${src.currentTitle} miss ${trg.currentTitle}!`, "yellow");
+      addLog([`${src.currentTitle} miss ${trg.currentTitle}!`, "yellow"]);
     }
     if (totalDamage <= 0) {
       blockAnimation(trg);
-      addLog(
+      addLog([
         `${trg.currentTitle} blocks ${src.currentTitle}'s attack!`,
-        "gray"
-      );
+        "gray",
+      ]);
       return;
     }
 
     hitAnimation(trg);
-    addLog(
+    addLog([
       `${src.currentTitle} ${weaponHitTitle} ${trg.currentTitle} for ${totalDamage} damage!`,
-      "yellow"
-    );
+      "yellow",
+    ]);
     trgHealth.takeDamage(trg, totalDamage);
   },
   (src, trg) => {
@@ -230,10 +230,10 @@ const pickUpAction = new Action(
       inventoryItem.getComponent("Stack").amount +=
         trg.getComponent("Stack").amount;
       handleTitle(inventoryItem);
-      addLog(`You now have ${inventoryItem.currentTitle}.`, "white");
+      addLog([`You now have ${inventoryItem.currentTitle}.`, "white"]);
     } else {
       inventoryComponent.inventory.push(trg);
-      addLog(`You have picked up ${trg.currentTitle}!`, "white");
+      addLog([`You have picked up ${trg.currentTitle}!`, "white"]);
     }
 
     tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
@@ -243,7 +243,7 @@ const pickUpAction = new Action(
   (src, trg) => {
     const itemsBelow = getEntitiesUnder(src, ["Floor"]);
     if (!itemsBelow || itemsBelow.length === 0) {
-      addLog("There is nothing to pick up!", "white");
+      addLog(["There is nothing to pick up!", "white"]);
       return false;
     }
 
@@ -251,7 +251,7 @@ const pickUpAction = new Action(
     const isPickable = trg.getComponent("Pickable");
 
     if (!inventoryComponent || !isPickable) {
-      addLog(`Cant pick up ${trg.currentTitle}!`, "white");
+      addLog([`Cant pick up ${trg.currentTitle}!`, "white"]);
       return false;
     }
 
@@ -270,13 +270,13 @@ const wieldAction = new Action(
     const shieldComponent = trg.getComponent("Shield");
 
     if (weaponComponent) {
-      addLog(`Equipped ${trg.currentTitle}!`, "orangered");
+      addLog([`Equipped ${trg.currentTitle}!`, "orangered"]);
       wieldSlots.weaponSlots.push(trg);
       wieldSlots.currentWeight += weaponComponent.slotWeight;
       weaponComponent.equipped = true;
     }
     if (shieldComponent) {
-      addLog(`Equipped ${trg.currentTitle}!`, "orangered");
+      addLog([`Equipped ${trg.currentTitle}!`, "orangered"]);
       wieldSlots.shieldSlots.push(trg);
       wieldSlots.currentWeight += shieldComponent.slotWeight;
       shieldComponent.equipped = true;
@@ -296,7 +296,7 @@ const wieldAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.currentTitle}`, "red");
+        addLog([`Not enough space for ${trg.currentTitle}`, "red"]);
         return false;
       }
     }
@@ -308,7 +308,7 @@ const wieldAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.currentTitle}`, "red");
+        addLog([`Not enough space for ${trg.currentTitle}`, "red"]);
         return false;
       }
     }
@@ -328,7 +328,7 @@ const equipAction = new Action(
     const armorComponent = trg.getComponent("Armor");
 
     if (armorComponent) {
-      addLog(`Wearing ${trg.currentTitle}!`, "orangered");
+      addLog([`Wearing ${trg.currentTitle}!`, "orangered"]);
       armorSlots.push(trg);
       armorSlotsComponent.currentWeight += armorComponent.slotWeight;
       armorComponent.equipped = true;
@@ -347,7 +347,7 @@ const equipAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.currentTitle}`, "red");
+        addLog([`Not enough space for ${trg.currentTitle}`, "red"]);
         return false;
       }
     }
@@ -468,27 +468,28 @@ const activateAction = new Action(
   1,
   (src, trg) => {
     const inventory = src.getComponent("Inventory").inventory;
+
     const scriptComponent = trg.getComponent("Script");
     const crystalComponent = trg.getComponent("Crystal");
+
     const encriptionComponent = trg.getComponent("Encription");
+    const singleCryptedTitle = encriptionComponent?.singleCryptedTitle;
 
     if (encriptionComponent.isCrypted) {
       if (scriptComponent) {
-        addLog(
-          `You execute a ${encriptionComponent.singleCryptedTitle}`,
-          "lime"
-        );
+        addLog(["You execute a ", "lime", singleCryptedTitle, trg.color]);
       }
       if (crystalComponent) {
-        addLog(`You drain ${trg.singleTitle}`, "lime");
+        addLog(["You drain ", "lime", `${singleCryptedTitle}`, trg.color]);
+        console.log(trg.color);
       }
-      addLog(`It was a ${trg.singleTitle}!`, "lime");
+      addLog(["It was a ", "lime", trg.singleTitle, trg.color]);
     } else {
       if (scriptComponent) {
-        addLog(`You execute a ${trg.singleTitle}`, "lime");
+        addLog(["You execute a ", "lime", trg.singleTitle, trg.color]);
       }
       if (crystalComponent) {
-        addLog(`You drain ${trg.singleTitle}`, "lime");
+        addLog(["You drain", "lime", trg.singleTitle, trg.color]);
       }
     }
 
