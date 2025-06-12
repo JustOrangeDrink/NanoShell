@@ -165,7 +165,7 @@ function chooseItem() {
     );
   }
 
-  if (currentPopupType == "Activate") {
+  if (currentPopupType == "Execute") {
     activateAction.makeAction(
       player,
       [player, itemList[cursor]],

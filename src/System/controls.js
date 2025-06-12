@@ -134,7 +134,7 @@ function handleInput(event, player) {
       break;
 
     case "a":
-      openPopup("Activate");
+      openPopup("Execute");
       break;
 
     case "r":

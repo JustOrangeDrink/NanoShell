@@ -173,7 +173,7 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Stack, []],
-    [Pickable, ["Activate"]],
+    [Pickable, ["Execute"]],
     [Script, [randomTp]],
     [Encription, ["Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"]],
   ]
@@ -190,9 +190,26 @@ new Tile(
   [
     [Size, ["Tiny"]],
     [Stack, []],
-    [Pickable, ["Activate"]],
+    [Pickable, ["Execute"]],
     [Script, []],
     [Encription, ["Script of |k39skgsk|", "Scripts of |k39skgsk|"]],
+  ]
+);
+
+new Tile(
+  "CrystalStrengthBoost",
+  "Crystal of Strength Boost",
+  "Crystals of Strength Boost",
+  1,
+  5,
+  15,
+  [225, 175, 100, 255],
+  [
+    [Size, ["Tiny"]],
+    [Stack, []],
+    [Pickable, ["Drain"]],
+    [Script, []],
+    [Encription, ["|Amethyst| Crystal", "|Amethyst| Crystals"]],
   ]
 );
 
