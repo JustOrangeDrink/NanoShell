@@ -477,19 +477,19 @@ const activateAction = new Action(
 
     if (encriptionComponent.isCrypted) {
       if (scriptComponent) {
-        addLog(["You execute a ", "lime", singleCryptedTitle, trg.color]);
+        addLog(["You execute a ", "lime", singleCryptedTitle + ".", trg.color]);
       }
       if (crystalComponent) {
-        addLog(["You drain ", "lime", `${singleCryptedTitle}`, trg.color]);
+        addLog(["You drain ", "lime", singleCryptedTitle + ".", trg.color]);
         console.log(trg.color);
       }
-      addLog(["It was a ", "lime", trg.singleTitle, trg.color]);
+      addLog(["It was a ", "lime", trg.singleTitle + ".", trg.color]);
     } else {
       if (scriptComponent) {
-        addLog(["You execute a ", "lime", trg.singleTitle, trg.color]);
+        addLog(["You execute a ", "lime", trg.singleTitle + ".", trg.color]);
       }
       if (crystalComponent) {
-        addLog(["You drain", "lime", trg.singleTitle, trg.color]);
+        addLog(["You drain", "lime", trg.singleTitle + ".", trg.color]);
       }
     }
 
