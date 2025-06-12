@@ -28,7 +28,7 @@ class Health {
         addLog("You are dead!", "red");
         entity.destroy();
       } else {
-        addLog(`${entity.name} is dead!`, "lime");
+        addLog(`${entity.currentTitle} is dead!`, "lime");
         entity.destroy();
       }
     }
@@ -179,11 +179,18 @@ class Armor {
 }
 
 class Script {
-  constructor(cryptedName, effect = () => true) {
+  constructor(effect = () => true) {
     this.type = "Script";
-    this.cryptedName = cryptedName;
     this.effect = effect;
-    this.revealed = false;
+  }
+}
+
+class Encription {
+  constructor(singleCryptedTitle, multipleCryptedTitle) {
+    this.type = "Encription";
+    this.isCrypted = true;
+    this.singleCryptedTitle = singleCryptedTitle;
+    this.multipleCryptedTitle = multipleCryptedTitle;
   }
 }
 
@@ -209,4 +216,5 @@ export {
   Shield,
   Armor,
   Script,
+  Encription,
 };

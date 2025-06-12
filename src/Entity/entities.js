@@ -5,6 +5,8 @@ let entityId = 0;
 class Entity {
   constructor(
     name,
+    singleTitle,
+    multipleTitle,
     x,
     y,
     z,
@@ -18,9 +20,11 @@ class Entity {
     const [bgR, bgG, bgB, bgA] = bgColorArray;
 
     this.id = entityId++;
+
     this.name = name;
-    this.title = this.name;
-    this.titleName = this.name;
+    this.singleTitle = singleTitle;
+    this.multipleTitle = multipleTitle;
+    this.currentTitle = singleTitle;
 
     this.x = x;
     this.y = y;
@@ -66,19 +70,20 @@ class Entity {
   }
 
   addComponent(component) {
+    this.components[component.type] = component;
+
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
-    if (component.type == "Script") {
-      this.title = `Script of |${component.cryptedName}|`;
-      scriptEntities.push(this);
-    }
     if (component.type == "Weapon")
-      this.title = `a +${component.acc},+${component.dmg} ${this.name}`;
+      this.currentTitle = `a +${component.acc},+${component.dmg} ${this.currentTitle}`;
     if (component.type == "Shield")
-      this.title = `a +${component.arm} ${this.name}`;
+      this.currentTitle = `a +${component.arm} ${this.currentTitle}`;
     if (component.type == "Armor")
-      this.title = `a +${component.arm} ${this.name}`;
-    this.components[component.type] = component;
+      this.currentTitle = `a +${component.arm} ${this.currentTitle}`;
+    if (component.type == "Encription") {
+      encryptedEntities.push(this);
+      handleTitle(this);
+    }
   }
 
   getComponent(type) {
@@ -98,6 +103,6 @@ class Entity {
 
 const vectorEntities = [];
 const turnsEntities = [];
-const scriptEntities = [];
+const encryptedEntities = [];
 
-export { Entity, vectorEntities, turnsEntities, scriptEntities };
+export { Entity, vectorEntities, turnsEntities, encryptedEntities };

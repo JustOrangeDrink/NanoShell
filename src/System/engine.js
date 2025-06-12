@@ -208,13 +208,13 @@ function handleCollision(entity, dx, dy) {
   const smallCollision =
     blockingEntity.getComponent("Collision").smallCollision;
   if (size?.size == "tiny" && smallCollision) {
-    `Collision with ${blockingEntity.name}!`;
+    `Collision with ${blockingEntity.currentTitle}!`;
     return blockingEntity;
   }
 
   if (!collision.collision) return;
 
-  `Collision with ${blockingEntity.name}!`;
+  `Collision with ${blockingEntity.currentTitle}!`;
   return blockingEntity;
 }
 

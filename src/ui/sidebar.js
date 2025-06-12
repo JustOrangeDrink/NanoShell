@@ -78,12 +78,12 @@ function writeBelow() {
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
     setContextFillStyle(mainUiCtx, entityBelow.color);
-    mainUiCtx.fillText(entityBelow.title, 10, 375 + i * 20);
+    mainUiCtx.fillText(entityBelow.currentTitle, 10, 375 + i * 20);
     mainUiCtx.fillStyle = "lime";
   }
 }
 
-function addLog(text, color) {
+function addLog(text, color = "lime") {
   logs.unshift([text, color]);
   if (logs.length > 5) logs.pop();
   updateUi();

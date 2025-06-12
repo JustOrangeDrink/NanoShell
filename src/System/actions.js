@@ -10,10 +10,9 @@ import {
   getEntityFromArray,
   handleTitle,
   randomInt,
-  revealScripts,
+  revealEncryptions,
   roundToOne,
 } from "../utils.js";
-import { randomTp } from "./effects.js";
 import { getEntitiesUnder } from "./engine.js";
 
 class Action {
@@ -135,17 +134,17 @@ const attackAction = new Action(
     if (src.name === "Player") {
       if (!isHit) {
         missAnimation(trg);
-        addLog(`You miss ${trg.title}!`, "gray");
+        addLog(`You miss ${trg.currentTitle}!`, "gray");
         return;
       }
       if (totalDamage <= 0) {
         blockAnimation(trg);
-        addLog(`${trg.title} blocks your attack!`, "gray");
+        addLog(`${trg.currentTitle} blocks your attack!`, "gray");
         return;
       }
       hitAnimation(trg);
       addLog(
-        `You ${weaponHitTitle} ${trg.title} for ${totalDamage} damage!`,
+        `You ${weaponHitTitle} ${trg.currentTitle} for ${totalDamage} damage!`,
         "yellow"
       );
       trgHealth.takeDamage(trg, totalDamage);
@@ -155,17 +154,17 @@ const attackAction = new Action(
     if (trg.name == "Player") {
       if (!isHit) {
         missAnimation(trg);
-        addLog(`${src.title} miss you!`, "gray");
+        addLog(`${src.currentTitle} miss you!`, "gray");
         return;
       }
       if (totalDamage <= 0) {
         blockAnimation(trg);
-        addLog(`You block ${src.title}'s attack!`, "gray");
+        addLog(`You block ${src.currentTitle}'s attack!`, "gray");
         return;
       }
       hitAnimation(trg);
       addLog(
-        `${src.title} ${weaponHitTitle} you for ${totalDamage} damage!`,
+        `${src.currentTitle} ${weaponHitTitle} you for ${totalDamage} damage!`,
         "yellow"
       );
       trgHealth.takeDamage(trg, totalDamage);
@@ -174,17 +173,20 @@ const attackAction = new Action(
 
     if (!isHit) {
       missAnimation(trg);
-      addLog(`${src.title} miss ${trg.title}!`, "yellow");
+      addLog(`${src.currentTitle} miss ${trg.currentTitle}!`, "yellow");
     }
     if (totalDamage <= 0) {
       blockAnimation(trg);
-      addLog(`${trg.title} blocks ${src.title}'s attack!`, "gray");
+      addLog(
+        `${trg.currentTitle} blocks ${src.currentTitle}'s attack!`,
+        "gray"
+      );
       return;
     }
 
     hitAnimation(trg);
     addLog(
-      `${src.title} ${weaponHitTitle} ${trg.title} for ${totalDamage} damage!`,
+      `${src.currentTitle} ${weaponHitTitle} ${trg.currentTitle} for ${totalDamage} damage!`,
       "yellow"
     );
     trgHealth.takeDamage(trg, totalDamage);
@@ -228,10 +230,10 @@ const pickUpAction = new Action(
       inventoryItem.getComponent("Stack").amount +=
         trg.getComponent("Stack").amount;
       handleTitle(inventoryItem);
-      addLog(`You now have ${inventoryItem.title}.`, "white");
+      addLog(`You now have ${inventoryItem.currentTitle}.`, "white");
     } else {
       inventoryComponent.inventory.push(trg);
-      addLog(`You have picked up ${trg.title}!`, "white");
+      addLog(`You have picked up ${trg.currentTitle}!`, "white");
     }
 
     tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg), 1);
@@ -249,7 +251,7 @@ const pickUpAction = new Action(
     const isPickable = trg.getComponent("Pickable");
 
     if (!inventoryComponent || !isPickable) {
-      addLog(`Cant pick up ${trg.title}!`, "white");
+      addLog(`Cant pick up ${trg.currentTitle}!`, "white");
       return false;
     }
 
@@ -268,13 +270,13 @@ const wieldAction = new Action(
     const shieldComponent = trg.getComponent("Shield");
 
     if (weaponComponent) {
-      addLog(`Equipped ${trg.title}!`, "orangered");
+      addLog(`Equipped ${trg.currentTitle}!`, "orangered");
       wieldSlots.weaponSlots.push(trg);
       wieldSlots.currentWeight += weaponComponent.slotWeight;
       weaponComponent.equipped = true;
     }
     if (shieldComponent) {
-      addLog(`Equipped ${trg.title}!`, "orangered");
+      addLog(`Equipped ${trg.currentTitle}!`, "orangered");
       wieldSlots.shieldSlots.push(trg);
       wieldSlots.currentWeight += shieldComponent.slotWeight;
       shieldComponent.equipped = true;
@@ -294,7 +296,7 @@ const wieldAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.title}`, "red");
+        addLog(`Not enough space for ${trg.currentTitle}`, "red");
         return false;
       }
     }
@@ -306,7 +308,7 @@ const wieldAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.title}`, "red");
+        addLog(`Not enough space for ${trg.currentTitle}`, "red");
         return false;
       }
     }
@@ -326,7 +328,7 @@ const equipAction = new Action(
     const armorComponent = trg.getComponent("Armor");
 
     if (armorComponent) {
-      addLog(`Wearing ${trg.title}!`, "orangered");
+      addLog(`Wearing ${trg.currentTitle}!`, "orangered");
       armorSlots.push(trg);
       armorSlotsComponent.currentWeight += armorComponent.slotWeight;
       armorComponent.equipped = true;
@@ -345,7 +347,7 @@ const equipAction = new Action(
       )
         return true;
       else {
-        addLog(`Not enough space for ${trg.title}`, "red");
+        addLog(`Not enough space for ${trg.currentTitle}`, "red");
         return false;
       }
     }
@@ -467,22 +469,25 @@ const activateAction = new Action(
   (src, trg) => {
     const inventory = src.getComponent("Inventory").inventory;
     const scriptComponent = trg.getComponent("Script");
+    const encriptionComponent = trg.getComponent("Encription");
+    console.log(encriptionComponent);
 
-    if (!scriptComponent.revealed) {
+    if (encriptionComponent.isCrypted) {
       addLog(
-        `You activate a Script of |${scriptComponent.cryptedName}|`,
+        `You activate a ${encriptionComponent.singleCryptedTitle}`,
         "lime"
       );
-      addLog(`It was a Script of ${trg.name}!`, "lime");
+      addLog(`It was a ${trg.singleTitle}!`, "lime");
     } else {
-      addLog(`You activate a Script of ${trg.name}`, "lime");
+      addLog(`You activate a ${trg.singleTitle}`, "lime");
     }
 
-    if (trg.getComponent("Stack").amount > 1)
+    if (trg.getComponent("Stack").amount > 1) {
       trg.getComponent("Stack").amount--;
-    else inventory.splice(inventory.indexOf(trg), 1);
+      handleTitle(trg);
+    } else inventory.splice(inventory.indexOf(trg), 1);
 
-    revealScripts(scriptComponent.cryptedName);
+    revealEncryptions(trg);
 
     scriptComponent.effect(src);
   },

@@ -21,6 +21,7 @@ import {
   Armor,
   ArmorSlots,
   Script,
+  Encription,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -32,6 +33,8 @@ const tiles = {};
 class Tile {
   constructor(
     name,
+    singleTitle,
+    multipleTitle,
     z,
     charX,
     charY,
@@ -44,7 +47,10 @@ class Tile {
     const [bgR, bgG, bgB, bgA] = bgColorArray;
 
     this.name = name;
-    this.title = this.name;
+    this.singleTitle = singleTitle;
+    this.multipleTitle = multipleTitle;
+    this.currentTitle = singleTitle;
+
     this.z = z;
 
     this.charX = charX;
@@ -63,6 +69,8 @@ class Tile {
   init(x, y) {
     const entity = new Entity(
       this.name,
+      this.singleTitle,
+      this.multipleTitle,
       x,
       y,
       this.z,
@@ -84,10 +92,21 @@ class Tile {
   }
 }
 
-new Tile("Fist", 0, 0, 0, [0, 0, 0, 0], [[Weapon, [0, 0, 0, "punch"]]]);
+new Tile(
+  "Fist",
+  "Fist",
+  "Fists",
+  0,
+  0,
+  0,
+  [0, 0, 0, 0],
+  [[Weapon, [0, 0, 0, "punch"]]]
+);
 
 new Tile(
   "Player",
+  "Player",
+  "Players",
   4,
   0,
   4,
@@ -109,6 +128,8 @@ new Tile(
 
 new Tile(
   "Guard",
+  "Guard",
+  "Guards",
   3,
   7,
   4,
@@ -128,6 +149,8 @@ new Tile(
 
 new Tile(
   "Bit",
+  "Bit",
+  "Bits",
   1,
   13,
   14,
@@ -140,7 +163,9 @@ new Tile(
 );
 
 new Tile(
-  "Teleportation",
+  "ScrollTeleportation",
+  "Scroll of Teleportation",
+  "Scrolls of Teleportation",
   1,
   5,
   15,
@@ -149,12 +174,15 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Activate"]],
-    [Script, ["fe45g@gkh", randomTp]],
+    [Script, [randomTp]],
+    [Encription, ["Scroll of |Sfe45g@gkh|", "Scrolls of |Sfe45g@gkh|"]],
   ]
 );
 
 new Tile(
-  "Enemy Summon",
+  "ScrollEnemySummon",
+  "Scroll of Enemy Summon",
+  "Scrolls of Enemy Summon",
   1,
   5,
   15,
@@ -163,14 +191,17 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Activate"]],
-    [Script, ["0fe3ol#l"]],
+    [Script, []],
+    [Encription, ["Scroll of |k39skgsk|", "Scrolls of |k39skgsk|"]],
   ]
 );
 
-new Tile("Floor", 0, 9, 15, [85, 85, 85, 255]);
+new Tile("Floor", "Floor", "Floors", 0, 9, 15, [85, 85, 85, 255]);
 
 new Tile(
   "Wall",
+  "Wall",
+  "Walls",
   2,
   3,
   2,
@@ -183,6 +214,8 @@ new Tile(
 
 new Tile(
   "Sword",
+  "Sword",
+  "Swords",
   1,
   8,
   1,
@@ -196,6 +229,8 @@ new Tile(
 
 new Tile(
   "Shield",
+  "Shield",
+  "Shields",
   1,
   8,
   14,
@@ -209,6 +244,8 @@ new Tile(
 
 new Tile(
   "Throngler",
+  "Throngler",
+  "Thronglers",
   1,
   8,
   1,
@@ -224,6 +261,8 @@ new Tile(
 
 new Tile(
   "Armor",
+  "Armor",
+  "Armors",
   1,
   14,
   1,
@@ -235,6 +274,15 @@ new Tile(
   ]
 );
 
-new Tile("Filler", 5, 11, 13, [255, 0, 0, 255], [[Hidden, []]]);
+new Tile(
+  "Filler",
+  "Filler",
+  "Fillers",
+  5,
+  11,
+  13,
+  [255, 0, 0, 255],
+  [[Hidden, []]]
+);
 
 export { tiles };

@@ -1,4 +1,4 @@
-import { scriptEntities } from "./Entity/entities.js";
+import { encryptedEntities } from "./Entity/entities.js";
 import {
   CANVAS_TILED_HEIGHT,
   CANVAS_TILED_WIDTH,
@@ -239,55 +239,34 @@ function getPopupItems(src, currentPopupType) {
   return itemList;
 }
 
-// BRAIN MELTING AHEAD, PLEASE DO NOT TOUCH
 function handleTitle(trg) {
-  if (!trg.getComponent("Script") && trg.getComponent("Stack")) {
-    if (trg.getComponent("Stack").amount > 1)
-      trg.title = `${trg.getComponent("Stack").amount} ${trg.titleName}s`;
-    else trg.title = trg.titleName;
-    return;
-  }
+  const trgStack = trg.getComponent("Stack");
 
-  if (
-    !trg.getComponent("Script").revealed &&
-    trg.getComponent("Stack").amount > 1
-  ) {
-    trg.title = `${trg.getComponent("Stack").amount} Scripts of |${
-      trg.getComponent("Script").cryptedName
-    }|`;
-    return;
+  if (trgStack?.amount > 1) {
+    if (trg.getComponent("Encription")?.isCrypted) {
+      trg.currentTitle = `${trgStack.amount} ${
+        trg.getComponent("Encription").multipleCryptedTitle
+      }`;
+      return;
+    }
+    trg.currentTitle = `${trgStack.amount} ${trg.multipleTitle}`;
+  } else {
+    if (trg.getComponent("Encription")?.isCrypted) {
+      trg.currentTitle = `${trg.getComponent("Encription").singleCryptedTitle}`;
+      return;
+    }
+    trg.currentTitle = `${trg.singleTitle}`;
   }
-
-  if (
-    !trg.getComponent("Script").revealed &&
-    trg.getComponent("Stack").amount == 1
-  ) {
-    trg.title = `Script of |${trg.getComponent("Script").cryptedName}|`;
-    return;
-  }
-
-  if (
-    trg.getComponent("Script").revealed &&
-    trg.getComponent("Stack").amount > 1
-  ) {
-    trg.title = `${trg.getComponent("Stack").amount} Scripts of ${trg.name}`;
-    return;
-  }
-  if (
-    trg.getComponent("Script").revealed &&
-    trg.getComponent("Stack").amount == 1
-  ) {
-    trg.title = `Script of ${trg.name}`;
-  }
+  console.log(trg.currentTitle);
 }
 
-function revealScripts(cryptedName) {
-  for (let i = 0; i < scriptEntities.length; i++) {
-    const script = scriptEntities[i];
-    if (script.getComponent("Script").cryptedName == cryptedName) {
-      script.getComponent("Script").revealed = true;
+function revealEncryptions(src) {
+  for (let i = 0; i < encryptedEntities.length; i++) {
+    const ecryptedEntity = encryptedEntities[i];
+    if (ecryptedEntity.name == src.name) {
+      ecryptedEntity.getComponent("Encription").isCrypted = false;
     }
-    handleTitle(script);
+    handleTitle(ecryptedEntity);
   }
 }
 
@@ -308,5 +287,5 @@ export {
   setContextFillStyle,
   getPopupItems,
   handleTitle,
-  revealScripts,
+  revealEncryptions,
 };

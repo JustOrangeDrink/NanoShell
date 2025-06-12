@@ -60,7 +60,7 @@ function updateInventoryUi() {
 
     setContextFillStyle(inventoryUiCtx, weapon.color);
     inventoryUiCtx.fillText(
-      `- ${weapon.title}`,
+      `- ${weapon.currentTitle}`,
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -78,7 +78,7 @@ function updateInventoryUi() {
 
     setContextFillStyle(inventoryUiCtx, shield.color);
     inventoryUiCtx.fillText(
-      `- ${shield.title}`,
+      `- ${shield.currentTitle}`,
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -101,7 +101,7 @@ function updateInventoryUi() {
 
     setContextFillStyle(inventoryUiCtx, armor.color);
     inventoryUiCtx.fillText(
-      `- ${armor.title}`,
+      `- ${armor.currentTitle}`,
       MENU_X + 36,
       MENU_Y + wieldShift
     );
@@ -125,7 +125,7 @@ function updateInventoryUi() {
     );
 
     inventoryUiCtx.fillText(
-      `- ${item.title}`,
+      `- ${item.currentTitle}`,
       MENU_X + 36,
       MENU_Y + i * 30 + wieldShift + 25
     );
