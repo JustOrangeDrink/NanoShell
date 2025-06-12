@@ -74,16 +74,11 @@ class Entity {
 
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
-    if (component.type == "Weapon")
-      this.currentTitle = `a +${component.acc},+${component.dmg} ${this.currentTitle}`;
-    if (component.type == "Shield")
-      this.currentTitle = `a +${component.arm} ${this.currentTitle}`;
-    if (component.type == "Armor")
-      this.currentTitle = `a +${component.arm} ${this.currentTitle}`;
     if (component.type == "Encription") {
       encryptedEntities.push(this);
-      handleTitle(this);
     }
+
+    handleTitle(this);
   }
 
   getComponent(type) {

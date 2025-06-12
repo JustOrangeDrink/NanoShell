@@ -242,6 +242,10 @@ function getPopupItems(src, currentPopupType) {
 function handleTitle(trg) {
   const trgStack = trg.getComponent("Stack");
 
+  const trgWeapon = trg.getComponent("Weapon");
+  const trgShield = trg.getComponent("Shield");
+  const trgArmor = trg.getComponent("Armor");
+
   if (trgStack?.amount > 1) {
     if (trg.getComponent("Encription")?.isCrypted) {
       trg.currentTitle = `${trgStack.amount} ${
@@ -257,7 +261,16 @@ function handleTitle(trg) {
     }
     trg.currentTitle = `${trg.singleTitle}`;
   }
-  console.log(trg.currentTitle);
+
+  if (trgWeapon) {
+    trg.currentTitle = `a +${trgWeapon.acc},+${trgWeapon.dmg} ${trg.currentTitle}`;
+  }
+  if (trgShield) {
+    trg.currentTitle = `a +${trgShield.arm} ${trg.currentTitle}`;
+  }
+  if (trgArmor) {
+    trg.currentTitle = `a +${trgArmor.arm} ${trg.currentTitle}`;
+  }
 }
 
 function revealEncryptions(src) {
