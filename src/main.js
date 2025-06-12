@@ -45,8 +45,6 @@ tiles.ScriptEnemySummon.init(player.x + 1, player.y + 1);
 
 tiles.CrystalStrength.init(player.x - 1, player.y - 1);
 
-tiles;
-
 tiles.Sword.init(player.x + 1, player.y - 1);
 tiles.Throngler.init(player.x, player.y - 1);
 
