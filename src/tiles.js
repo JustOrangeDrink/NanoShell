@@ -163,9 +163,9 @@ new Tile(
 );
 
 new Tile(
-  "ScrollTeleportation",
-  "Scroll of Teleportation",
-  "Scrolls of Teleportation",
+  "ScriptTeleportation",
+  "Script of Teleportation",
+  "Scripts of Teleportation",
   1,
   5,
   15,
@@ -175,14 +175,14 @@ new Tile(
     [Stack, []],
     [Pickable, ["Activate"]],
     [Script, [randomTp]],
-    [Encription, ["Scroll of |Sfe45g@gkh|", "Scrolls of |Sfe45g@gkh|"]],
+    [Encription, ["Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"]],
   ]
 );
 
 new Tile(
-  "ScrollEnemySummon",
-  "Scroll of Enemy Summon",
-  "Scrolls of Enemy Summon",
+  "ScriptEnemySummon",
+  "Script of Enemy Summon",
+  "Scripts of Enemy Summon",
   1,
   5,
   15,
@@ -192,7 +192,7 @@ new Tile(
     [Stack, []],
     [Pickable, ["Activate"]],
     [Script, []],
-    [Encription, ["Scroll of |k39skgsk|", "Scrolls of |k39skgsk|"]],
+    [Encription, ["Script of |k39skgsk|", "Scripts of |k39skgsk|"]],
   ]
 );
 

@@ -38,10 +38,10 @@ tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 1, player.y);
 tiles.Bit.init(player.x + 2, player.y);
 
-tiles["ScrollTeleportation"].init(player.x + 1, player.y + 1);
-tiles["ScrollTeleportation"].init(player.x + 1, player.y + 1);
-tiles["ScrollTeleportation"].init(player.x + 2, player.y + 1);
-tiles["ScrollEnemySummon"].init(player.x + 1, player.y + 1);
+tiles["ScriptTeleportation"].init(player.x + 1, player.y + 1);
+tiles["ScriptTeleportation"].init(player.x + 1, player.y + 1);
+tiles["ScriptTeleportation"].init(player.x + 2, player.y + 1);
+tiles["ScriptEnemySummon"].init(player.x + 1, player.y + 1);
 
 tiles.Sword.init(player.x + 1, player.y - 1);
 tiles.Throngler.init(player.x, player.y - 1);
