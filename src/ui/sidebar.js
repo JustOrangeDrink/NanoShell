@@ -1,6 +1,6 @@
 import { entities, mainUiCanvas, mainUiCtx } from "../globals.js";
 import { time } from "../globals.js";
-import { getEntityFromArray, write } from "../utils.js";
+import { getEntityFromArray, getShallowCopy, write } from "../utils.js";
 
 const logs = [];
 const below = [];
@@ -87,6 +87,13 @@ function writeBelow() {
 }
 
 function addLog(arrayTextColor = ["Default", "lime"]) {
+  // if we passed in object we replace it with
+  // copy of this object so it won't be mutated
+  for (let i = 0; i < arrayTextColor.length; i++) {
+    const element = arrayTextColor[i];
+    if (typeof element == "object") arrayTextColor[i] = getShallowCopy(element);
+  }
+
   logs.unshift(arrayTextColor);
   if (logs.length > 5) logs.pop();
   updateUi();

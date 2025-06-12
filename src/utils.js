@@ -79,6 +79,11 @@ function recolorize(
   const [bgR, bgG, bgB, bgA] = bgColorArray;
   entity.color = [r, g, b, a];
   entity.bg = [bgR, bgG, bgB, bgA];
+
+  // if entity is a shallow copy used to change
+  // log color we return after changing color
+  if (entity.logCopy) return;
+
   entity.renderName = getRenderName(entity.name, colorArray, bgColorArray);
   addEntityAsset(entity);
   if (defaultRecolor) {
@@ -279,16 +284,50 @@ function numToRgba(num) {
 function write(ctx, text, x, y) {
   let textShift = x;
   for (let k = 0; k < text.length; k += 2) {
-    const textFragment = text[k];
-    const color = Array.isArray(text[k + 1])
-      ? numToRgba(text[k + 1])
-      : text[k + 1];
+    let textFragment;
+    let color;
+
+    // if passed in parameter is an object we use it's title and color as our parameters
+    // passing in an object allows us to have dynamically changing message (animation)
+    if (typeof text[k] == "object") {
+      textFragment = text[k].currentTitle;
+
+      // if object has animation with color change
+      // then we must use it's temporary color
+      if (text[k].animation)
+        color = Array.isArray(text[k].color)
+          ? numToRgba(text[k].color)
+          : text[k].color;
+      else
+        color = Array.isArray(text[k].defaultColor)
+          ? numToRgba(text[k].defaultColor)
+          : text[k].defaultColor;
+    } else {
+      textFragment = text[k];
+      color = Array.isArray(text[k + 1]) ? numToRgba(text[k + 1]) : text[k + 1];
+    }
 
     ctx.fillStyle = color;
     ctx.fillText(textFragment, textShift, y);
 
     textShift += ctx.measureText(textFragment).width;
   }
+}
+
+function getShallowCopy(srcEntity) {
+  const shallowCopy = JSON.parse(JSON.stringify(srcEntity));
+  shallowCopy.logCopy = true;
+
+  // animation function of the original isn't copied,
+  // so we pass it in manually and then play it
+  if (srcEntity.animation) {
+    shallowCopy.animation[0] = srcEntity.animation[0];
+    shallowCopy.animation[1] = srcEntity.animation[1];
+
+    shallowCopy.animation[0](shallowCopy, shallowCopy.animation[1]);
+  }
+
+  return shallowCopy;
 }
 
 export {
@@ -309,4 +348,5 @@ export {
   revealEncryptions,
   numToRgba,
   write,
+  getShallowCopy,
 };
