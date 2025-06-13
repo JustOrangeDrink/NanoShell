@@ -188,16 +188,31 @@ class Encription {
 }
 
 class Script {
-  constructor(effect = () => true) {
+  constructor(effect = () => true, ...args) {
     this.type = "Script";
     this.effect = effect;
+    this.effectArgs = args;
+  }
+  executeScript(trg) {
+    this.effect(trg, ...this.effectArgs);
   }
 }
 
 class Crystal {
-  constructor(effect = () => true) {
+  constructor(effect = () => true, ...args) {
     this.type = "Crystal";
     this.effect = effect;
+    this.effectArgs = args;
+  }
+  drainCrystal(trg) {
+    this.effect(trg, ...this.effectArgs);
+  }
+}
+
+class Effects {
+  constructor() {
+    this.type = "Effects";
+    this.effects = [];
   }
 }
 
@@ -225,4 +240,5 @@ export {
   Script,
   Encription,
   Crystal,
+  Effects,
 };

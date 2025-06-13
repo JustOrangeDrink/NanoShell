@@ -44,6 +44,8 @@ class Entity {
 
     this.components = {};
 
+    this.effects = [];
+
     this.isViewed = false;
     this.revealed = false;
 
@@ -74,6 +76,7 @@ class Entity {
 
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
+    if (component.type == "Effects") effectsEntities.push(this);
     if (component.type == "Encription") {
       encryptedEntities.push(this);
     }
@@ -98,6 +101,13 @@ class Entity {
 
 const vectorEntities = [];
 const turnsEntities = [];
+const effectsEntities = [];
 const encryptedEntities = [];
 
-export { Entity, vectorEntities, turnsEntities, encryptedEntities };
+export {
+  Entity,
+  vectorEntities,
+  turnsEntities,
+  effectsEntities,
+  encryptedEntities,
+};

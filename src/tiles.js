@@ -26,7 +26,7 @@ import {
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
-import { randomTp } from "./System/effects.js";
+import { randomTp, strengthBoost } from "./System/effects.js";
 import { getRenderName } from "./utils.js";
 
 const tiles = {};
@@ -209,7 +209,7 @@ new Tile(
     [Size, ["Tiny"]],
     [Stack, []],
     [Pickable, ["Drain"]],
-    [Crystal, []],
+    [Crystal, [strengthBoost, 6, 10]],
     [Encription, ["|Amethyst| Crystal", "|Amethyst| Crystals"]],
   ]
 );

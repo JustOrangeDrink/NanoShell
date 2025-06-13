@@ -3,7 +3,7 @@ import {
   hitAnimation,
   missAnimation,
 } from "../Animations/animations.js";
-import { turnsEntities } from "../Entity/entities.js";
+import { effectsEntities, turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
 import { addLog } from "../ui/sidebar.js";
 import {
@@ -13,6 +13,7 @@ import {
   revealEncryptions,
   roundToOne,
 } from "../utils.js";
+import { handleEffects } from "./effects.js";
 import { getEntitiesUnder } from "./engine.js";
 
 class Action {
@@ -46,11 +47,17 @@ class Action {
     turnsComponent.currentTime = roundToOne(
       turnsComponent.currentTime + totalTimeCost
     );
+
     document.dispatchEvent(new Event("gameTurn"));
   }
 }
 
 function passTime() {
+  for (let i = 0; i < effectsEntities.length; i++) {
+    const entity = effectsEntities[i];
+    handleEffects(entity);
+  }
+
   for (let i = 0; i < turnsEntities.length; i++) {
     const entity = turnsEntities[i];
     const turnsComponent = entity.getComponent("Turns");
@@ -508,8 +515,8 @@ const activateAction = new Action(
       addLog(["It was a ", "lime", trg, false, ".", "lime"]);
     }
 
-    if (scriptComponent) scriptComponent.effect(src);
-    if (crystalComponent) crystalComponent.effect(src);
+    if (scriptComponent) scriptComponent.executeScript(src);
+    if (crystalComponent) crystalComponent.drainCrystal(src);
 
     if (trg.getComponent("Stack").amount > 1) {
       trg.getComponent("Stack").amount--;
