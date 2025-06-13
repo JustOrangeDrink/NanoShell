@@ -76,7 +76,7 @@ class Entity {
 
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
-    if (component.type == "Effects") effectsEntities.push(this);
+    if (component.type == "ScheduledEffects") effectsEntities.push(this);
     if (component.type == "Encription") {
       encryptedEntities.push(this);
     }

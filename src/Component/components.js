@@ -209,10 +209,10 @@ class Crystal {
   }
 }
 
-class Effects {
+class ScheduledEffects {
   constructor() {
-    this.type = "Effects";
-    this.effects = [];
+    this.type = "ScheduledEffects";
+    this.scheduledEffects = [];
   }
 }
 
@@ -240,5 +240,5 @@ export {
   Script,
   Encription,
   Crystal,
-  Effects,
+  ScheduledEffects,
 };

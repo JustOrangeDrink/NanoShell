@@ -1,4 +1,4 @@
-import { Effects } from "../Component/components.js";
+import { ScheduledEffects } from "../Component/components.js";
 import { knownMap, rooms, tilemap, time } from "../globals.js";
 import { addLog } from "../ui/sidebar.js";
 import { randomInt } from "../utils.js";
@@ -12,7 +12,7 @@ class ScheduledEffect {
 }
 
 function handleEffects(trg) {
-  const effects = trg.getComponent("Effects").effects;
+  const effects = trg.getComponent("ScheduledEffects").scheduledEffects;
   for (let i = 0; i < effects.length; i++) {
     const effect = effects[i];
     console.log(effect);
@@ -42,11 +42,21 @@ function randomTp(trg) {
   trg.x = randomRoom.getCenter().x;
   trg.y = randomRoom.getCenter().y;
   addLog([`${trg.currentTitle} vanishes!`, "purple"]);
+  trg.getComponent("ScheduledEffects").scheduledEffects.push(
+    new ScheduledEffect("Strength Boost", duration, (trgEntity) => {
+      trgEntity.getComponent("Attributes").str -= boostAmount;
+      if (trgEntity.name == "Player")
+        addLog(["Your strength wears away...", "red"]);
+      else
+        addLog([trgEntity, false, "'s strength seems to wear away..."], "red");
+    })
+  );
 }
 
 function strengthBoost(trg, duration, boostAmount) {
-  if (!trg.getComponent("Effects")) trg.addComponent(new Effects());
-  const effects = trg.getComponent("Effects").effects;
+  if (!trg.getComponent("ScheduledEffects"))
+    trg.addComponent(new ScheduledEffects());
+  const effects = trg.getComponent("ScheduledEffects").scheduledEffects;
 
   if (trg.name == "Player") addLog([`You suddenly feel stronger!`, "orange"]);
   else addLog([trg, false, " seems stronger now!", "pink"]);
