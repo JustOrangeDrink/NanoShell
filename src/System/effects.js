@@ -6,7 +6,7 @@ import { randomInt } from "../utils.js";
 class ScheduledEffect {
   constructor(effectName, scheduledTime, effectFunction) {
     this.effectName = effectName;
-    this.timeLeft = scheduledTime;
+    this.timeLeft = scheduledTime + 1;
     this.effectFunction = effectFunction;
   }
 }
@@ -42,15 +42,6 @@ function randomTp(trg) {
   trg.x = randomRoom.getCenter().x;
   trg.y = randomRoom.getCenter().y;
   addLog([`${trg.currentTitle} vanishes!`, "purple"]);
-  trg.getComponent("ScheduledEffects").scheduledEffects.push(
-    new ScheduledEffect("Strength Boost", duration, (trgEntity) => {
-      trgEntity.getComponent("Attributes").str -= boostAmount;
-      if (trgEntity.name == "Player")
-        addLog(["Your strength wears away...", "red"]);
-      else
-        addLog([trgEntity, false, "'s strength seems to wear away..."], "red");
-    })
-  );
 }
 
 function strengthBoost(trg, duration, boostAmount) {
