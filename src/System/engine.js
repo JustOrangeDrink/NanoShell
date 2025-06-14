@@ -109,7 +109,7 @@ function revealLine(x0, y0, x1, y1) {
         const entity = tilemap[y0][x0][i];
         entity.isViewed = true;
 
-        const knownEntity = { ...tilemap[y0][x0][i] };
+        const knownEntity = { ...entity };
 
         knownMap[y0][x0].splice(i, 1);
         knownMap[y0][x0].push(knownEntity);
