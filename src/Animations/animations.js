@@ -29,7 +29,8 @@ function thronglerShine(trgEntity, interval = 100) {
   const colors = [red, green, blue, yellow, purple, cyan];
 
   let current = 0;
-  setInterval(() => {
+  const recolorinterval = setInterval(() => {
+    if (!trgEntity.id) clearInterval(recolorinterval);
     current = current < colors.length - 1 ? current + 1 : 0;
     recolorize(trgEntity, colors[current], trgEntity.defaultBg);
   }, interval);
