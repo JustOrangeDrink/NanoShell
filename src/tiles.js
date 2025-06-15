@@ -84,8 +84,8 @@ class Tile {
 
     if (this.components) {
       for (let i = 0; i < this.components.length; i++) {
-        const component = this.components[i];
-        entity.addComponent(new component[0](...component[1]));
+        const [component, ...componentArgs] = this.components[i];
+        entity.addComponent(new component(...componentArgs));
       }
     }
 
@@ -101,7 +101,7 @@ new Tile(
   0,
   0,
   [0, 0, 0, 0],
-  [[Weapon, [0, 0, 0, "punch"]]]
+  [[Weapon, 0, 0, 0, "punch"]]
 );
 
 new Tile(
@@ -113,17 +113,17 @@ new Tile(
   4,
   [255, 255, 255, 255],
   [
-    [Collision, [0, 0]],
-    [Health, [30, 30]],
-    [CPU, [10]],
-    [Damage, [10]],
-    [Turns, [1, 1, 0]],
-    [Alignment, ["Good"]],
-    [Stats, [50, 0, 1]],
-    [Attributes, [3, 5, 3]],
-    [Inventory, []],
-    [WieldSlots, [2, tiles.Fist.init()]],
-    [ArmorSlots, [1]],
+    [Collision],
+    [Health, 30, 30],
+    [CPU, 10],
+    [Damage, 10],
+    [Turns, 1, 1, 0],
+    [Alignment, "Good"],
+    [Stats, 50, 0, 1],
+    [Attributes, 3, 5, 3],
+    [Inventory],
+    [WieldSlots, 2, tiles.Fist.init()],
+    [ArmorSlots, 1],
   ]
 );
 
@@ -136,15 +136,15 @@ new Tile(
   4,
   [255, 0, 255, 255],
   [
-    [Collision, []],
-    [Health, [15, 15]],
-    [Damage, [5]],
-    [Turns, [1, 1, 0]],
-    [Alignment, ["Bad"]],
-    [Behavior, [guardBehavior]],
-    [Stats, [40, 0, 1]],
-    [Attributes, [1, 1, 1]],
-    [WieldSlots, [2, tiles.Fist.init()]],
+    [Collision],
+    [Health, 15, 15],
+    [Damage, 5],
+    [Turns, 1, 1, 0],
+    [Alignment, "Bad"],
+    [Behavior, guardBehavior],
+    [Stats, 40, 0, 1],
+    [Attributes, 1, 1, 1],
+    [WieldSlots, 2, tiles.Fist.init()],
   ]
 );
 
@@ -156,11 +156,7 @@ new Tile(
   13,
   14,
   [255, 255, 0, 255],
-  [
-    [Size, ["Tiny"]],
-    [Pickable, []],
-    [Stack, []],
-  ]
+  [[Size, "Tiny"], [Pickable], [Stack]]
 );
 
 new Tile(
@@ -172,11 +168,11 @@ new Tile(
   15,
   [225, 175, 100, 255],
   [
-    [Size, ["Tiny"]],
-    [Stack, []],
-    [Pickable, ["Execute"]],
+    [Size, "Tiny"],
+    [Stack],
+    [Pickable, "Execute"],
     [Script, [randomTp]],
-    [Encription, ["Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"]],
+    [Encription, "Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"],
   ]
 );
 
@@ -189,11 +185,11 @@ new Tile(
   15,
   [225, 175, 100, 255],
   [
-    [Size, ["Tiny"]],
-    [Stack, []],
-    [Pickable, ["Execute"]],
-    [Script, []],
-    [Encription, ["Script of |k39skgsk|", "Scripts of |k39skgsk|"]],
+    [Size, "Tiny"],
+    [Stack],
+    [Pickable, "Execute"],
+    [Script],
+    [Encription, "Script of |k39skgsk|", "Scripts of |k39skgsk|"],
   ]
 );
 
@@ -206,11 +202,11 @@ new Tile(
   0,
   [225, 100, 255, 255],
   [
-    [Size, ["Tiny"]],
-    [Stack, []],
-    [Pickable, ["Drain"]],
+    [Size, "Tiny"],
+    [Stack],
+    [Pickable, "Drain"],
     [Crystal, [strengthBoost, 6, 10]],
-    [Encription, ["|Amethyst| Crystal", "|Amethyst| Crystals"]],
+    [Encription, "|Amethyst| Crystal", "|Amethyst| Crystals"],
   ]
 );
 
@@ -224,10 +220,7 @@ new Tile(
   3,
   2,
   [0, 255, 0, 255],
-  [
-    [Collision, [true]],
-    [Occlusion, [true]],
-  ]
+  [[Collision, true, true], [Occlusion]]
 );
 
 new Tile(
@@ -239,9 +232,9 @@ new Tile(
   1,
   [220, 220, 220, 255],
   [
-    [Size, ["Tiny"]],
-    [Pickable, ["Wield"]],
-    [Weapon, [5, 10, 1, "slash"]],
+    [Size, "Tiny"],
+    [Pickable, "Wield"],
+    [Weapon, 5, 10, 1, "slash"],
   ]
 );
 
@@ -254,9 +247,9 @@ new Tile(
   14,
   [220, 220, 220, 255],
   [
-    [Size, ["Tiny"]],
-    [Pickable, ["Wield"]],
-    [Shield, [2, 1]],
+    [Size, "Tiny"],
+    [Pickable, "Wield"],
+    [Shield, 2, 1],
   ]
 );
 
@@ -269,9 +262,9 @@ new Tile(
   1,
   [255, 100, 255, 255],
   [
-    [Size, ["Tiny"]],
-    [Pickable, ["Wield"]],
-    [Weapon, [100, 1000, 1, "bonk"]],
+    [Size, "Tiny"],
+    [Pickable, "Wield"],
+    [Weapon, 100, 1000, 1, "bonk"],
   ],
   [],
   [thronglerShine]
@@ -286,9 +279,9 @@ new Tile(
   1,
   [220, 220, 220, 255],
   [
-    [Size, ["Tiny"]],
-    [Pickable, ["Equip"]],
-    [Armor, [4, 1]],
+    [Size, "Tiny"],
+    [Pickable, "Equip"],
+    [Armor, 4, 1],
   ]
 );
 
@@ -300,7 +293,7 @@ new Tile(
   11,
   13,
   [255, 0, 0, 255],
-  [[Hidden, []]]
+  [[Hidden]]
 );
 
 export { tiles };

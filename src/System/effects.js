@@ -4,10 +4,15 @@ import { addLog } from "../ui/sidebar.js";
 import { randomInt } from "../utils.js";
 
 class ScheduledEffect {
-  constructor(effectName, scheduledTime, effectFunction) {
+  constructor(trg, effectName, scheduledTime, effectFunction, linkedEntity) {
+    this.linkedEntity = linkedEntity;
     this.effectName = effectName;
     this.timeLeft = scheduledTime + 1;
     this.effectFunction = effectFunction;
+
+    if (!trg.getComponent("ScheduledEffects"))
+      trg.addComponent(new ScheduledEffects());
+    trg.getComponent("ScheduledEffects").scheduledEffects.push(this);
   }
 }
 
@@ -15,7 +20,6 @@ function handleEffects(trg) {
   const effects = trg.getComponent("ScheduledEffects").scheduledEffects;
   for (let i = 0; i < effects.length; i++) {
     const effect = effects[i];
-    console.log(effect);
     if (effect.timeLeft > 0) {
       effect.timeLeft -= time.timeJump;
     }
@@ -24,6 +28,7 @@ function handleEffects(trg) {
       effects.splice(i, 1);
       i--;
     }
+    console.log(effect);
   }
 }
 
@@ -41,28 +46,29 @@ function randomTp(trg) {
 
   trg.x = randomRoom.getCenter().x;
   trg.y = randomRoom.getCenter().y;
-  addLog([`${trg.currentTitle} vanishes!`, "purple"]);
+  addLog([trg, false, " vanishes!", "purple"]);
 }
 
-function strengthBoost(trg, duration, boostAmount) {
-  if (!trg.getComponent("ScheduledEffects"))
-    trg.addComponent(new ScheduledEffects());
-  const effects = trg.getComponent("ScheduledEffects").scheduledEffects;
-
+function strengthBoost(trg, duration = 3, boostAmount = 5, linkedEntity) {
   if (trg.name == "Player") addLog([`You suddenly feel stronger!`, "orange"]);
   else addLog([trg, false, " seems stronger now!", "pink"]);
 
   trg.getComponent("Attributes").str += boostAmount;
 
-  effects.push(
-    new ScheduledEffect("Strength Boost", duration, (trgEntity) => {
+  new ScheduledEffect(
+    trg,
+    "Strength Boost",
+    duration,
+    (trgEntity) => {
       trgEntity.getComponent("Attributes").str -= boostAmount;
-      if (trgEntity.name == "Player")
+      if (trgEntity.name == "Player") {
         addLog(["Your strength wears away...", "red"]);
-      else
+      } else {
         addLog([trgEntity, false, "'s strength seems to wear away..."], "red");
-    })
+      }
+    },
+    linkedEntity
   );
 }
 
-export { handleEffects, randomTp, strengthBoost };
+export { ScheduledEffect, handleEffects, randomTp, strengthBoost };

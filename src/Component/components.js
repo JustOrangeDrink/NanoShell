@@ -1,9 +1,9 @@
 import { addLog } from "../ui/sidebar.js";
 
 class Collision {
-  constructor(smallCollision = false) {
+  constructor(collision = true, smallCollision = false) {
     this.type = "Collision";
-    this.collision = true;
+    this.collision = collision;
     this.smallCollision = smallCollision;
   }
 }
@@ -93,7 +93,7 @@ class Behavior {
 }
 
 class Occlusion {
-  constructor(occlusion) {
+  constructor(occlusion = true) {
     this.type = "Occlusion";
     this.occlusion = occlusion;
   }
@@ -188,24 +188,28 @@ class Encription {
 }
 
 class Script {
-  constructor(effect = () => true, ...args) {
+  constructor(...effects) {
     this.type = "Script";
-    this.effect = effect;
-    this.effectArgs = args;
+    this.effects = effects;
   }
   executeScript(trg) {
-    this.effect(trg, ...this.effectArgs);
+    for (let i = 0; i < this.effects.length; i++) {
+      const [effect, ...effectArgs] = this.effects[i];
+      effect(trg, ...effectArgs);
+    }
   }
 }
 
 class Crystal {
-  constructor(effect = () => true, ...args) {
+  constructor(...effects) {
     this.type = "Crystal";
-    this.effect = effect;
-    this.effectArgs = args;
+    this.effects = effects;
   }
   drainCrystal(trg) {
-    this.effect(trg, ...this.effectArgs);
+    for (let i = 0; i < this.effects.length; i++) {
+      const [effect, ...effectArgs] = this.effects[i];
+      effect(trg, ...effectArgs);
+    }
   }
 }
 
