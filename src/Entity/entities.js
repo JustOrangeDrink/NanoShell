@@ -79,6 +79,7 @@ class Entity {
     if (component.type == "ScheduledEffects") effectsEntities.push(this);
     if (component.type == "Encription") {
       encryptedEntities.push(this);
+      if (decryptedEntities.includes(this.name)) component.isCrypted = false;
     }
 
     handleTitle(this);
@@ -103,6 +104,7 @@ const vectorEntities = [];
 const turnsEntities = [];
 const effectsEntities = [];
 const encryptedEntities = [];
+const decryptedEntities = [];
 
 export {
   Entity,
@@ -110,4 +112,5 @@ export {
   turnsEntities,
   effectsEntities,
   encryptedEntities,
+  decryptedEntities,
 };

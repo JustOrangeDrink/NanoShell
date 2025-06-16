@@ -1,4 +1,4 @@
-import { encryptedEntities } from "./Entity/entities.js";
+import { decryptedEntities, encryptedEntities } from "./Entity/entities.js";
 import {
   CANVAS_TILED_HEIGHT,
   CANVAS_TILED_WIDTH,
@@ -275,10 +275,12 @@ function handleTitle(trg) {
   }
 }
 
-function revealEncryptions(src) {
+function revealEncryptions(trg) {
+  if (!decryptedEntities.includes(trg.name)) decryptedEntities.push(trg.name);
+
   for (let i = 0; i < encryptedEntities.length; i++) {
     const ecryptedEntity = encryptedEntities[i];
-    if (ecryptedEntity.name == src.name) {
+    if (ecryptedEntity.name == trg.name) {
       ecryptedEntity.getComponent("Encription").isCrypted = false;
     }
     handleTitle(ecryptedEntity);
