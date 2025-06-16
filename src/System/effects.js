@@ -4,15 +4,41 @@ import { addLog } from "../ui/sidebar.js";
 import { randomInt } from "../utils.js";
 
 class ScheduledEffect {
-  constructor(trg, effectName, scheduledTime, effectFunction, linkedEntity) {
+  constructor(
+    trg,
+    effectName = "Unknown Effect",
+    scheduledTime,
+    effectFunction,
+    linkedEntity,
+    isCancel = false
+  ) {
     this.linkedEntity = linkedEntity;
     this.effectName = effectName;
     this.timeLeft = scheduledTime + 1;
     this.effectFunction = effectFunction;
+    this.isCancel = isCancel;
 
     if (!trg.getComponent("ScheduledEffects"))
       trg.addComponent(new ScheduledEffects());
     trg.getComponent("ScheduledEffects").scheduledEffects.push(this);
+  }
+}
+
+function cancelLinkedEffects(trg, linkedEntity) {
+  const effects = trg.getComponent("Effects")?.effects;
+  if (!effects) return;
+
+  for (let i = 0; i < effects.length; i++) {
+    const effect = effects[i];
+    if (!effect.linkedEntity.id || !linkedEntity.id) return;
+
+    if (effect.linkedEntity.id === linkedEntity.id) {
+      if (effect.isCancel) {
+        effect.effectFunction(trg);
+      }
+      effects.splice(i, 1);
+      i--;
+    }
   }
 }
 
@@ -67,8 +93,15 @@ function strengthBoost(trg, duration = 3, boostAmount = 5, linkedEntity) {
         addLog([trgEntity, false, "'s strength seems to wear away..."], "red");
       }
     },
-    linkedEntity
+    linkedEntity,
+    true
   );
 }
 
-export { ScheduledEffect, handleEffects, randomTp, strengthBoost };
+export {
+  ScheduledEffect,
+  handleEffects,
+  cancelLinkedEffects,
+  randomTp,
+  strengthBoost,
+};
