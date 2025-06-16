@@ -123,23 +123,27 @@ function handleInput(event, player) {
       openPopup("Wield");
       break;
 
-    case "E":
+    case "e":
       openPopup("Equip");
       break;
 
-    case "e":
+    case "z":
       openPopup("Execute");
       break;
 
-    case "d":
+    case "x":
       openPopup("Drain");
+      break;
+
+    case "c":
+      openPopup("Install");
       break;
 
     case "r":
       openPopup("Remove");
       break;
 
-    case "D":
+    case "d":
       openPopup("Drop");
       break;
 
