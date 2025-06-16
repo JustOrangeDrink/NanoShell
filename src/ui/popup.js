@@ -12,7 +12,6 @@ import {
   dropAction,
   equipAction,
   removeAction,
-  wieldAction,
 } from "../System/actions.js";
 import { getEntityFromArray, getPopupItems, write } from "../utils.js";
 
@@ -134,7 +133,7 @@ function chooseItem() {
   if (itemList.length === 0) return;
 
   if (currentPopupType == "Wield")
-    wieldAction.makeAction(
+    equipAction.makeAction(
       player,
       [player, itemList[cursor]],
       [player, itemList[cursor]]

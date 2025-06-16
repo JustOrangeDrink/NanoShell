@@ -25,7 +25,7 @@ class ScheduledEffect {
 }
 
 function cancelLinkedEffects(trg, linkedEntity) {
-  const effects = trg.getComponent("Effects")?.effects;
+  const effects = trg.getComponent("ScheduledEffects")?.scheduledEffects;
   if (!effects) return;
 
   for (let i = 0; i < effects.length; i++) {

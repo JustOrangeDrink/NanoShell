@@ -13,13 +13,7 @@ import {
   openPopup,
 } from "../ui/popup.js";
 import { addLog } from "../ui/sidebar.js";
-import {
-  equipAction,
-  longSkipAction,
-  pickUpAction,
-  skipAction,
-  wieldAction,
-} from "./actions.js";
+import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 
 function handleInput(event, player) {

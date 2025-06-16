@@ -23,6 +23,7 @@ import {
   Script,
   Encription,
   Crystal,
+  EquipEffects,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -85,7 +86,21 @@ class Tile {
     if (this.components) {
       for (let i = 0; i < this.components.length; i++) {
         const [component, ...componentArgs] = this.components[i];
-        entity.addComponent(new component(...componentArgs));
+        const resultArgs = [];
+
+        for (let k = 0; k < componentArgs.length; k++) {
+          const componentArg = componentArgs[k];
+
+          if (Array.isArray(componentArg)) {
+            for (let j = 0; j < componentArg.length; j++) {
+              if (componentArg[j] == "self") componentArg[j] = entity;
+            }
+          }
+          if (componentArg == "self") resultArgs.push(entity);
+          else resultArgs.push(componentArg);
+        }
+
+        entity.addComponent(new component(...resultArgs));
       }
     }
 

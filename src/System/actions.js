@@ -13,7 +13,7 @@ import {
   revealEncryptions,
   roundToOne,
 } from "../utils.js";
-import { handleEffects } from "./effects.js";
+import { cancelLinkedEffects, handleEffects } from "./effects.js";
 import { getEntitiesUnder } from "./engine.js";
 
 class Action {
@@ -278,34 +278,58 @@ const pickUpAction = new Action(
   }
 );
 
-const wieldAction = new Action(
+const equipAction = new Action(
   "Wield",
   1,
   (src, trg) => {
     const srcInventory = src.getComponent("Inventory").inventory;
 
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+
     const wieldSlots = src.getComponent("WieldSlots");
+    const armorSlots = armorSlotsComponent.armorSlots;
+
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
+    const armorComponent = trg.getComponent("Armor");
+
+    const equipEffectsComponent = trg.getComponent("EquipEffects");
 
     if (weaponComponent) {
       wieldSlots.weaponSlots.push(trg);
       wieldSlots.currentWeight += weaponComponent.slotWeight;
       weaponComponent.equipped = true;
+      addLog(["Wielding ", "orangered", trg, false, " now.", "orangered"]);
     }
+
     if (shieldComponent) {
       wieldSlots.shieldSlots.push(trg);
       wieldSlots.currentWeight += shieldComponent.slotWeight;
       shieldComponent.equipped = true;
       src.getComponent("Stats").arm += shieldComponent.arm;
+      addLog(["Wielding ", "orangered", trg, false, " now.", "orangered"]);
     }
-    addLog(["Wielding ", "orangered", trg, false, " now.", "orangered"]);
+
+    if (armorComponent) {
+      armorSlots.push(trg);
+      armorSlotsComponent.currentWeight += armorComponent.slotWeight;
+      armorComponent.equipped = true;
+      src.getComponent("Stats").arm += armorComponent.arm;
+      addLog(["Wearing ", "orangered", trg, false, " now.", "orangered"]);
+    }
+
+    if (equipEffectsComponent) {
+      equipEffectsComponent.activateEffects(src);
+    }
+
     srcInventory.splice(srcInventory.indexOf(trg), 1);
   },
   (src, trg) => {
     const wieldSlots = src.getComponent("WieldSlots");
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
+    const armorSlotsComponent = src.getComponent("ArmorSlots");
+    const armorComponent = trg.getComponent("Armor");
 
     if (weaponComponent) {
       if (
@@ -330,33 +354,6 @@ const wieldAction = new Action(
         return false;
       }
     }
-
-    return false;
-  }
-);
-
-const equipAction = new Action(
-  "Equip",
-  1,
-  (src, trg) => {
-    const srcInventory = src.getComponent("Inventory").inventory;
-    const armorSlotsComponent = src.getComponent("ArmorSlots");
-    const armorSlots = armorSlotsComponent.armorSlots;
-
-    const armorComponent = trg.getComponent("Armor");
-
-    if (armorComponent) {
-      addLog(["Wearing ", "orangered", trg, false, " now.", "orangered"]);
-      armorSlots.push(trg);
-      armorSlotsComponent.currentWeight += armorComponent.slotWeight;
-      armorComponent.equipped = true;
-      src.getComponent("Stats").arm += armorComponent.arm;
-    }
-    srcInventory.splice(srcInventory.indexOf(trg), 1);
-  },
-  (src, trg) => {
-    const armorSlotsComponent = src.getComponent("ArmorSlots");
-    const armorComponent = trg.getComponent("Armor");
 
     if (armorComponent) {
       if (
@@ -429,6 +426,8 @@ const dropAction = new Action(
     trg.y = src.y;
     tilemap[src.y][src.x].push(trg);
     addLog(["You drop ", "white", trg, false, ".", "white"]);
+
+    cancelLinkedEffects(src, trg);
   },
   (src, trg) => {
     // conditions to remove item (might be cursed etc...)
@@ -478,6 +477,8 @@ const removeAction = new Action(
         inventory.push(trg);
       }
     }
+
+    cancelLinkedEffects(src, trg);
   },
   (src, trg) => {
     // conditions to uneqip item (might be cursed etc...)
@@ -534,7 +535,6 @@ export {
   skipAction,
   pickUpAction,
   longSkipAction,
-  wieldAction,
   equipAction,
   dropAction,
   removeAction,

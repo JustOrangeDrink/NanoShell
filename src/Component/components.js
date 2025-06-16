@@ -178,6 +178,19 @@ class Armor {
   }
 }
 
+class EquipEffects {
+  constructor(...effects) {
+    this.type = "EquipEffects";
+    this.effects = effects;
+  }
+  activateEffects(trg) {
+    for (let i = 0; i < this.effects.length; i++) {
+      const [effect, ...effectArgs] = this.effects[i];
+      effect(trg, ...effectArgs);
+    }
+  }
+}
+
 class Encription {
   constructor(singleCryptedTitle, multipleCryptedTitle) {
     this.type = "Encription";
@@ -241,6 +254,7 @@ export {
   Weapon,
   Shield,
   Armor,
+  EquipEffects,
   Script,
   Encription,
   Crystal,
