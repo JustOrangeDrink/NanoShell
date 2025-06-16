@@ -156,7 +156,7 @@ class Weapon {
     this.dmg = dmg;
     this.slotWeight = slotWeight;
     this.hitTitle = hitTitle;
-    this.equipped = false;
+    this.isEquipped = false;
   }
 }
 
@@ -165,7 +165,7 @@ class Shield {
     this.type = "Shield";
     this.arm = arm;
     this.slotWeight = slotWeight;
-    this.equipped = false;
+    this.isEquipped = false;
   }
 }
 
@@ -174,7 +174,7 @@ class Armor {
     this.type = "Armor";
     this.arm = arm;
     this.slotWeight = slotWeight;
-    this.equipped = false;
+    this.isEquipped = false;
   }
 }
 
