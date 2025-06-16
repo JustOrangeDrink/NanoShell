@@ -315,7 +315,7 @@ function write(ctx, text, x, y) {
 }
 
 function getShallowCopy(srcEntity) {
-  const shallowCopy = JSON.parse(JSON.stringify(srcEntity));
+  const shallowCopy = { ...srcEntity };
   shallowCopy.logCopy = true;
 
   // animation function of the original isn't copied,
