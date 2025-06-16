@@ -322,14 +322,26 @@ const equipAction = new Action(
       chipSlots.chipSlots.push(trg);
       chipSlots.currentWeight += chipComponent.slotWeight;
       chipComponent.isEquipped = true;
-      addLog(["Installed ", "orangered", trg, false, ".", "orangered"]);
+      addLog([
+        "You have installed ",
+        "orangered",
+        trg,
+        false,
+        ".",
+        "orangered",
+      ]);
     }
+
+    srcInventory.splice(srcInventory.indexOf(trg), 1);
 
     if (equipEffectsComponent) {
       equipEffectsComponent.activateEffects(src);
     }
 
-    srcInventory.splice(srcInventory.indexOf(trg), 1);
+    if (trg.getComponent("Encription").isCrypted) {
+      revealEncryptions(trg);
+      addLog(["It was a ", "lime", trg, false, ".", "lime"]);
+    }
   },
   (src, trg) => {
     const wieldSlots = src.getComponent("WieldSlots");
