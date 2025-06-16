@@ -400,15 +400,18 @@ const dropAction = new Action(
       if (item == trg) {
         if (weaponComponent?.isEquipped) {
           weaponSlots.splice(weaponSlots.indexOf(trg), 1);
+          weaponComponent.isEquipped = false;
           wieldSlots.currentWeight -= weaponComponent.slotWeight;
         }
         if (shieldComponent?.isEquipped) {
           shieldSlots.splice(shieldSlots.indexOf(trg), 1);
+          shieldComponent.isEquipped = false;
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
         }
         if (armorComponent?.isEquipped) {
           armorSlots.splice(shieldSlots.indexOf(trg), 1);
+          armorComponent.isEquipped = false;
           armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
         }
@@ -459,17 +462,20 @@ const removeAction = new Action(
       if (item == trg) {
         if (weaponComponent?.isEquipped) {
           weaponSlots.splice(weaponSlots.indexOf(trg), 1);
+          weaponComponent.isEquipped = false;
           wieldSlots.currentWeight -= weaponComponent.slotWeight;
           addLog(["You put your ", "white", trg, false, " away.", "white"]);
         }
         if (shieldComponent?.isEquipped) {
           shieldSlots.splice(shieldSlots.indexOf(trg), 1);
+          shieldComponent.isEquipped = false;
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
           addLog(["You put your ", "white", trg, false, " away.", "white"]);
         }
         if (armorComponent?.isEquipped) {
           armorSlots.splice(shieldSlots.indexOf(trg), 1);
+          armorComponent.isEquipped = false;
           armorSlotsComponent.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
           addLog(["You take your ", "white", trg, false, " off.", "white"]);
