@@ -100,6 +100,13 @@ function updatePopupUi() {
 
   for (let i = 0; i < itemList.length; i++) {
     const item = itemList[i];
+
+    let additionalLog = "";
+    if (item.getComponent("Weapon")?.isEquipped) additionalLog = " (wielded)";
+    if (item.getComponent("Shield")?.isEquipped) additionalLog = " (wielded)";
+    if (item.getComponent("Armor")?.isEquipped) additionalLog = " (worn)";
+    console.log(additionalLog);
+
     popupUiCtx.drawImage(
       uniqueAssets[item.renderName],
       MENU_X + 10,
@@ -108,7 +115,7 @@ function updatePopupUi() {
 
     write(
       popupUiCtx,
-      [`- ${item.currentTitle}`, item.color],
+      [`- ${item.currentTitle}`, item.color, additionalLog, item.color],
       MENU_X + 40,
       textShift
     );
