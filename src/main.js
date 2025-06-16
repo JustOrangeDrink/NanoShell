@@ -52,6 +52,8 @@ tiles.Shield.init(player.x - 1, player.y + 1);
 
 tiles.Armor.init(player.x - 1, player.y - 1);
 
+tiles.ChipVision.init(player.x, player.y + 1);
+
 wakeUpSleepingEnemies();
 
 addBelow(getEntitiesUnder(player, ["Floor"]));

@@ -206,15 +206,23 @@ function getPopupItems(src, currentPopupType) {
   const inventory = src.getComponent("Inventory").inventory;
 
   const wieldSlots = src.getComponent("WieldSlots");
+
   const weaponSlots = wieldSlots.weaponSlots;
   const shieldSlots = wieldSlots.shieldSlots;
   const armorSlots = src.getComponent("ArmorSlots").armorSlots;
+  const chipSlots = src.getComponent("ChipSlots").chipSlots;
 
   let trgStorage;
   if (currentPopupType == "Drop") {
-    trgStorage = [...inventory, ...weaponSlots, ...shieldSlots, ...armorSlots];
+    trgStorage = [
+      ...inventory,
+      ...weaponSlots,
+      ...shieldSlots,
+      ...armorSlots,
+      ...chipSlots,
+    ];
   } else if (currentPopupType == "Remove") {
-    trgStorage = [...weaponSlots, ...shieldSlots, ...armorSlots];
+    trgStorage = [...weaponSlots, ...shieldSlots, ...armorSlots, ...chipSlots];
   } else {
     trgStorage = [...inventory];
   }

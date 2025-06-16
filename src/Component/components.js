@@ -149,6 +149,15 @@ class ArmorSlots {
   }
 }
 
+class ChipSlots {
+  constructor(maxWeight) {
+    this.type = "ChipSlots";
+    this.chipSlots = [];
+    this.maxWeight = maxWeight;
+    this.currentWeight = 0;
+  }
+}
+
 class Weapon {
   constructor(acc, dmg, slotWeight, hitTitle = "hit") {
     this.type = "Weapon";
@@ -173,6 +182,14 @@ class Armor {
   constructor(arm, slotWeight) {
     this.type = "Armor";
     this.arm = arm;
+    this.slotWeight = slotWeight;
+    this.isEquipped = false;
+  }
+}
+
+class Chip {
+  constructor(slotWeight) {
+    this.type = "Chip";
     this.slotWeight = slotWeight;
     this.isEquipped = false;
   }
@@ -251,9 +268,11 @@ export {
   Hidden,
   WieldSlots,
   ArmorSlots,
+  ChipSlots,
   Weapon,
   Shield,
   Armor,
+  Chip,
   EquipEffects,
   Script,
   Encription,

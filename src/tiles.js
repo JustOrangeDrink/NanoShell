@@ -24,6 +24,8 @@ import {
   Encription,
   Crystal,
   EquipEffects,
+  Chip,
+  ChipSlots,
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
@@ -139,6 +141,7 @@ new Tile(
     [Inventory],
     [WieldSlots, 2, tiles.Fist.init()],
     [ArmorSlots, 1],
+    [ChipSlots, 2],
   ]
 );
 
@@ -297,6 +300,23 @@ new Tile(
     [Size, "Tiny"],
     [Pickable, "Equip"],
     [Armor, 4, 1],
+  ]
+);
+
+new Tile(
+  "ChipVision",
+  "Chip of Strength",
+  "Chips of Strength",
+  1,
+  1,
+  9,
+  [60, 255, 60, 255],
+  [
+    [Size, "Tiny"],
+    [Pickable, "Install"],
+    [Chip, 1],
+    [Encription, "Chip of |x1x00z|", "Chips of |x1x00z|"],
+    [EquipEffects, [strengthBoost, Infinity, 3, "self"]],
   ]
 );
 

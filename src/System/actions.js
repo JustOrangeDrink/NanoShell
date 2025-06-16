@@ -286,12 +286,12 @@ const equipAction = new Action(
 
     const armorSlots = src.getComponent("ArmorSlots");
     const wieldSlots = src.getComponent("WieldSlots");
-    // const chipSlots = src.getComponent("").armorSlots;
+    const chipSlots = src.getComponent("ChipSlots");
 
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
     const armorComponent = trg.getComponent("Armor");
-    // const chipComponent = trg.getComponent("Chip");
+    const chipComponent = trg.getComponent("Chip");
 
     const equipEffectsComponent = trg.getComponent("EquipEffects");
 
@@ -318,6 +318,13 @@ const equipAction = new Action(
       addLog(["Wearing ", "orangered", trg, false, " now.", "orangered"]);
     }
 
+    if (chipComponent) {
+      chipSlots.chipSlots.push(trg);
+      chipSlots.currentWeight += chipComponent.slotWeight;
+      chipComponent.isEquipped = true;
+      addLog(["Installed ", "orangered", trg, false, ".", "orangered"]);
+    }
+
     if (equipEffectsComponent) {
       equipEffectsComponent.activateEffects(src);
     }
@@ -327,11 +334,12 @@ const equipAction = new Action(
   (src, trg) => {
     const wieldSlots = src.getComponent("WieldSlots");
     const armorSlots = src.getComponent("ArmorSlots");
+    const chipSlots = src.getComponent("ChipSlots");
 
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
-
     const armorComponent = trg.getComponent("Armor");
+    const chipComponent = trg.getComponent("Chip");
 
     if (weaponComponent) {
       if (
@@ -351,10 +359,6 @@ const equipAction = new Action(
         wieldSlots.maxWeight
       )
         return true;
-      else {
-        addLog(["Not enough space for ", "red", trg, false, ".", "red"]);
-        return false;
-      }
     }
 
     if (armorComponent) {
@@ -363,12 +367,17 @@ const equipAction = new Action(
         armorSlots.maxWeight
       )
         return true;
-      else {
-        addLog(["Not enough space for ", "red", trg, false, ".", "red"]);
-        return false;
-      }
     }
 
+    if (chipComponent) {
+      if (
+        chipSlots.currentWeight + chipComponent.slotWeight <=
+        chipSlots.maxWeight
+      )
+        return true;
+    }
+
+    addLog(["Not enough space for ", "red", trg, false, ".", "red"]);
     return false;
   }
 );
@@ -381,16 +390,19 @@ const dropAction = new Action(
 
     const wieldSlots = src.getComponent("WieldSlots");
     const armorSlots = src.getComponent("ArmorSlots");
+    const chipSlots = src.getComponent("ChipSlots");
 
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
     const armorComponent = trg.getComponent("Armor");
+    const chipComponent = trg.getComponent("Chip");
 
     const commonStorage = [
       ...inventory,
       ...wieldSlots.weaponSlots,
       ...wieldSlots.shieldSlots,
-      ...armorSlots,
+      ...armorSlots.armorSlots,
+      ...chipSlots.chipSlots,
     ];
 
     for (let i = 0; i < commonStorage.length; i++) {
@@ -413,6 +425,12 @@ const dropAction = new Action(
           armorSlots.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
         }
+        if (chipComponent?.isEquipped) {
+          chipSlots.chipSlots.splice(chipSlots.chipSlots.indexOf(trg), 1);
+          chipComponent.isEquipped = false;
+          chipSlots.currentWeight -= chipComponent.slotWeight;
+        }
+
         if (
           !weaponComponent?.isEquipped &&
           !shieldComponent?.isEquipped &&
@@ -444,15 +462,18 @@ const removeAction = new Action(
 
     const wieldSlots = src.getComponent("WieldSlots");
     const armorSlots = src.getComponent("ArmorSlots");
+    const chipSlots = src.getComponent("ChipSlots");
 
     const weaponComponent = trg.getComponent("Weapon");
     const shieldComponent = trg.getComponent("Shield");
     const armorComponent = trg.getComponent("Armor");
+    const chipComponent = trg.getComponent("Chip");
 
     const commonStorage = [
       ...wieldSlots.weaponSlots,
       ...wieldSlots.shieldSlots,
       ...armorSlots.armorSlots,
+      ...chipSlots.chipSlots,
     ];
 
     for (let i = 0; i < commonStorage.length; i++) {
@@ -478,6 +499,13 @@ const removeAction = new Action(
           src.getComponent("Stats").arm -= armorComponent.arm;
           addLog(["You take your ", "white", trg, false, " off.", "white"]);
         }
+        if (chipComponent?.isEquipped) {
+          chipSlots.chipSlots.splice(chipSlots.chipSlots.indexOf(trg), 1);
+          chipComponent.isEquipped = false;
+          chipSlots.currentWeight -= chipComponent.slotWeight;
+          addLog(["You uninstall ", "white", trg, false, ".", "white"]);
+        }
+
         inventory.push(trg);
       }
     }

@@ -154,6 +154,14 @@ function chooseItem() {
     );
   }
 
+  if (currentPopupType == "Install") {
+    equipAction.makeAction(
+      player,
+      [player, itemList[cursor]],
+      [player, itemList[cursor]]
+    );
+  }
+
   if (currentPopupType == "Drop") {
     dropAction.makeAction(
       player,
