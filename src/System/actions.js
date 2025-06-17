@@ -336,7 +336,7 @@ const equipAction = new Action(
       equipEffectsComponent.activateEffects(src);
     }
 
-    if (trg.getComponent("Encription").isCrypted) {
+    if (trg.getComponent("Encription")?.isCrypted) {
       revealEncryptions(trg);
       addLog(["It was a ", "lime", trg, false, ".", "lime"]);
     }
