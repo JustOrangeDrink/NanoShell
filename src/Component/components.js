@@ -69,11 +69,9 @@ class Stats {
 }
 
 class Turns {
-  constructor(defaultTurns, currentTurns, currentTime) {
+  constructor() {
     this.type = "Turns";
-    this.defaultTurns = defaultTurns;
-    this.currentTurns = currentTurns;
-    this.currentTime = currentTime;
+    this.currentTime = 0;
   }
 }
 
@@ -88,7 +86,7 @@ class Behavior {
   constructor(behavior) {
     this.type = "Behavior";
     this.useBehavior = behavior;
-    this.active = false;
+    this.active = true;
   }
 }
 
