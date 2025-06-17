@@ -70,8 +70,6 @@ function passTime() {
       continue;
     }
 
-    if (entity.name == "Player") continue;
-
     while (turnsComponent.currentTime < time.currentTime) {
       behavior.useBehavior(entity);
     }
