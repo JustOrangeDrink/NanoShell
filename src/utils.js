@@ -249,16 +249,16 @@ function handleTitle(trg) {
   const trgArmor = trg.getComponent("Armor");
 
   if (trgStack?.amount > 1) {
-    if (trg.getComponent("Encription")?.isCrypted) {
+    if (trg.getComponent("Encryption")?.isCrypted) {
       trg.currentTitle = `${trgStack.amount} ${
-        trg.getComponent("Encription").multipleCryptedTitle
+        trg.getComponent("Encryption").multipleCryptedTitle
       }`;
       return;
     }
     trg.currentTitle = `${trgStack.amount} ${trg.multipleTitle}`;
   } else {
-    if (trg.getComponent("Encription")?.isCrypted) {
-      trg.currentTitle = `${trg.getComponent("Encription").singleCryptedTitle}`;
+    if (trg.getComponent("Encryption")?.isCrypted) {
+      trg.currentTitle = `${trg.getComponent("Encryption").singleCryptedTitle}`;
       return;
     }
     trg.currentTitle = `${trg.singleTitle}`;
@@ -281,7 +281,7 @@ function revealEncryptions(trg) {
   for (let i = 0; i < encryptedEntities.length; i++) {
     const ecryptedEntity = encryptedEntities[i];
     if (ecryptedEntity.name == trg.name) {
-      ecryptedEntity.getComponent("Encription").isCrypted = false;
+      ecryptedEntity.getComponent("Encryption").isCrypted = false;
     }
     handleTitle(ecryptedEntity);
   }

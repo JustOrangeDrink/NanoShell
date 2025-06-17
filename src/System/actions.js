@@ -336,7 +336,7 @@ const equipAction = new Action(
       equipEffectsComponent.activateEffects(src);
     }
 
-    if (trg.getComponent("Encription")?.isCrypted) {
+    if (trg.getComponent("Encryption")?.isCrypted) {
       revealEncryptions(trg);
       addLog(["It was a ", "lime", trg, false, ".", "lime"]);
     }
@@ -537,11 +537,11 @@ const activateAction = new Action(
     const scriptComponent = trg.getComponent("Script");
     const crystalComponent = trg.getComponent("Crystal");
 
-    const encriptionComponent = trg.getComponent("Encription");
-    const singleCryptedTitle = encriptionComponent?.singleCryptedTitle;
+    const EncryptionComponent = trg.getComponent("Encryption");
+    const singleCryptedTitle = EncryptionComponent?.singleCryptedTitle;
 
     // set currentTitle to a single title because we use only one item
-    trg.currentTitle = encriptionComponent.isCrypted
+    trg.currentTitle = EncryptionComponent.isCrypted
       ? singleCryptedTitle
       : (trg.currentTitle = trg.singleTitle);
 
@@ -552,7 +552,7 @@ const activateAction = new Action(
       addLog(["You drain energy from ", "lime", trg, false, ".", "lime"]);
     }
 
-    if (encriptionComponent.isCrypted) {
+    if (EncryptionComponent.isCrypted) {
       revealEncryptions(trg);
       trg.currentTitle = trg.singleTitle;
       addLog(["It was a ", "lime", trg, false, ".", "lime"]);

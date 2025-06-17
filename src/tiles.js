@@ -21,7 +21,7 @@ import {
   Armor,
   ArmorSlots,
   Script,
-  Encription,
+  Encryption,
   Crystal,
   EquipEffects,
   Chip,
@@ -190,7 +190,7 @@ new Tile(
     [Stack],
     [Pickable, "Execute"],
     [Script, [randomTp]],
-    [Encription, "Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"],
+    [Encryption, "Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"],
   ]
 );
 
@@ -207,7 +207,7 @@ new Tile(
     [Stack],
     [Pickable, "Execute"],
     [Script],
-    [Encription, "Script of |k39skgsk|", "Scripts of |k39skgsk|"],
+    [Encryption, "Script of |k39skgsk|", "Scripts of |k39skgsk|"],
   ]
 );
 
@@ -224,7 +224,7 @@ new Tile(
     [Stack],
     [Pickable, "Drain"],
     [Crystal, [strengthBoost, 6, 10]],
-    [Encription, "|Amethyst| Crystal", "|Amethyst| Crystals"],
+    [Encryption, "|Amethyst| Crystal", "|Amethyst| Crystals"],
   ]
 );
 
@@ -315,7 +315,7 @@ new Tile(
     [Size, "Tiny"],
     [Pickable, "Install"],
     [Chip, 1],
-    [Encription, "Chip of |x1x00z|", "Chips of |x1x00z|"],
+    [Encryption, "Chip of |x1x00z|", "Chips of |x1x00z|"],
     [EquipEffects, [strengthBoost, Infinity, 3, "self"]],
   ]
 );

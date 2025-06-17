@@ -77,7 +77,7 @@ class Entity {
     if (component.type == "Vector") vectorEntities.push(this);
     if (component.type == "Turns") turnsEntities.push(this);
     if (component.type == "ScheduledEffects") effectsEntities.push(this);
-    if (component.type == "Encription") {
+    if (component.type == "Encryption") {
       encryptedEntities.push(this);
       if (decryptedEntities.includes(this.name)) component.isCrypted = false;
     }

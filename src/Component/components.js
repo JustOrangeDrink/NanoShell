@@ -206,9 +206,9 @@ class EquipEffects {
   }
 }
 
-class Encription {
+class Encryption {
   constructor(singleCryptedTitle, multipleCryptedTitle) {
-    this.type = "Encription";
+    this.type = "Encryption";
     this.isCrypted = true;
     this.singleCryptedTitle = singleCryptedTitle;
     this.multipleCryptedTitle = multipleCryptedTitle;
@@ -273,7 +273,7 @@ export {
   Chip,
   EquipEffects,
   Script,
-  Encription,
+  Encryption,
   Crystal,
   ScheduledEffects,
 };
