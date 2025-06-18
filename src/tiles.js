@@ -30,7 +30,12 @@ import {
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
 import { randomTp, strengthBoost } from "./System/effects.js";
-import { getRenderName } from "./utils.js";
+import {
+  getChipString,
+  getRandomColor,
+  getScrollName,
+  getRenderName,
+} from "./utils.js";
 
 const tiles = {};
 
@@ -177,6 +182,7 @@ new Tile(
   [[Size, "Tiny"], [Pickable], [Stack]]
 );
 
+const scriptTpEncryption = getScrollName(8);
 new Tile(
   "ScriptTeleportation",
   "Script of Teleportation",
@@ -190,10 +196,15 @@ new Tile(
     [Stack],
     [Pickable, "Execute"],
     [Script, [randomTp]],
-    [Encryption, "Script of |Sfe45g@gkh|", "Scripts of |Sfe45g@gkh|"],
+    [
+      Encryption,
+      `Script of |${scriptTpEncryption}|`,
+      `Scripts of |${scriptTpEncryption}|`,
+    ],
   ]
 );
 
+const scriptEnemySummonEncryption = getScrollName(8);
 new Tile(
   "ScriptEnemySummon",
   "Script of Enemy Summon",
@@ -207,24 +218,33 @@ new Tile(
     [Stack],
     [Pickable, "Execute"],
     [Script],
-    [Encryption, "Script of |k39skgsk|", "Scripts of |k39skgsk|"],
+    [
+      Encryption,
+      `Script of |${scriptEnemySummonEncryption}|`,
+      `Scripts of |${scriptEnemySummonEncryption}|`,
+    ],
   ]
 );
 
+const [crystalStrengthColor, crystalStrengthString] = getRandomColor(true);
 new Tile(
   "CrystalStrength",
   "Crystal of Strength",
   "Crystals of Strength",
   1,
-  4,
-  0,
-  [225, 100, 255, 255],
+  10,
+  2,
+  crystalStrengthColor,
   [
     [Size, "Tiny"],
     [Stack],
     [Pickable, "Drain"],
     [Crystal, [strengthBoost, 6, 10]],
-    [Encryption, "|Amethyst| Crystal", "|Amethyst| Crystals"],
+    [
+      Encryption,
+      `|${crystalStrengthString}| Crystal`,
+      `|${crystalStrengthString}| Crystals`,
+    ],
   ]
 );
 
@@ -303,6 +323,7 @@ new Tile(
   ]
 );
 
+const chipStrengthName = getChipString(6);
 new Tile(
   "ChipVision",
   "Chip of Strength",
@@ -315,7 +336,11 @@ new Tile(
     [Size, "Tiny"],
     [Pickable, "Install"],
     [Chip, 1],
-    [Encryption, "Chip of |x1x00z|", "Chips of |x1x00z|"],
+    [
+      Encryption,
+      `Chip of |${chipStrengthName}|`,
+      `Chips of |${chipStrengthName}|`,
+    ],
     [EquipEffects, [strengthBoost, Infinity, 3, "self"]],
   ]
 );

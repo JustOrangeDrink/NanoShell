@@ -340,6 +340,57 @@ function getShallowCopy(srcEntity) {
   return shallowCopy;
 }
 
+function getScrollName(lettersAmount = 5) {
+  let result = "";
+  const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'";
+
+  for (let i = 0; i < lettersAmount; i++) {
+    result += alphabet[randomInt(0, alphabet.length - 1)];
+  }
+
+  return result;
+}
+
+function getChipString(lettersAmount = 5) {
+  let result = "";
+  const alphabet = "01xzf-_+";
+
+  for (let i = 0; i < lettersAmount; i++) {
+    result += alphabet[randomInt(0, alphabet.length - 1)];
+  }
+
+  return result;
+}
+
+function getRandomColor(includeMaterial) {
+  const white = [[255, 255, 255, 255], "Quartz"];
+  const silver = [[165, 169, 180, 255], "Silver"];
+  const red = [[255, 0, 0, 255], "Ruby"];
+  const green = [[0, 255, 0, 255], "Emerald"];
+  const blue = [[0, 0, 255, 255], "Sapphire"];
+  const purple = [[255, 0, 255, 255], "Amethyst"];
+  const yellow = [[255, 255, 0, 255], "Topaz"];
+  const orange = [[255, 165, 0, 255], "Amber"];
+  const cyan = [[0, 255, 255, 255], "Diamond"];
+  const brown = [[150, 75, 0, 255], "Zircon"];
+
+  const colors = [
+    white,
+    silver,
+    red,
+    green,
+    blue,
+    purple,
+    yellow,
+    orange,
+    cyan,
+    brown,
+  ];
+
+  if (includeMaterial) return colors[randomInt(0, colors.length - 1)];
+  else return colors[randomInt(0, colors.length - 1)][0];
+}
+
 export {
   randomInt,
   randomFloat,
@@ -359,4 +410,7 @@ export {
   numToRgba,
   write,
   getShallowCopy,
+  getScrollName,
+  getChipString,
+  getRandomColor,
 };
