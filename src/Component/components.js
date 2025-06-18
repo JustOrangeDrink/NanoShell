@@ -86,7 +86,7 @@ class Behavior {
   constructor(behavior) {
     this.type = "Behavior";
     this.useBehavior = behavior;
-    this.active = true;
+    this.active = false;
   }
 }
 
