@@ -37,9 +37,28 @@ import {
   getRenderName,
 } from "./utils.js";
 
-const tiles = {};
+const entityPresets = {};
 
-class Tile {
+function getPresetsByTags(...searchTags) {
+  const result = [];
+
+  for (const presetKey in entityPresets) {
+    const preset = entityPresets[presetKey];
+
+    if (preset.tags.length === 0) continue;
+
+    for (let i = 0; i < searchTags.length; i++) {
+      const searchTag = searchTags[i];
+      if (preset.tags.includes(searchTag)) {
+        result.push(preset);
+      }
+    }
+  }
+
+  return result;
+}
+
+class EntityPreset {
   constructor(
     name,
     singleTitle,
@@ -49,6 +68,7 @@ class Tile {
     charY,
     colorArray = [0, 0, 0, 0],
     components,
+    tags = [],
     bgColorArray = [0, 0, 0, 0],
     animation = false
   ) {
@@ -70,9 +90,11 @@ class Tile {
 
     this.components = components;
 
+    this.tags = tags;
+
     this.animation = animation;
 
-    tiles[name] = this;
+    entityPresets[name] = this;
   }
 
   init(x, y) {
@@ -115,7 +137,7 @@ class Tile {
   }
 }
 
-new Tile(
+new EntityPreset(
   "Fist",
   "Fist",
   "Fists",
@@ -126,7 +148,7 @@ new Tile(
   [[Weapon, 0, 0, 0, "punch"]]
 );
 
-new Tile(
+new EntityPreset(
   "Player",
   "Player",
   "Players",
@@ -144,13 +166,14 @@ new Tile(
     [Stats, 50, 0, 1],
     [Attributes, 3, 5, 3],
     [Inventory],
-    [WieldSlots, 2, tiles.Fist.init()],
+    [WieldSlots, 2, entityPresets.Fist.init()],
     [ArmorSlots, 1],
     [ChipSlots, 2],
-  ]
+  ],
+  ["common"]
 );
 
-new Tile(
+new EntityPreset(
   "Guard",
   "Guard",
   "Guards",
@@ -167,11 +190,12 @@ new Tile(
     [Behavior, guardBehavior],
     [Stats, 40, 0, 1],
     [Attributes, 1, 1, 1],
-    [WieldSlots, 2, tiles.Fist.init()],
-  ]
+    [WieldSlots, 2, entityPresets.Fist.init()],
+  ],
+  ["common", "enemy"]
 );
 
-new Tile(
+new EntityPreset(
   "Bit",
   "Bit",
   "Bits",
@@ -179,11 +203,12 @@ new Tile(
   13,
   14,
   [255, 255, 0, 255],
-  [[Size, "Tiny"], [Pickable], [Stack]]
+  [[Size, "Tiny"], [Pickable], [Stack]],
+  ["common", "item"]
 );
 
 const scriptTpEncryption = getScrollName(8);
-new Tile(
+new EntityPreset(
   "ScriptTeleportation",
   "Script of Teleportation",
   "Scripts of Teleportation",
@@ -201,11 +226,12 @@ new Tile(
       `Script of |${scriptTpEncryption}|`,
       `Scripts of |${scriptTpEncryption}|`,
     ],
-  ]
+  ],
+  ["common", "item", "script"]
 );
 
 const scriptEnemySummonEncryption = getScrollName(8);
-new Tile(
+new EntityPreset(
   "ScriptEnemySummon",
   "Script of Enemy Summon",
   "Scripts of Enemy Summon",
@@ -223,18 +249,20 @@ new Tile(
       `Script of |${scriptEnemySummonEncryption}|`,
       `Scripts of |${scriptEnemySummonEncryption}|`,
     ],
-  ]
+  ],
+  ["common", "item", "script"]
 );
 
-const [crystalStrengthColor, crystalStrengthString] = getRandomColor(true);
-new Tile(
-  "CrystalStrength",
-  "Crystal of Strength",
-  "Crystals of Strength",
+const [crystalStrengthBurstColor, crystalStrengthBurstString] =
+  getRandomColor(true);
+new EntityPreset(
+  "CrystalStrengthBurst",
+  "Crystal of Strength Burst",
+  "Crystals of Strength Burst",
   1,
   10,
   2,
-  crystalStrengthColor,
+  crystalStrengthBurstColor,
   [
     [Size, "Tiny"],
     [Stack],
@@ -242,15 +270,26 @@ new Tile(
     [Crystal, [strengthBoost, 6, 10]],
     [
       Encryption,
-      `|${crystalStrengthString}| Crystal`,
-      `|${crystalStrengthString}| Crystals`,
+      `|${crystalStrengthBurstString}| Crystal`,
+      `|${crystalStrengthBurstString}| Crystals`,
     ],
-  ]
+  ],
+  ["common", "item", "crystal"]
 );
 
-new Tile("Floor", "Floor", "Floors", 0, 9, 15, [85, 85, 85, 255]);
+new EntityPreset(
+  "Floor",
+  "Floor",
+  "Floors",
+  0,
+  9,
+  15,
+  [85, 85, 85, 255],
+  [],
+  ["common", "construction"]
+);
 
-new Tile(
+new EntityPreset(
   "Wall",
   "Wall",
   "Walls",
@@ -258,10 +297,11 @@ new Tile(
   3,
   2,
   [0, 255, 0, 255],
-  [[Collision, true, true], [Occlusion]]
+  [[Collision, true, true], [Occlusion]],
+  ["common", "construction"]
 );
 
-new Tile(
+new EntityPreset(
   "Sword",
   "Sword",
   "Swords",
@@ -273,10 +313,11 @@ new Tile(
     [Size, "Tiny"],
     [Pickable, "Wield"],
     [Weapon, 5, 10, 1, "slash"],
-  ]
+  ],
+  ["common", "item", "equip", "weapon"]
 );
 
-new Tile(
+new EntityPreset(
   "Shield",
   "Shield",
   "Shields",
@@ -288,10 +329,11 @@ new Tile(
     [Size, "Tiny"],
     [Pickable, "Wield"],
     [Shield, 2, 1],
-  ]
+  ],
+  ["common", "item", "equip", "shield"]
 );
 
-new Tile(
+new EntityPreset(
   "Throngler",
   "Throngler",
   "Thronglers",
@@ -304,11 +346,12 @@ new Tile(
     [Pickable, "Wield"],
     [Weapon, 100, 1000, 1, "bonk"],
   ],
+  ["common", "item", "equip", "weapon"],
   [],
   [thronglerShine]
 );
 
-new Tile(
+new EntityPreset(
   "Armor",
   "Armor",
   "Armors",
@@ -318,14 +361,15 @@ new Tile(
   [220, 220, 220, 255],
   [
     [Size, "Tiny"],
-    [Pickable, "Equip"],
+    [Pickable, "Equip", "weapon"],
     [Armor, 4, 1],
-  ]
+  ],
+  ["common", "item", "equip", "armor"]
 );
 
 const chipStrengthName = getChipString(6);
-new Tile(
-  "ChipVision",
+new EntityPreset(
+  "ChipStrength",
   "Chip of Strength",
   "Chips of Strength",
   1,
@@ -342,10 +386,11 @@ new Tile(
       `Chips of |${chipStrengthName}|`,
     ],
     [EquipEffects, [strengthBoost, Infinity, 3, "self"]],
-  ]
+  ],
+  ["common", "item", "chip"]
 );
 
-new Tile(
+new EntityPreset(
   "Filler",
   "Filler",
   "Fillers",
@@ -353,7 +398,8 @@ new Tile(
   11,
   13,
   [255, 0, 0, 255],
-  [[Hidden]]
+  [[Hidden]],
+  ["common", "effect"]
 );
 
-export { tiles };
+export { entityPresets, getPresetsByTags };

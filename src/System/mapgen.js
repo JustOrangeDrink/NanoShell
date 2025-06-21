@@ -5,13 +5,13 @@ import {
   MAP_TILED_HEIGHT,
 } from "../globals.js";
 import { randomInt } from "../utils.js";
-import { tiles } from "../tiles.js";
+import { entityPresets } from "../presets.js";
 
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
     for (let x = 0; x < tilemap[y].length; x++) {
-      tiles.Floor.init(x, y);
-      tiles.Wall.init(x, y);
+      entityPresets.Floor.init(x, y);
+      entityPresets.Wall.init(x, y);
     }
   }
 }
@@ -340,7 +340,7 @@ function populateMap() {
     if (randomInt(0, 100) > 50) {
       const spawnX = randomInt(room.x, room.x + room.w - 1);
       const spawnY = randomInt(room.y, room.y + room.h - 1);
-      tiles.Guard.init(spawnX, spawnY);
+      entityPresets.Guard.init(spawnX, spawnY);
     }
   }
 }

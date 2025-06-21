@@ -1,5 +1,3 @@
-import { thronglerShine } from "../Animations/animations.js";
-import { tiles } from "../tiles.js";
 import {
   closeInventory,
   isInventoryOpen,
