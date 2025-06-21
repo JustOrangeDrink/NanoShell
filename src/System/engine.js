@@ -10,7 +10,6 @@ import {
   uniqueAssetsDark,
   animationMap,
 } from "../globals.js";
-import { tiles } from "../tiles.js";
 import { getRelativeCoords } from "../utils.js";
 import { attackAction, moveAction } from "./actions.js";
 

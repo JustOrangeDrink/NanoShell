@@ -76,7 +76,7 @@ function randomTp(trg) {
 }
 
 function strengthBoost(trg, duration = 3, boostAmount = 5, linkedEntity) {
-  if (trg.name == "Player") addLog([`You suddenly feel stronger!`, "orange"]);
+  if (trg.name == "Player") addLog([`You feel stronger!`, "orange"]);
   else addLog([trg, false, " seems stronger now!", "pink"]);
 
   trg.getComponent("Attributes").str += boostAmount;
