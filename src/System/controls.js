@@ -14,6 +14,8 @@ import { addLog } from "../ui/sidebar.js";
 import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 
+let isDeveloperMod = false;
+
 function handleInput(event, player) {
   let dx = 0;
   let dy = 0;
@@ -149,21 +151,29 @@ function handleInput(event, player) {
       openInventory();
       break;
 
+    case "`":
+      isDeveloperMod = !isDeveloperMod;
+      const increase = isDeveloperMod ? 10000 : -10000;
+      const log = isDeveloperMod
+        ? "Developer mode activated!"
+        : "Developer mode deactivated!";
+
+      player.getComponent("Stats").ddg += increase;
+      player.getComponent("Stats").arm += increase;
+      player.getComponent("Attributes").str += increase;
+      player.getComponent("Attributes").agi += increase;
+      player.getComponent("Attributes").dur += increase;
+      addLog([`${log}`, "lime"]);
+      break;
+
     case " ":
+      if (!isDeveloperMod) return;
       player.getComponent("Collision").collision =
         !player.getComponent("Collision").collision;
       addLog([
         `NoClip: ${!player.getComponent("Collision").collision}`,
         "lime",
       ]);
-      break;
-    case "`":
-      player.getComponent("Stats").ddg += 10000;
-      player.getComponent("Stats").arm += 10000;
-      player.getComponent("Attributes").str += 10000;
-      player.getComponent("Attributes").agi += 10000;
-      player.getComponent("Attributes").dur += 10000;
-      addLog([`Developer mode activated!`, "lime"]);
       break;
 
     case "5":
