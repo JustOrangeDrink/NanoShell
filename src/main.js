@@ -25,9 +25,6 @@ const player = entityPresets.Player.init(
 );
 viewPort.scrollTo(player.x, player.y);
 
-entityPresets.Throngler.init(player.x + 1, player.y);
-entityPresets.Throngler.init(player.x - 1, player.y);
-
 updateUi();
 updateInventoryUi();
 
