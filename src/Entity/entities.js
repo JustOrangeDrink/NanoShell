@@ -39,6 +39,7 @@ class Entity {
     this.bg = [bgR, bgG, bgB, bgA];
 
     this.animation = animation;
+    if (this.animation) this.animation[0](this, this.animation[1]);
 
     this.renderName = getRenderName(name, colorArray, bgColorArray);
 

@@ -1,3 +1,4 @@
+import { spritesheet } from "../globals.js";
 import { recolorize } from "../utils.js";
 
 function hitAnimation(trgEntity, duration = 150) {
@@ -32,6 +33,7 @@ function thronglerShine(trgEntity, interval = 100) {
   const recolorinterval = setInterval(() => {
     if (!trgEntity.id) clearInterval(recolorinterval);
     current = current < colors.length - 1 ? current + 1 : 0;
+    if (!spritesheet.complete) return;
     recolorize(trgEntity, colors[current], trgEntity.defaultBg);
   }, interval);
 }
