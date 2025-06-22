@@ -346,7 +346,7 @@ new EntityPreset(
     [Pickable, "Wield"],
     [Weapon, 100, 1000, 1, "bonk"],
   ],
-  ["common", "item", "equip", "weapon"],
+  ["developerItem"],
   [],
   [thronglerShine]
 );

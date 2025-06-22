@@ -5,7 +5,7 @@ import {
   MAP_TILED_HEIGHT,
 } from "../globals.js";
 import { randomInt } from "../utils.js";
-import { entityPresets } from "../presets.js";
+import { entityPresets, getPresetsByTags } from "../presets.js";
 
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
@@ -341,6 +341,26 @@ function populateMap() {
       const spawnX = randomInt(room.x, room.x + room.w - 1);
       const spawnY = randomInt(room.y, room.y + room.h - 1);
       entityPresets.Guard.init(spawnX, spawnY);
+    }
+    const itemChance = randomInt(0, 100);
+    let itemAmount = 0;
+    if (itemChance > 80) itemAmount = 1;
+    if (itemChance > 85) itemAmount = 2;
+    if (itemChance > 90) itemAmount = 3;
+    if (itemChance >= 99) itemAmount = 4;
+
+    for (let i = 0; i < itemAmount; i++) {
+      const spawnX = randomInt(room.x, room.x + room.w - 1);
+      const spawnY = randomInt(room.y, room.y + room.h - 1);
+      const itemPresets = getPresetsByTags("item");
+      const randomPreset = itemPresets[randomInt(0, itemPresets.length - 1)];
+      if (randomPreset.name == "Bit") {
+        for (let k = 0; k < randomInt(1, 200); k++) {
+          randomPreset.init(spawnX, spawnY);
+        }
+      } else {
+        randomPreset.init(spawnX, spawnY);
+      }
     }
   }
 }
