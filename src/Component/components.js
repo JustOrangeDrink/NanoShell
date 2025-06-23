@@ -168,18 +168,20 @@ class Weapon {
 }
 
 class Shield {
-  constructor(arm, slotWeight) {
+  constructor(arm, ddgMod, slotWeight) {
     this.type = "Shield";
     this.arm = arm;
+    this.ddgMod = ddgMod;
     this.slotWeight = slotWeight;
     this.isEquipped = false;
   }
 }
 
 class Armor {
-  constructor(arm, slotWeight) {
+  constructor(arm, ddgMod, slotWeight) {
     this.type = "Armor";
     this.arm = arm;
+    this.ddgMod = ddgMod;
     this.slotWeight = slotWeight;
     this.isEquipped = false;
   }

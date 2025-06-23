@@ -265,13 +265,19 @@ function handleTitle(trg) {
   }
 
   if (trgWeapon) {
-    trg.currentTitle = `+${trgWeapon.acc},+${trgWeapon.dmg} ${trg.currentTitle}`;
+    let accSymbol = trgWeapon.acc < 0 ? "" : "+";
+    let dmgSymbol = trgWeapon.dmg < 0 ? "" : "+";
+    trg.currentTitle = `${accSymbol}${trgWeapon.acc},${dmgSymbol}${trgWeapon.dmg} ${trg.currentTitle}`;
   }
   if (trgShield) {
-    trg.currentTitle = `+${trgShield.arm} ${trg.currentTitle}`;
+    let ddgModSymbol = trgShield.ddgMod < 0 ? "" : "+";
+    let armSymbol = trgShield.arm < 0 ? "" : "+";
+    trg.currentTitle = `${ddgModSymbol}${trgShield.ddgMod},${armSymbol}${trgShield.arm} ${trg.currentTitle}`;
   }
   if (trgArmor) {
-    trg.currentTitle = `+${trgArmor.arm} ${trg.currentTitle}`;
+    let ddgModSymbol = trgArmor.ddgMod < 0 ? "" : "+";
+    let armSymbol = trgArmor.arm < 0 ? "" : "+";
+    trg.currentTitle = `${ddgModSymbol}${trgArmor.ddgMod},${armSymbol}${trgArmor.arm} ${trg.currentTitle}`;
   }
 }
 

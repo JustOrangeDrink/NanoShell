@@ -314,7 +314,7 @@ new EntityPreset(
   [
     [Size, "Tiny"],
     [Pickable, "Wield"],
-    [Shield, 2, 1],
+    [Shield, 2, -5, 1],
   ],
   ["common", "item", "equip", "shield"]
 );
@@ -348,7 +348,7 @@ new EntityPreset(
   [
     [Size, "Tiny"],
     [Pickable, "Equip", "weapon"],
-    [Armor, 4, 1],
+    [Armor, 4, -10, 1],
   ],
   ["common", "item", "equip", "armor"]
 );

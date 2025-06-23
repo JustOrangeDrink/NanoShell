@@ -305,6 +305,7 @@ const equipAction = new Action(
       wieldSlots.currentWeight += shieldComponent.slotWeight;
       shieldComponent.isEquipped = true;
       src.getComponent("Stats").arm += shieldComponent.arm;
+      src.getComponent("Stats").ddg += shieldComponent.ddgMod;
       addLog(["Wielding ", "orangered", trg, false, " now.", "orangered"]);
     }
 
@@ -313,6 +314,7 @@ const equipAction = new Action(
       armorSlots.currentWeight += armorComponent.slotWeight;
       armorComponent.isEquipped = true;
       src.getComponent("Stats").arm += armorComponent.arm;
+      src.getComponent("Stats").ddg += armorComponent.ddgMod;
       addLog(["Wearing ", "orangered", trg, false, " now.", "orangered"]);
     }
 
@@ -428,12 +430,14 @@ const dropAction = new Action(
           shieldComponent.isEquipped = false;
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
+          src.getComponent("Stats").ddg -= shieldComponent.ddgMod;
         }
         if (armorComponent?.isEquipped) {
           armorSlots.armorSlots.splice(armorSlots.armorSlots.indexOf(trg), 1);
           armorComponent.isEquipped = false;
           armorSlots.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
+          src.getComponent("Stats").ddg -= armorComponent.ddgMod;
         }
         if (chipComponent?.isEquipped) {
           chipSlots.chipSlots.splice(chipSlots.chipSlots.indexOf(trg), 1);
@@ -500,6 +504,7 @@ const removeAction = new Action(
           shieldComponent.isEquipped = false;
           wieldSlots.currentWeight -= shieldComponent.slotWeight;
           src.getComponent("Stats").arm -= shieldComponent.arm;
+          src.getComponent("Stats").ddg -= shieldComponent.ddgMod;
           addLog(["You put your ", "white", trg, false, " away.", "white"]);
         }
         if (armorComponent?.isEquipped) {
@@ -507,6 +512,7 @@ const removeAction = new Action(
           armorComponent.isEquipped = false;
           armorSlots.currentWeight -= armorComponent.slotWeight;
           src.getComponent("Stats").arm -= armorComponent.arm;
+          src.getComponent("Stats").ddg -= armorComponent.ddgMod;
           addLog(["You take your ", "white", trg, false, " off.", "white"]);
         }
         if (chipComponent?.isEquipped) {
