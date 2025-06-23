@@ -61,9 +61,11 @@ function updatePopupUi() {
 
   const wieldSlots = player.getComponent("WieldSlots");
   const armorSlots = player.getComponent("ArmorSlots");
+  const chipSlots = player.getComponent("ChipSlots");
 
   const freeWieldSlots = wieldSlots.maxWeight - wieldSlots.currentWeight;
   const freeArmorSlots = armorSlots.maxWeight - armorSlots.currentWeight;
+  const freeChipSlots = chipSlots.maxWeight - chipSlots.currentWeight;
 
   let textShift = 0;
 
@@ -79,6 +81,12 @@ function updatePopupUi() {
       freeArmorSlots == 1
         ? `You have ${freeArmorSlots} free armor slot.`
         : `You have ${freeArmorSlots} free armor slots.`;
+  }
+  if (currentPopupType == "Install") {
+    log =
+      freeChipSlots == 1
+        ? `You have ${freeChipSlots} free chip slot.`
+        : `You have ${freeChipSlots} free chip slots.`;
   }
   if (log) {
     textShift += 30;
