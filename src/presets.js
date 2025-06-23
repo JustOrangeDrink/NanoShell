@@ -284,7 +284,21 @@ new EntityPreset(
   2,
   [0, 255, 0, 255],
   [[Collision, true, true], [Occlusion]],
-  ["common", "construction"]
+  ["common", "construction"],
+  [0, 70, 0, 255]
+);
+
+new EntityPreset(
+  "Door",
+  "Door",
+  "Doors",
+  2,
+  11,
+  2,
+  [0, 500, 0, 255],
+  [[Collision, true, true], [Occlusion]],
+  ["common", "construction"],
+  [0, 60, 0, 255]
 );
 
 new EntityPreset(
