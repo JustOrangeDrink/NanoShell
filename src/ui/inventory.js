@@ -114,6 +114,33 @@ function updateInventoryUi() {
 
   write(
     inventoryUiCtx,
+    ["Installed:", "darksalmon"],
+    MENU_X + 5,
+    MENU_Y + wieldShift
+  );
+  wieldShift += 25;
+  const chipSlots = player.getComponent("ChipSlots").chipSlots;
+
+  for (let i = 0; i < chipSlots.length; i++) {
+    const chip = chipSlots[i];
+    inventoryUiCtx.drawImage(
+      uniqueAssets[chip.renderName],
+      MENU_X + 10,
+      MENU_Y + wieldShift - 20
+    );
+
+    write(
+      inventoryUiCtx,
+      [`- ${chip.currentTitle}`, chip.color],
+      MENU_X + 36,
+      MENU_Y + wieldShift
+    );
+
+    wieldShift += 30;
+  }
+
+  write(
+    inventoryUiCtx,
     ["Storage vault:", "bisque"],
     MENU_X + 5,
     MENU_Y + wieldShift
