@@ -54,7 +54,6 @@ function handleEffects(trg) {
       effects.splice(i, 1);
       i--;
     }
-    console.log(effect);
   }
 }
 
@@ -75,7 +74,7 @@ function randomTp(trg) {
   addLog([trg, false, " vanishes!", "purple"]);
 }
 
-function strengthBoost(trg, duration = 3, boostAmount = 5, linkedEntity) {
+function strengthBoost(trg, src, duration = 3, boostAmount = 5) {
   if (trg.name == "Player") addLog([`You feel stronger!`, "orange"]);
   else addLog([trg, false, " seems stronger now!", "pink"]);
 
@@ -93,7 +92,7 @@ function strengthBoost(trg, duration = 3, boostAmount = 5, linkedEntity) {
         addLog([trgEntity, false, "'s strength seems to wear away..."], "red");
       }
     },
-    linkedEntity,
+    src,
     true
   );
 }

@@ -333,7 +333,7 @@ const equipAction = new Action(
     srcInventory.splice(srcInventory.indexOf(trg), 1);
 
     if (equipEffectsComponent) {
-      equipEffectsComponent.activateEffects(src);
+      equipEffectsComponent.activateEffects(src, trg);
     }
 
     if (trg.getComponent("Encryption")?.isCrypted) {
@@ -558,8 +558,8 @@ const activateAction = new Action(
       addLog(["It was a ", "lime", trg, false, ".", "lime"]);
     }
 
-    if (scriptComponent) scriptComponent.executeScript(src);
-    if (crystalComponent) crystalComponent.drainCrystal(src);
+    if (scriptComponent) scriptComponent.executeScript(src, trg);
+    if (crystalComponent) crystalComponent.drainCrystal(src, trg);
 
     if (trg.getComponent("Stack").amount > 1) {
       trg.getComponent("Stack").amount--;

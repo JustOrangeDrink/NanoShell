@@ -115,21 +115,7 @@ class EntityPreset {
     if (this.components) {
       for (let i = 0; i < this.components.length; i++) {
         const [component, ...componentArgs] = this.components[i];
-        const resultArgs = [];
-
-        for (let k = 0; k < componentArgs.length; k++) {
-          const componentArg = componentArgs[k];
-
-          if (Array.isArray(componentArg)) {
-            for (let j = 0; j < componentArg.length; j++) {
-              if (componentArg[j] == "self") componentArg[j] = entity;
-            }
-          }
-          if (componentArg == "self") resultArgs.push(entity);
-          else resultArgs.push(componentArg);
-        }
-
-        entity.addComponent(new component(...resultArgs));
+        entity.addComponent(new component(...componentArgs));
       }
     }
 
@@ -385,7 +371,7 @@ new EntityPreset(
       `Chip of |${chipStrengthName}|`,
       `Chips of |${chipStrengthName}|`,
     ],
-    [EquipEffects, [strengthBoost, Infinity, 3, "self"]],
+    [EquipEffects, [strengthBoost, Infinity, 3]],
   ],
   ["common", "item", "chip"]
 );

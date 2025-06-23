@@ -198,10 +198,10 @@ class EquipEffects {
     this.type = "EquipEffects";
     this.effects = effects;
   }
-  activateEffects(trg) {
+  activateEffects(trgEntity, effectSrc) {
     for (let i = 0; i < this.effects.length; i++) {
       const [effect, ...effectArgs] = this.effects[i];
-      effect(trg, ...effectArgs);
+      effect(trgEntity, effectSrc, ...effectArgs);
     }
   }
 }
@@ -220,10 +220,10 @@ class Script {
     this.type = "Script";
     this.effects = effects;
   }
-  executeScript(trg) {
+  executeScript(trgEntity, effectSrc) {
     for (let i = 0; i < this.effects.length; i++) {
       const [effect, ...effectArgs] = this.effects[i];
-      effect(trg, ...effectArgs);
+      effect(trgEntity, effectSrc, ...effectArgs);
     }
   }
 }
@@ -233,10 +233,10 @@ class Crystal {
     this.type = "Crystal";
     this.effects = effects;
   }
-  drainCrystal(trg) {
+  drainCrystal(trgEntity, effectSrc) {
     for (let i = 0; i < this.effects.length; i++) {
       const [effect, ...effectArgs] = this.effects[i];
-      effect(trg, ...effectArgs);
+      effect(trgEntity, effectSrc, ...effectArgs);
     }
   }
 }
