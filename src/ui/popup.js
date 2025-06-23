@@ -113,6 +113,7 @@ function updatePopupUi() {
     if (item.getComponent("Weapon")?.isEquipped) additionalLog = " (wielded)";
     if (item.getComponent("Shield")?.isEquipped) additionalLog = " (wielded)";
     if (item.getComponent("Armor")?.isEquipped) additionalLog = " (worn)";
+    if (item.getComponent("Chip")?.isEquipped) additionalLog = " (installed)";
 
     popupUiCtx.drawImage(
       uniqueAssets[item.renderName],
