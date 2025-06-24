@@ -29,7 +29,7 @@ import {
 } from "./Component/components.js";
 import { Entity } from "./Entity/entities.js";
 import { guardBehavior } from "./System/ai.js";
-import { randomTp, strengthBoost } from "./System/effects.js";
+import { randomTp, spawnRandomEnemy, strengthBoost } from "./System/effects.js";
 import {
   getChipString,
   getRandomColor,
@@ -131,7 +131,7 @@ new EntityPreset(
   0,
   0,
   [0, 0, 0, 0],
-  [[Weapon, 0, 0, 0, "punch"]]
+  [[Weapon, 0, 1, 0, "punch"]]
 );
 
 new EntityPreset(
@@ -185,8 +185,8 @@ new EntityPreset(
     [Turns],
     [Alignment, "Bad"],
     [Behavior, guardBehavior],
-    [Stats, 40, 0, 1],
-    [Attributes, 1, 1, 1],
+    [Stats, 20, 0, 1],
+    [Attributes, 0, 0, 0],
     [WieldSlots, 2, entityPresets.RatFang.init()],
   ],
   ["common", "enemy"]
