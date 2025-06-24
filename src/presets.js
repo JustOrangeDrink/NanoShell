@@ -240,7 +240,7 @@ new EntityPreset(
     [Size, "Tiny"],
     [Stack],
     [Pickable, "Execute"],
-    [Script],
+    [Script, [spawnRandomEnemy]],
     [
       Encryption,
       `Script of |${scriptEnemySummonEncryption}|`,

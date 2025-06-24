@@ -1,7 +1,9 @@
 import { ScheduledEffects } from "../Component/components.js";
 import { knownMap, rooms, tilemap, time } from "../globals.js";
+import { getPresetsByTags } from "../presets.js";
 import { addLog } from "../ui/sidebar.js";
-import { randomInt } from "../utils.js";
+import { getNeighbors, randomInt } from "../utils.js";
+import { getBlockingEntity } from "./engine.js";
 
 class ScheduledEffect {
   constructor(
@@ -74,6 +76,35 @@ function randomTp(trg) {
   addLog([trg, false, " vanishes!", "purple"]);
 }
 
+function spawnRandomEnemy(trg) {
+  const enemies = getPresetsByTags("enemy");
+  const randomEnemyPreset = enemies[randomInt(0, enemies.length - 1)];
+  const neighbors = getNeighbors(trg.x, trg.y);
+
+  // filter our neighbors with collision entities on them
+  for (let i = 0; i < neighbors.length; i++) {
+    const neighbor = neighbors[i];
+    const neighborTile = tilemap[neighbor[1]][neighbor[0]];
+    if (getBlockingEntity(neighborTile)) {
+      neighbors.splice(i, 1);
+      i--;
+    }
+  }
+
+  if (neighbors.length === 0) {
+    addLog(["Nothing seems to happen...", "gray"]);
+    return;
+  }
+
+  const [destX, destY] = neighbors[randomInt(0, neighbors.length - 1)];
+  const randomEnemy = randomEnemyPreset.init(destX, destY);
+
+  // give new entity a 1 turn penalty
+  randomEnemy.getComponent("Turns").currentTime = time.currentTime + 1;
+
+  addLog([randomEnemy, false, " appears out of nowhere!", "brown"]);
+}
+
 function strengthBoost(trg, src, duration = 3, boostAmount = 5) {
   if (trg.name == "Player") addLog([`You feel stronger!`, "orange"]);
   else addLog([trg, false, " seems stronger now!", "pink"]);
@@ -103,4 +134,5 @@ export {
   cancelLinkedEffects,
   randomTp,
   strengthBoost,
+  spawnRandomEnemy,
 };
