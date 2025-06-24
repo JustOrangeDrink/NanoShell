@@ -100,7 +100,7 @@ function addLog(arrayTextColor = ["Default", "lime"]) {
   }
 
   logs.unshift(arrayTextColor);
-  if (logs.length > 5) logs.pop();
+  if (logs.length > 7) logs.pop();
   updateUi();
 }
 
