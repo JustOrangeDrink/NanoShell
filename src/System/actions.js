@@ -5,6 +5,7 @@ import {
 } from "../Animations/animations.js";
 import { effectsEntities, turnsEntities } from "../Entity/entities.js";
 import { tilemap, time } from "../globals.js";
+import { entityPresets } from "../presets.js";
 import { addLog } from "../ui/sidebar.js";
 import {
   getEntityFromArray,
@@ -14,7 +15,7 @@ import {
   roundToOne,
 } from "../utils.js";
 import { cancelLinkedEffects, handleEffects } from "./effects.js";
-import { getEntitiesUnder } from "./engine.js";
+import { getEntitiesUnder, renderWorld } from "./engine.js";
 
 class Action {
   constructor(name, timeCost, action, condition = () => true) {
@@ -175,7 +176,7 @@ const attackAction = new Action(
       addLog([
         src,
         false,
-        ` ${weaponHitTitle} you for ${totalDamage} damage!`,
+        ` ${weaponHitTitle}s you for ${totalDamage} damage!`,
         "white",
       ]);
       trgHealth.takeDamage(trg, totalDamage);
@@ -577,6 +578,19 @@ const activateAction = new Action(
   }
 );
 
+const openDoorAction = new Action(
+  "Open Door",
+  1,
+  (trg) => {
+    tilemap[trg.y][trg.x].splice(tilemap[trg.y][trg.x].indexOf(trg));
+    entityPresets.OpenedDoor.init(trg.x, trg.y);
+    renderWorld();
+  },
+  (src, trg) => {
+    return true;
+  }
+);
+
 export {
   moveAction,
   attackAction,
@@ -587,4 +601,5 @@ export {
   dropAction,
   removeAction,
   activateAction,
+  openDoorAction,
 };

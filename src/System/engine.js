@@ -11,7 +11,7 @@ import {
   animationMap,
 } from "../globals.js";
 import { getRelativeCoords } from "../utils.js";
-import { attackAction, moveAction } from "./actions.js";
+import { attackAction, moveAction, openDoorAction } from "./actions.js";
 
 function renderWorld() {
   ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -157,10 +157,17 @@ function clearVision() {
 }
 
 function tryMovement(entity, dx, dy) {
-  const trgEnemy = handleCollision(entity, dx, dy);
+  const trgCollision = handleCollision(entity, dx, dy);
 
-  if (trgEnemy) {
-    attackAction.makeAction(entity, [entity, trgEnemy], [entity, trgEnemy]);
+  if (trgCollision) {
+    if (trgCollision.name == "Door") {
+      openDoorAction.makeAction(entity, [trgCollision], [entity, trgCollision]);
+    } else
+      attackAction.makeAction(
+        entity,
+        [entity, trgCollision],
+        [entity, trgCollision]
+      );
   } else moveAction.makeAction(entity, [entity, dx, dy], [entity, dx, dy]);
 }
 
@@ -168,6 +175,7 @@ function getEntitiesUnder(targetEntity, ignoredEntitiesNames) {
   if (!targetEntity) return;
   if (targetEntity.y > tilemap.length - 1 || targetEntity.y < 0) return;
   if (targetEntity.x > tilemap[0].length - 1 || targetEntity.x < 0) return;
+
   const entitiesTile = tilemap[targetEntity.y][targetEntity.x];
 
   const result = [];
@@ -213,7 +221,6 @@ function handleCollision(entity, dx, dy) {
 
   if (!collision.collision) return;
 
-  `Collision with ${blockingEntity.currentTitle}!`;
   return blockingEntity;
 }
 
