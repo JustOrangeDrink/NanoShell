@@ -372,7 +372,7 @@ function populateMap() {
     if (randomInt(0, 100) > 50) {
       const spawnX = randomInt(room.x, room.x + room.w - 1);
       const spawnY = randomInt(room.y, room.y + room.h - 1);
-      entityPresets.Guard.init(spawnX, spawnY);
+      entityPresets.Rat.init(spawnX, spawnY);
     }
     const itemChance = randomInt(0, 100);
     let itemAmount = 0;

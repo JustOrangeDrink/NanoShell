@@ -135,6 +135,17 @@ new EntityPreset(
 );
 
 new EntityPreset(
+  "RatFang",
+  "RatFang",
+  "RatFangs",
+  0,
+  0,
+  0,
+  [0, 0, 0, 0],
+  [[Weapon, 0, 0, 0, "bite"]]
+);
+
+new EntityPreset(
   "Player",
   "Player",
   "Players",
@@ -149,8 +160,8 @@ new EntityPreset(
     [Damage, 10],
     [Turns],
     [Alignment, "Good"],
-    [Stats, 50, 0, 1],
-    [Attributes, 3, 5, 3],
+    [Stats, 40, 0, 1],
+    [Attributes, 1, 1, 1],
     [Inventory],
     [WieldSlots, 2, entityPresets.Fist.init()],
     [ArmorSlots, 1],
@@ -160,13 +171,13 @@ new EntityPreset(
 );
 
 new EntityPreset(
-  "Guard",
-  "Guard",
-  "Guards",
+  "Rat",
+  "Rat",
+  "Rats",
   3,
-  7,
-  4,
-  [255, 0, 255, 255],
+  2,
+  5,
+  [150, 150, 100, 255],
   [
     [Collision],
     [Health, 15, 15],
@@ -176,7 +187,7 @@ new EntityPreset(
     [Behavior, guardBehavior],
     [Stats, 40, 0, 1],
     [Attributes, 1, 1, 1],
-    [WieldSlots, 2, entityPresets.Fist.init()],
+    [WieldSlots, 2, entityPresets.RatFang.init()],
   ],
   ["common", "enemy"]
 );
@@ -297,6 +308,19 @@ new EntityPreset(
   2,
   [350, 300, 200, 255],
   [[Collision, true, true], [Occlusion]],
+  ["common", "construction"],
+  [90, 70, 35, 255]
+);
+
+new EntityPreset(
+  "OpenedDoor",
+  "Opened door",
+  "Open Doors",
+  2,
+  15,
+  2,
+  [188, 161, 107, 255],
+  [],
   ["common", "construction"],
   [90, 70, 35, 255]
 );
