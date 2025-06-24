@@ -272,17 +272,17 @@ function handleTitle(trg) {
   if (trgWeapon) {
     let accSymbol = trgWeapon.acc < 0 ? "" : "+";
     let dmgSymbol = trgWeapon.dmg < 0 ? "" : "+";
-    trg.currentTitle = `${accSymbol}${trgWeapon.acc},${dmgSymbol}${trgWeapon.dmg} ${trg.currentTitle}`;
+    trg.currentTitle = `${trg.currentTitle} (${accSymbol}${trgWeapon.acc},${dmgSymbol}${trgWeapon.dmg})`;
   }
   if (trgShield) {
     let ddgModSymbol = trgShield.ddgMod < 0 ? "" : "+";
     let armSymbol = trgShield.arm < 0 ? "" : "+";
-    trg.currentTitle = `${ddgModSymbol}${trgShield.ddgMod},${armSymbol}${trgShield.arm} ${trg.currentTitle}`;
+    trg.currentTitle = `${trg.currentTitle} (${ddgModSymbol}${trgShield.ddgMod},${armSymbol}${trgShield.arm})`;
   }
   if (trgArmor) {
     let ddgModSymbol = trgArmor.ddgMod < 0 ? "" : "+";
     let armSymbol = trgArmor.arm < 0 ? "" : "+";
-    trg.currentTitle = `${ddgModSymbol}${trgArmor.ddgMod},${armSymbol}${trgArmor.arm} ${trg.currentTitle}`;
+    trg.currentTitle = `${trg.currentTitle} (${ddgModSymbol}${trgArmor.ddgMod},${armSymbol}${trgArmor.arm})`;
   }
 }
 
