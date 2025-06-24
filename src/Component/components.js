@@ -20,12 +20,15 @@ class Health {
     this.type = "Health";
     this.maxHp = maxHp;
     this.currentHp = currentHp;
+    this.isAlive = true;
   }
   takeDamage(entity, amount) {
     this.currentHp -= amount;
     if (this.currentHp <= 0) {
       if (entity.name == "Player") {
-        addLog(["You are dead!", "red"]);
+        addLog(["You have been slain!", "red"]);
+        addLog(["Press ", "red", '"ENTER" ', "lime", "to restart", "red"]);
+        this.isAlive = false;
         entity.destroy();
       } else {
         addLog([`${entity.currentTitle} is dead!`, "lime"]);

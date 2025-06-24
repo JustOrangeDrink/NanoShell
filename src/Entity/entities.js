@@ -94,9 +94,6 @@ class Entity {
     tilemap[this.y][this.x].splice(tilemap[this.y][this.x].indexOf(this), 1);
     vectorEntities.splice(vectorEntities.indexOf(this), 1);
     turnsEntities.splice(turnsEntities.indexOf(this), 1);
-    for (const key in this) {
-      delete this[key];
-    }
     document.dispatchEvent(new Event("gameTurn"));
   }
 }

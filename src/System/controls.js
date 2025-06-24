@@ -17,6 +17,11 @@ import { getEntitiesUnder, tryMovement } from "./engine.js";
 let isDeveloperMod = false;
 
 function handleInput(event, player) {
+  if (player.getComponent("Health") && !player.getComponent("Health").isAlive) {
+    if (event.key == "Enter") window.location.reload();
+    return;
+  }
+
   let dx = 0;
   let dy = 0;
 
