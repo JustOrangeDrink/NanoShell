@@ -26,8 +26,9 @@ class Health {
     this.currentHp -= amount;
     if (this.currentHp <= 0) {
       if (entity.name == "Player") {
-        addLog(["You have been slain!", "red"]);
-        addLog(["Press ", "red", '"ENTER" ', "lime", "to restart", "red"]);
+        addLog(["", "red"]);
+        addLog(["You have been slain...", "red"]);
+        addLog(["Press ", "red", '"ENTER" ', "lime", "to restart.", "red"]);
         this.isAlive = false;
         entity.destroy();
       } else {
