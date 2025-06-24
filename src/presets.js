@@ -142,7 +142,7 @@ new EntityPreset(
   0,
   0,
   [0, 0, 0, 0],
-  [[Weapon, 0, 0, 0, "bite"]]
+  [[Weapon, 0, 1, 0, "bite"]]
 );
 
 new EntityPreset(
