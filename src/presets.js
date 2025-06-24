@@ -295,10 +295,10 @@ new EntityPreset(
   2,
   11,
   2,
-  [0, 500, 0, 255],
+  [255, 255, 255, 255],
   [[Collision, true, true], [Occlusion]],
   ["common", "construction"],
-  [0, 60, 0, 255]
+  [60, 60, 60, 255]
 );
 
 new EntityPreset(

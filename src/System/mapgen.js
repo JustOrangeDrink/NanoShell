@@ -175,6 +175,38 @@ function generateMap() {
   }
 
   carveRooms();
+  generateDoors();
+}
+
+function generateDoors() {
+  for (let i = 0; i < rooms.length; i++) {
+    const room = rooms[i];
+    // go through borders of the room and place door if there is an entrance to corridor
+
+    // upper and bottom borders
+    for (let j = room.x - 1; j < room.x + room.w + 1; j++) {
+      if (j >= 0 && room.y - 1 >= 0 && tilemap[room.y - 1][j].length == 1) {
+        carveTile(j, room.y - 1);
+        entityPresets.Door.init(j, room.y - 1);
+      }
+      if (j >= 0 && tilemap[room.y + room.h][j].length == 1) {
+        carveTile(j, room.y + room.h);
+        entityPresets.Door.init(j, room.y + room.h);
+      }
+    }
+
+    // left and right borders
+    for (let j = room.y - 1; j < room.y + room.h + 1; j++) {
+      if (j >= 0 && room.x - 1 >= 0 && tilemap[j][room.x - 1].length == 1) {
+        carveTile(room.x - 1, j);
+        entityPresets.Door.init(room.x - 1, j);
+      }
+      if (j >= 0 && tilemap[j][room.x + room.w].length == 1) {
+        carveTile(room.x + room.w, j);
+        entityPresets.Door.init(room.x + room.w, j);
+      }
+    }
+  }
 }
 
 function generateRooms() {
