@@ -32,33 +32,38 @@ function updateUi() {
 
   mainUiCtx.font = "bold 25px monospace";
 
-  write(mainUiCtx, ["Performance Indicators", "lime"], 60, 40);
+  write(mainUiCtx, ["Performance Indicators", "burlywood"], 60, 40);
 
   mainUiCtx.font = "20px monospace";
   write(
     mainUiCtx,
-    [`System Integrity: ${currentHp}/${maxHp}`, "lime"],
+    [`System Integrity: `, "burlywood", `${currentHp}/${maxHp}`, "white"],
     10,
     100
   );
   write(
     mainUiCtx,
-    [`CPU Temperature: ${currentTemperature}/${maxTemperature}`, "lime"],
+    [
+      `CPU Temperature: `,
+      "burlywood",
+      `${currentTemperature}/${maxTemperature}`,
+      "white",
+    ],
     10,
     130
   );
 
-  write(mainUiCtx, [`Str: ${str}`, "lime"], 10, 175);
-  write(mainUiCtx, [`Agi: ${agi}`, "lime"], 10, 200);
-  write(mainUiCtx, [`Dur: ${dur}`, "lime"], 10, 225);
+  write(mainUiCtx, [`Str: `, "burlywood", `${str}`, "white"], 10, 175);
+  write(mainUiCtx, [`Agi: `, "burlywood", `${agi}`, "white"], 10, 200);
+  write(mainUiCtx, [`Dur: `, "burlywood", `${dur}`, "white"], 10, 225);
 
-  write(mainUiCtx, [`DDG: ${ddg}`, "lime"], 125, 175);
-  write(mainUiCtx, [`ARM: ${arm}`, "lime"], 125, 200);
-  write(mainUiCtx, [`QKN: ${qkn}`, "lime"], 125, 225);
+  write(mainUiCtx, [`DDG: `, "burlywood", `${ddg}`, "white"], 125, 175);
+  write(mainUiCtx, [`ARM: `, "burlywood", `${arm}`, "white"], 125, 200);
+  write(mainUiCtx, [`QKN: `, "burlywood", `${qkn}`, "white"], 125, 225);
 
   write(
     mainUiCtx,
-    [`Time: ${time.currentTime} (+${time.timeJump})`, "yellow"],
+    [`Time: `, "burlywood", `${time.currentTime} (+${time.timeJump})`, "white"],
     10,
     325
   );
@@ -74,7 +79,7 @@ function addBelow(entities) {
 }
 
 function writeBelow() {
-  write(mainUiCtx, ["Below:", "lime"], 10, 350);
+  write(mainUiCtx, ["Below:", "burlywood"], 10, 350);
   for (let i = 0; i < below.length; i++) {
     const entityBelow = below[i];
     write(

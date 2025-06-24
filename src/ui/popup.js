@@ -48,7 +48,7 @@ function updatePopupUi() {
   popupUiCtx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   popupUiCtx.fillStyle = "black";
-  popupUiCtx.strokeStyle = "lime";
+  popupUiCtx.strokeStyle = "burlywood";
   popupUiCtx.lineWidth = 4;
   popupUiCtx.font = "20px monospace";
 

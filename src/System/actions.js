@@ -150,11 +150,11 @@ const attackAction = new Action(
       hitAnimation(trg);
       addLog([
         `You ${weaponHitTitle} `,
-        "yellow",
+        "white",
         trg,
         false,
         ` for ${totalDamage} damage!`,
-        "yellow",
+        "white",
       ]);
       trgHealth.takeDamage(trg, totalDamage);
       return;
@@ -176,7 +176,7 @@ const attackAction = new Action(
         src,
         false,
         ` ${weaponHitTitle} you for ${totalDamage} damage!`,
-        "yellow",
+        "white",
       ]);
       trgHealth.takeDamage(trg, totalDamage);
       return;
@@ -204,7 +204,7 @@ const attackAction = new Action(
     hitAnimation(trg);
     addLog([
       `${src.currentTitle} ${weaponHitTitle} ${trg.currentTitle} for ${totalDamage} damage!`,
-      "yellow",
+      "white",
     ]);
     trgHealth.takeDamage(trg, totalDamage);
   },

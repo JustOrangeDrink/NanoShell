@@ -120,12 +120,12 @@ function addEntityAsset(entity) {
       entity.charX,
       entity.charY,
       [
-        entity.color[0] / 4,
-        entity.color[1] / 4,
-        entity.color[2] / 4,
+        entity.color[0] / 2.5,
+        entity.color[1] / 2.5,
+        entity.color[2] / 2.5,
         entity.color[3],
       ],
-      [entity.bg[0] / 4, entity.bg[1] / 4, entity.bg[2] / 4, entity.bg[3]]
+      [entity.bg[0] / 2.5, entity.bg[1] / 2.5, entity.bg[2] / 2.5, entity.bg[3]]
     );
   }
 }

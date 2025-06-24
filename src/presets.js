@@ -270,7 +270,7 @@ new EntityPreset(
   0,
   9,
   15,
-  [85, 85, 85, 255],
+  [85, 55, 25, 255],
   [],
   ["common", "construction"]
 );
@@ -282,10 +282,10 @@ new EntityPreset(
   2,
   3,
   2,
-  [0, 255, 0, 255],
+  [200, 175, 150, 255],
   [[Collision, true, true], [Occlusion]],
   ["common", "construction"],
-  [0, 70, 0, 255]
+  [192, 159, 117, 150]
 );
 
 new EntityPreset(
@@ -295,10 +295,10 @@ new EntityPreset(
   2,
   11,
   2,
-  [255, 255, 255, 255],
+  [350, 300, 200, 255],
   [[Collision, true, true], [Occlusion]],
   ["common", "construction"],
-  [60, 60, 60, 255]
+  [90, 70, 35, 255]
 );
 
 new EntityPreset(
