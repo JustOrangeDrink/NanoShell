@@ -610,7 +610,7 @@ const goUpstairsAction = new Action(
     const srcTile = tilemap[src.y][src.x];
     for (let i = 0; i < srcTile.length; i++) {
       const entity = srcTile[i];
-      if (entity.name == "Upstairs") return true;
+      if (entity.name == "StaircaseUp") return true;
     }
 
     addLog(["There are no staircases leading up.", "gray"]);
