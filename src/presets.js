@@ -131,7 +131,8 @@ new EntityPreset(
   0,
   0,
   [0, 0, 0, 0],
-  [[Weapon, 0, 1, 0, "punch"]]
+  [[Weapon, 0, 1, 0, "punch"]],
+  ["barehanded_weapon"]
 );
 
 new EntityPreset(
@@ -142,7 +143,8 @@ new EntityPreset(
   0,
   0,
   [0, 0, 0, 0],
-  [[Weapon, 0, 1, 0, "bite"]]
+  [[Weapon, 0, 1, 0, "bite"]],
+  ["barehanded_weapon"]
 );
 
 new EntityPreset(
