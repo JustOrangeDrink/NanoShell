@@ -3,15 +3,10 @@ import {
   getEntitiesUnder,
   wakeUpSleepingEnemies,
 } from "./System/engine.js";
-import { spritesheet, viewPort, rooms, entities } from "./globals.js";
-import {
-  populateMap,
-  generateMap,
-  reGenerateMap,
-  placePlayer,
-} from "./System/mapgen.js";
-import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
-import { entityPresets, getPresetsByTags } from "./presets.js";
+import { spritesheet, viewPort } from "./globals.js";
+import { populateMap, generateMap, placePlayer } from "./System/mapgen.js";
+import { addEntityAsset } from "./utils.js";
+import { entityPresets } from "./presets.js";
 import { addBelow, updateUi } from "./ui/sidebar.js";
 import { handleInput } from "./System/controls.js";
 import { updateInventoryUi } from "./ui/inventory.js";
@@ -30,8 +25,6 @@ generateMap();
 placePlayer();
 
 populateMap();
-
-setTimeout(() => reGenerateMap(), 1000);
 
 document.addEventListener("keydown", (event) => {
   handleInput(event, player);

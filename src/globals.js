@@ -76,6 +76,11 @@ const time = {
 const uniqueAssets = {};
 const uniqueAssetsDark = {};
 
+const level = {
+  currentLevel: -25,
+  biome: "Abandoned Caves",
+};
+
 export {
   canvas,
   ctx,
@@ -102,4 +107,5 @@ export {
   time,
   uniqueAssets,
   uniqueAssetsDark,
+  level,
 };

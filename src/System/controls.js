@@ -11,7 +11,12 @@ import {
   openPopup,
 } from "../ui/popup.js";
 import { addLog } from "../ui/sidebar.js";
-import { longSkipAction, pickUpAction, skipAction } from "./actions.js";
+import {
+  goUpstairsAction,
+  longSkipAction,
+  pickUpAction,
+  skipAction,
+} from "./actions.js";
 import { getEntitiesUnder, tryMovement } from "./engine.js";
 
 let isDeveloperMod = false;
@@ -124,6 +129,10 @@ function handleInput(event, player) {
       );
       break;
 
+    case ">":
+      goUpstairsAction.makeAction(player, [], [player]);
+      break;
+
     case "w":
       openPopup("Wield");
       break;
@@ -156,6 +165,14 @@ function handleInput(event, player) {
       openInventory();
       break;
 
+    case "5":
+      skipAction.makeAction(player);
+      break;
+    case "0":
+      longSkipAction.makeAction(player);
+      break;
+
+    // developer mode to debug
     case "`":
       isDeveloperMod = !isDeveloperMod;
       const increase = isDeveloperMod ? 10000 : -10000;
@@ -179,13 +196,6 @@ function handleInput(event, player) {
         `NoClip: ${!player.getComponent("Collision").collision}`,
         "lime",
       ]);
-      break;
-
-    case "5":
-      skipAction.makeAction(player);
-      break;
-    case ".":
-      longSkipAction.makeAction(player);
       break;
 
     default:

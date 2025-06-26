@@ -4,7 +4,7 @@ import {
   missAnimation,
 } from "../Animations/animations.js";
 import { effectsEntities, turnsEntities } from "../Entity/entities.js";
-import { tilemap, time } from "../globals.js";
+import { level, tilemap, time } from "../globals.js";
 import { entityPresets } from "../presets.js";
 import { addLog } from "../ui/sidebar.js";
 import {
@@ -16,6 +16,7 @@ import {
 } from "../utils.js";
 import { cancelLinkedEffects, handleEffects } from "./effects.js";
 import { getEntitiesUnder, renderWorld } from "./engine.js";
+import { reGenerateMap } from "./mapgen.js";
 
 class Action {
   constructor(name, timeCost, action, condition = () => true) {
@@ -591,6 +592,32 @@ const openDoorAction = new Action(
   }
 );
 
+const goUpstairsAction = new Action(
+  "Go Upstairs",
+  1,
+  () => {
+    level.currentLevel++;
+    reGenerateMap();
+    addLog(["You go upstairs to the next floor.", "lime"]);
+    addLog([
+      `Level: ${level.currentLevel}   `,
+      "burlywood",
+      `Biome: ${level.biome}`,
+      "brown",
+    ]);
+  },
+  (src) => {
+    const srcTile = tilemap[src.y][src.x];
+    for (let i = 0; i < srcTile.length; i++) {
+      const entity = srcTile[i];
+      if (entity.name == "Upstairs") return true;
+    }
+
+    addLog(["There are no staircases leading up.", "gray"]);
+    return false;
+  }
+);
+
 export {
   moveAction,
   attackAction,
@@ -602,4 +629,5 @@ export {
   removeAction,
   activateAction,
   openDoorAction,
+  goUpstairsAction,
 };

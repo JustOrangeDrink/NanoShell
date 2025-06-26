@@ -328,6 +328,19 @@ new EntityPreset(
 );
 
 new EntityPreset(
+  "StaircaseUp",
+  "Staircase Up",
+  "Staircases Up",
+  3,
+  12,
+  3,
+  [0, 255, 0, 255],
+  [],
+  ["common", "construction"],
+  [0, 75, 0, 255]
+);
+
+new EntityPreset(
   "Sword",
   "Sword",
   "Swords",

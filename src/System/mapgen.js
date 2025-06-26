@@ -435,6 +435,10 @@ function carveCorridorY(srcStart, srcEnd, x) {
 }
 
 function populateMap() {
+  const randomRoom = rooms[randomInt(0, rooms.length - 1)];
+  const { x, y } = randomRoom.getCenter();
+  entityPresets.StaircaseUp.init(x, y);
+
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
     if (randomInt(0, 100) > 50) {
