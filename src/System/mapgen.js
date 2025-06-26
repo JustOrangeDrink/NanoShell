@@ -3,9 +3,59 @@ import {
   rooms,
   MAP_TILED_WIDTH,
   MAP_TILED_HEIGHT,
+  knownMap,
+  entities,
+  viewPort,
 } from "../globals.js";
-import { randomInt } from "../utils.js";
+import { getEntityFromArray, randomInt } from "../utils.js";
 import { entityPresets, getPresetsByTags } from "../presets.js";
+import {
+  getEntitiesUnder,
+  renderWorld,
+  wakeUpSleepingEnemies,
+} from "./engine.js";
+import { addBelow, updateUi } from "../ui/sidebar.js";
+import { updateInventoryUi } from "../ui/inventory.js";
+
+function clearMap() {
+  sectionGrid.splice(0, sectionGrid.length);
+  rooms.splice(0, rooms.length);
+  disconnectedRooms.splice(0, disconnectedRooms.length);
+  connectedRooms.splice(0, connectedRooms.length);
+
+  for (let y = 0; y < tilemap.length; y++) {
+    for (let x = 0; x < tilemap[y].length; x++) {
+      const tile = tilemap[y][x];
+      const knownTile = knownMap[y][x];
+      for (let i = 0; i < tile.length; i++) {
+        tile.splice(i, 1);
+        knownTile.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  for (let y = 0; y < knownMap.length; y++) {
+    for (let x = 0; x < knownMap[y].length; x++) {
+      knownMap[y][x].splice(0, knownMap[y][x].length);
+    }
+  }
+
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i];
+    if (entity.name == "Player") continue;
+  }
+}
+
+function reGenerateMap() {
+  clearMap();
+  generateMap();
+
+  placePlayer();
+
+  populateMap();
+  renderWorld();
+}
 
 function fillMap() {
   for (let y = 0; y < tilemap.length; y++) {
@@ -55,14 +105,15 @@ const sectionWidth = Math.floor(MAP_TILED_WIDTH / sectionGridsX);
 const sectionHeight = Math.floor(MAP_TILED_HEIGHT / sectionGridsY);
 
 const sectionGrid = [];
-for (let y = 0; y < sectionGridsY; y++) {
-  sectionGrid.push([]);
-  for (let x = 0; x < sectionGridsX; x++) {
-    sectionGrid[y].push([]);
-  }
-}
 
 function generateSections() {
+  for (let y = 0; y < sectionGridsY; y++) {
+    sectionGrid.push([]);
+    for (let x = 0; x < sectionGridsX; x++) {
+      sectionGrid[y].push([]);
+    }
+  }
+
   for (let y = 0; y < sectionGrid.length; y++) {
     for (let x = 0; x < sectionGrid[0].length; x++) {
       const element = sectionGrid[y][x];
@@ -97,6 +148,24 @@ class Room {
 
 const disconnectedRooms = [];
 const connectedRooms = [];
+
+function placePlayer() {
+  const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
+  const player = getEntityFromArray(false, "Player", entities);
+  const { x, y } = spawnRoom.getCenter();
+  tilemap[y][x].push(player);
+  knownMap[y][x].push(player);
+  player.x = x;
+  player.y = y;
+  viewPort.scrollTo(player.x, player.y);
+
+  updateUi();
+  updateInventoryUi();
+
+  wakeUpSleepingEnemies(player);
+
+  addBelow(getEntitiesUnder(player, ["Floor"]));
+}
 
 function generateMap() {
   fillMap();
@@ -210,7 +279,6 @@ function generateDoors() {
 }
 
 function generateRooms() {
-  generateSections();
   for (let y = 0; y < sectionGrid.length; y++) {
     for (let x = 0; x < sectionGrid[0].length; x++) {
       const section = sectionGrid[y][x][0];
@@ -406,4 +474,6 @@ export {
   sectionGrid,
   populateMap,
   generateRooms,
+  reGenerateMap,
+  placePlayer,
 };

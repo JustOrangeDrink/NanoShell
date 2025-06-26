@@ -1,6 +1,15 @@
-import { renderWorld, getEntitiesUnder } from "./System/engine.js";
+import {
+  renderWorld,
+  getEntitiesUnder,
+  wakeUpSleepingEnemies,
+} from "./System/engine.js";
 import { spritesheet, viewPort, rooms, entities } from "./globals.js";
-import { populateMap, generateMap } from "./System/mapgen.js";
+import {
+  populateMap,
+  generateMap,
+  reGenerateMap,
+  placePlayer,
+} from "./System/mapgen.js";
 import { addEntityAsset, getEnemyEntitiesAround, randomInt } from "./utils.js";
 import { entityPresets, getPresetsByTags } from "./presets.js";
 import { addBelow, updateUi } from "./ui/sidebar.js";
@@ -14,23 +23,15 @@ spritesheet.onload = () => {
   renderWorld();
 };
 
+const player = entityPresets.Player.init();
+
 generateMap();
+
+placePlayer();
+
 populateMap();
 
-const spawnRoom = rooms[randomInt(0, rooms.length - 1)];
-
-const player = entityPresets.Player.init(
-  spawnRoom.getCenter().x,
-  spawnRoom.getCenter().y
-);
-viewPort.scrollTo(player.x, player.y);
-
-updateUi();
-updateInventoryUi();
-
-wakeUpSleepingEnemies();
-
-addBelow(getEntitiesUnder(player, ["Floor"]));
+setTimeout(() => reGenerateMap(), 1000);
 
 document.addEventListener("keydown", (event) => {
   handleInput(event, player);
@@ -42,18 +43,9 @@ document.addEventListener("gameTurn", () => {
 
 function handleTurn() {
   addBelow(getEntitiesUnder(player, ["Floor"]));
-  wakeUpSleepingEnemies();
+  wakeUpSleepingEnemies(player);
   viewPort.scrollTo(player.x, player.y);
   updateUi();
   updateInventoryUi();
   renderWorld();
-}
-
-function wakeUpSleepingEnemies() {
-  const enemies = getEnemyEntitiesAround(player, 5);
-  if (enemies.length > 0)
-    enemies.forEach((el) => {
-      if (el.getComponent("Behavior"))
-        el.getComponent("Behavior").active = true;
-    });
 }

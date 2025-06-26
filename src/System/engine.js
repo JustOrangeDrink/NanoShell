@@ -10,7 +10,7 @@ import {
   uniqueAssetsDark,
   animationMap,
 } from "../globals.js";
-import { getRelativeCoords } from "../utils.js";
+import { getEnemyEntitiesAround, getRelativeCoords } from "../utils.js";
 import { attackAction, moveAction, openDoorAction } from "./actions.js";
 
 function renderWorld() {
@@ -224,10 +224,20 @@ function handleCollision(entity, dx, dy) {
   return blockingEntity;
 }
 
+function wakeUpSleepingEnemies(trg) {
+  const enemies = getEnemyEntitiesAround(trg, 5);
+  if (enemies.length > 0)
+    enemies.forEach((el) => {
+      if (el.getComponent("Behavior"))
+        el.getComponent("Behavior").active = true;
+    });
+}
+
 export {
   renderWorld,
   getEntitiesUnder,
   handleCollision,
   getBlockingEntity,
   tryMovement,
+  wakeUpSleepingEnemies,
 };
